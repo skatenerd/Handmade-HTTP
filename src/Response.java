@@ -21,11 +21,11 @@ public class Response {
     }
     
     public String [] listFiles(){
-        return _browser.ListDirectory(_request.getPath());
+        return _browser.ListDirectory(_request.get_path());
     }
     
     private static String responseStatus(Request request,FileBrowser browser){
-        String [] files = browser.ListDirectory(request.getPath());
+        String [] files = browser.ListDirectory(request.get_path());
         if (files==null){
             return "404 Not Found";
         }else{

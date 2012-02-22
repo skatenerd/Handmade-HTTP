@@ -12,11 +12,15 @@ import java.util.*;
 public class MockRequestTest {
     @Test
     public void constructor(){
-        String [] bodyArray={"foo", "bar", "soymilk","free-range eggs"};
-        List<String> body = Arrays.asList(bodyArray);
-        MockRequest mock=new MockRequest("SUPERGET","/path/to/your/password.jpg",body);
-        assertEquals("SUPERGET",mock.getRequestType());
-        assertEquals("/path/to/your/password.jpg",mock.getPath());
-        assertEquals(body,mock.getBody());
+        List<String> header=new ArrayList<String>();
+        header.add("SUPERGET /path/foo.jpg HTTP/1.1");
+        header.add("junk");
+        
+        String bodyString="foo\nbar\nsoymilk\nfree-range eggs";
+        byte [] body = bodyString.getBytes();
+        MockRequest mock=new MockRequest("SUPERGET","/path/foo.jpg",body,header);
+        assertEquals("SUPERGET",mock.get_RequestType());
+        assertEquals("/path/to/your/password.jpg",mock.get_path());
+        assertEquals(body,mock.get_Body());
     }
 }

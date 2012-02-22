@@ -1,5 +1,5 @@
 import java.util.*;
-
+import java.io.*;
 /**
  * Created by IntelliJ IDEA.
  * User: 8thlight
@@ -10,36 +10,46 @@ import java.util.*;
 public class RequestImpl implements Request{
 
     private static String[] _requestTypes = {"GET", "POST"};
-    
     private String _requestType;
     private String _path;
-    private List<String> _body;
-    //private
+    private List<String> _header;
+    private byte [] _body;
 
 
-    public RequestImpl(Iterator<String> request) {
-    
-        List [] headerAndBody=getHeaderAndBody(request);
-        List<String> header = headerAndBody[0];
-        List<String> body=headerAndBody[1];
-        _body=body;
-        _requestType=requestType(header.get(0));
-        _path=path(header.get(0));
+    public RequestImpl(InputStream request)
+    throws IOException{
+        assignHeaderAndBody(request);
+        _requestType=requestType();
+        _path=path();
 
-        
+
     }
 
-    public static String requestType(String requestLine) {
+    private void assignHeaderAndBody(InputStream request)
+    throws IOException{
+        _header= extractHeader(request);
+        _body=extractBody(request, 0);
+
+    }
+
+    private LineReader getLineReader(InputStream stream)
+            throws IOException {
+        return new LineReader(new InputStreamReader(stream));
+    }
+
+    public String requestType() {
+        String requestLine = _header.get(0);
         String [] splitted = requestLine.split("[ ]+");
         String firstToken=splitted[0];
-                
+
         if (isValidRequestType(firstToken)) {
             return firstToken;
         }
         return null;
     }
 
-    public static String path(String requestLine) {
+    public String path() {
+        String requestLine = _header.get(0);
         String [] splitted = requestLine.split("[ ]+");
         String path=null;
         if(splitted.length>1){
@@ -58,42 +68,44 @@ public class RequestImpl implements Request{
         return false;
     }
 
-    public static List<String> getHeader(Iterator<String> request){
+    public List<String> extractHeader(InputStream stream)
+            throws IOException {
+
+        LineReader reader= getLineReader(stream);
+        List<String> rtnList = new ArrayList<String>();
         String curString;
-        List <String> rtnList=new ArrayList<String>();
-        while((curString=request.next().trim())!=""){
+
+        while((curString=reader.readLine().trim()).length()>0){
             rtnList.add(curString);
         }
         return rtnList;
-        
-    }
-    
-    public static List<String> getBody(Iterator<String> partiallyIteratedRequest){
-        List <String> rtnList=new ArrayList<String>();
-        while(partiallyIteratedRequest.hasNext()){
-            rtnList.add(partiallyIteratedRequest.next());
-        }
-        return rtnList;
-        
-    }
-    
-    public static List [] getHeaderAndBody(Iterator<String> request){
-        List [] headerAndBody = new List[2];
-        headerAndBody[0]=getHeader(request);
-        headerAndBody[1]=getBody(request);
-        return headerAndBody;
-        
+
     }
 
-    public String getPath(){
+    public byte [] extractBody(InputStream stream, int contentLength)
+    throws IOException{
+        byte [] body= new byte[contentLength];
+        stream.read(body);
+        return body;
+    }
+
+
+
+    public String get_path(){
         return _path;
     }
-    
-    public String getRequestType(){
+
+    public String get_RequestType(){
         return _requestType;
     }
-    
-    public List<String> getBody(){
+
+    public byte [] get_Body(){
         return _body;
+    }
+    
+    public List<String> get_header(){
+        List<String> rtn=new ArrayList<String>();
+        rtn.addAll(_header);
+        return rtn;
     }
 }

@@ -3,32 +3,24 @@ import java.io.File;
 import static org.junit.Assert.*;
 import java.util.*;
 /**
- * Created by IntelliJ IDEA.
- * User: 8thlight
- * Date: 2/21/12
- * Time: 6:18 PM
- * To change this template use File | Settings | File Templates.
- */
+* Created by IntelliJ IDEA.
+* User: 8thlight
+* Date: 2/21/12
+* Time: 6:18 PM
+* To change this template use File | Settings | File Templates.
+*/
 public class ResponseTest {
-//    @Test
-//    public void listsDirectory(){
-//        File dir = new File("/Users/8thlight/Programs");
-//        String [] foo = dir.list();
-//        for (String f:foo){
-//            System.out.println(f);
-//        }
-//    }
     @Test
     public void canListFilesInDirectory(){
         String toList="/bin/fizz/to/list";
         String [] files = {"PPP.pdf","PPP.txt","C#.txt","pirated_cartoons"};
         List<String> body = new ArrayList<String>();
         FileBrowser mockBrowser=new MockFileBrowser(toList,files);
-        Request mockRequest = new MockRequest("UBERPOST",toList,body);
+        Request mockRequest = new MockRequest("UBERPOST",toList,new byte[0], new ArrayList<String>());
         Response response = new Response(mockRequest,mockBrowser, new MockWriteable());
         assertArrayEquals(files,response.listFiles());
     }
-    
+
     @Test
     public void statusLineForValidFolderPath(){
         String toList = "/fizz/buzz";
@@ -37,11 +29,11 @@ public class ResponseTest {
         FileBrowser mockBrowser=new MockFileBrowser(toList, files);
         Request mockRequest = new MockRequest("UBERGET","/fizz/buzz",body);
         Response response=new Response(mockRequest,mockBrowser, new MockWriteable());
-        
+
         assertEquals("HTTP/1.1 200 OK", response.statusLine());
-        
-        
-        
+
+
+
     }
     @Test
     public void statusCodeForInvalidFolderPath(){
@@ -64,7 +56,7 @@ public class ResponseTest {
         Request mockRequest = new MockRequest("UBERPOST",toList,body);
         MockWriteable mockWriteable=new MockWriteable();
         Response response = new Response(mockRequest,mockBrowser, mockWriteable);
-                 
+
         List<String> desiredResponse = new ArrayList<String>();
         desiredResponse.add("HTTP/1.1 200 OK");
         desiredResponse.add("Connection: close");
@@ -75,10 +67,10 @@ public class ResponseTest {
             desiredResponse.add(file);
         }
         assertArrayEquals(desiredResponse.toArray(), response.response().toArray());
-        
+
         response.writeResponse();
-        
+
         assertArrayEquals(desiredResponse.toArray(), mockWriteable.get_writtenText().toArray());
     }
-    
+
 }

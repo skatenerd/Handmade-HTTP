@@ -17,12 +17,7 @@ public class RequestHandler {
     }
 
     private PrintStream getServerSocketOutputStream(Socket socket)
-    throws IOException {
+            throws IOException {
         return new PrintStream(socket.getOutputStream());
-    }
-
-    private BufferedReader getServerSocketInputStream(Socket socket)
-    throws IOException {
-        return new BufferedReader(new InputStreamReader(socket.getInputStream()));
     }
 }

@@ -7,7 +7,8 @@ import java.util.*;
  * To change this template use File | Settings | File Templates.
  */
 public interface Request {
-    String getRequestType();
-    String getPath();
-    List<String> getBody();
+    String get_RequestType();
+    String get_path();
+    List<String> get_header();
+    byte [] get_Body();
 }

@@ -54,7 +54,7 @@ extends Thread{
             }
         }
         catch (SocketException e){
-            System.out.println("swallowing expected exception");
+            System.out.println("swallowing expected shutdown exception");
         }
         catch (IOException e){
             System.out.println("exception in main server loop");

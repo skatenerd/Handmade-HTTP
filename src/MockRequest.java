@@ -11,25 +11,30 @@ import java.util.List;
 public class MockRequest implements Request{
     String _requestType;
     String _path;
-    List<String> _body;
+    byte [] _body;
+    List<String> _header;
             
-    public MockRequest(String requestType, String path, List<String> body){
+    public MockRequest(String requestType, String path, byte [] body, List<String> header){
         _requestType = requestType;
         _path=path;
-        _body=new ArrayList<String>();
-        _body.addAll(body);
+        _body=body;
+        _header=header;
+
     }
 
-
-    public String getPath(){
+    public String get_path(){
         return _path;
     }
 
-    public String getRequestType(){
+    public String get_RequestType(){
         return _requestType;
     }
 
-    public List<String> getBody(){
+    public byte [] get_Body(){
         return _body;
+    }
+    
+    public List<String> get_header(){
+        return _header;
     }
 }
