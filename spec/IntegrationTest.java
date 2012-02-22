@@ -1,8 +1,6 @@
 import org.junit.*;
 import java.io.*;
 import java.net.*;
-import java.security.PublicKey;
-
 import static org.junit.Assert.*;
 
 /**
