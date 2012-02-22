@@ -21,7 +21,7 @@ extends Thread{
     throws InterruptedException{
         Server foo = new Server(8080);
         foo.start();
-        Thread.sleep(10000);
+        Thread.sleep(15000);
         foo.kill();
     }
 
@@ -36,20 +36,8 @@ extends Thread{
             _serverSocket = new ServerSocket(_port);
             while (keepRunning){
                 Socket connection=_serverSocket.accept();
-                PrintStream output = getServerSocketOutputStream(connection);
-                BufferedReader input = getServerSocketInputStream(connection);
-                String readString;
-//                while(true){
-//                    readString=input.readLine();
-//                    if(readString.trim().equals("")){
-//                        break;
-//                    }
-//                    System.out.println(readString);
-//                    output.println(readString);
-//                }
-                output.println("foo");
-                System.out.println("closing");
-                connection.close();
+                RequestHandler handler=new RequestHandler(connection);
+                handler.handleResponse();
                 connection=null;
             }
         }
@@ -66,16 +54,6 @@ extends Thread{
 
         }
 
-
-    private PrintStream getServerSocketOutputStream(Socket socket)
-    throws IOException{
-        return new PrintStream(socket.getOutputStream());
-    }
-
-    private BufferedReader getServerSocketInputStream(Socket socket)
-    throws IOException{
-        return new BufferedReader(new InputStreamReader(socket.getInputStream()));
-    }
 
     public void kill(){
         System.out.println(getState());

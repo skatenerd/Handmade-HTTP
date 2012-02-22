@@ -14,12 +14,10 @@ public class MockRequest implements Request{
     byte [] _body;
     List<String> _header;
             
-    public MockRequest(String requestType, String path, byte [] body, List<String> header){
+    public MockRequest(String requestType, String path, byte [] body){
         _requestType = requestType;
         _path=path;
         _body=body;
-        _header=header;
-
     }
 
     public String get_path(){
@@ -33,8 +31,5 @@ public class MockRequest implements Request{
     public byte [] get_Body(){
         return _body;
     }
-    
-    public List<String> get_header(){
-        return _header;
-    }
+
 }

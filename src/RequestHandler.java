@@ -12,12 +12,22 @@ import java.net.Socket;
  * To change this template use File | Settings | File Templates.
  */
 public class RequestHandler {
-    public void handleResponse(Socket socket) {
-
+    Socket _socket;
+    public RequestHandler(Socket socket){
+        _socket=socket;
+    }
+    
+    public void handleResponse()
+    throws IOException{
+        FileBrowser browser=new FileBrowserImpl("/Users");
+        Request request=RequestFactory.BuildRequest(_socket.getInputStream());
+        Response response=new Response(request, browser, getServerSocketOutputStream(_socket));
+        response.writeResponse();
+        _socket.close();
     }
 
-    private PrintStream getServerSocketOutputStream(Socket socket)
+    private PrintStreamWriteable getServerSocketOutputStream(Socket socket)
             throws IOException {
-        return new PrintStream(socket.getOutputStream());
+        return new PrintStreamWriteable(new PrintStream(socket.getOutputStream()));
     }
 }

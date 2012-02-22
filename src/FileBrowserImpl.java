@@ -19,7 +19,7 @@ public class FileBrowserImpl implements FileBrowser{
     
     public boolean ValidPath(String path){
         Object files=getFileFromPath(path).list();
-        return files==null;
+        return files!=null;
     }
     
     public String [] ListDirectory(String path){

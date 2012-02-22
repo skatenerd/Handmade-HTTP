@@ -22,7 +22,7 @@ public class RequestImplTest {
         byte [] requestBytes=requestText.getBytes();
         InputStream requestStream = new ByteArrayInputStream(requestBytes);
 
-        Request request=new RequestImpl(requestStream);
+        RequestImpl request=new RequestImpl(requestStream);
         
         List<String> parsedHeader= request.get_header();
         List<String> desiredResult = new ArrayList<String>();
@@ -53,38 +53,21 @@ public class RequestImplTest {
     }
 
 
+    @Test
+    public void extractsBody()
+    throws IOException{
+        String bodyString="abcdefghijklmnop";
+        String requestText=postPath+"\n"+"junk: fizz\n\n"+bodyString;
+        byte [] requestBytes=requestText.getBytes();
+        InputStream requestStream = new ByteArrayInputStream(requestBytes);
+
+        Request request=new RequestImpl(requestStream);
+        System.out.println(request.get_Body());
+        assertEquals(bodyString.getBytes(), request.get_Body());
+
+
+
+    }
 }
 
-//    @Test
-//    public void getsContentPathFromString(){
-//        assertEquals("/", RequestImpl.path(getBasic));
-//        assertEquals("/foo/bar.img", RequestImpl.path(getImgPath));
-//        assertEquals("/path/script.cgi", RequestImpl.path(postPath));
-//        assertEquals(null, RequestImpl.path("foo fizz quiche salad"));
-//    }
-//
-//
-////    @Test
-////    public void extractsHeaderAndBody(){
-////        String [] requestArray={"foo",
-////                "fizz",
-////                "booger",
-////                "pollution",
-////                "",
-////                "buddy",
-////                "holly"};
-////        String [] requestHeaderArray = Arrays.copyOfRange(requestArray,0,4);
-////        String [] requestBodyArray = Arrays.copyOfRange(requestArray,5,7);
-////
-////
-////
-////        List<String> request = Arrays.asList(requestArray);
-////        List<String> requestHeader = Arrays.asList(requestHeaderArray);
-////        List<String> requestBody = Arrays.asList(requestBodyArray);
-////
-////        List [] parsedBody = RequestImpl.getHeaderAndBody(request.iterator());
-////
-////        assertTrue(requestBody.equals(parsedBody[1]));
-////
-////    }
 //}

@@ -16,7 +16,7 @@ public class ResponseTest {
         String [] files = {"PPP.pdf","PPP.txt","C#.txt","pirated_cartoons"};
         List<String> body = new ArrayList<String>();
         FileBrowser mockBrowser=new MockFileBrowser(toList,files);
-        Request mockRequest = new MockRequest("UBERPOST",toList,new byte[0], new ArrayList<String>());
+        Request mockRequest = new MockRequest("UBERPOST",toList,new byte[0]);
         Response response = new Response(mockRequest,mockBrowser, new MockWriteable());
         assertArrayEquals(files,response.listFiles());
     }
@@ -25,23 +25,21 @@ public class ResponseTest {
     public void statusLineForValidFolderPath(){
         String toList = "/fizz/buzz";
         String [] files = {};
-        List<String> body=new ArrayList<String>();
         FileBrowser mockBrowser=new MockFileBrowser(toList, files);
-        Request mockRequest = new MockRequest("UBERGET","/fizz/buzz",body);
+
+        Request mockRequest = new MockRequest("UBERGET","/fizz/buzz",new byte[0]);
         Response response=new Response(mockRequest,mockBrowser, new MockWriteable());
 
         assertEquals("HTTP/1.1 200 OK", response.statusLine());
-
-
-
     }
+
     @Test
     public void statusCodeForInvalidFolderPath(){
         String toList = "";
         String [] files = {};
         List<String> body=new ArrayList<String>();
         FileBrowser mockBrowser=new MockFileBrowser(toList, files);
-        Request mockRequest = new MockRequest("UBERGET","/fizz/buzz",body);
+        Request mockRequest = new MockRequest("UBERGET","/fizz/buzz",new byte[0]);
         Response response=new Response(mockRequest,mockBrowser, new MockWriteable());
 
         assertEquals("HTTP/1.1 404 Not Found", response.statusLine());
@@ -53,7 +51,7 @@ public class ResponseTest {
         String [] files = {"PPP.pdf","PPP.txt","C#.txt","pirated_cartoons"};
         List<String> body = new ArrayList<String>();
         FileBrowser mockBrowser=new MockFileBrowser(toList,files);
-        Request mockRequest = new MockRequest("UBERPOST",toList,body);
+        Request mockRequest = new MockRequest("UBERPOST",toList,new byte[0]);
         MockWriteable mockWriteable=new MockWriteable();
         Response response = new Response(mockRequest,mockBrowser, mockWriteable);
 
@@ -72,5 +70,8 @@ public class ResponseTest {
 
         assertArrayEquals(desiredResponse.toArray(), mockWriteable.get_writtenText().toArray());
     }
-
 }
+
+
+
+
