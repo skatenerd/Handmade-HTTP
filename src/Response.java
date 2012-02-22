@@ -10,12 +10,14 @@ public class Response {
     Request _request;
     FileBrowser _browser;
     String _status;
+    Writeable _output;
     static String connection="close";
     static String contentType="text";
-    public Response(Request request, FileBrowser browser){
+    public Response(Request request, FileBrowser browser, Writeable output){
         _request=request;
         _browser=browser;
         _status=responseStatus(request,browser);
+        _output=output;
     }
     
     public String [] listFiles(){
@@ -54,6 +56,12 @@ public class Response {
         }
         
         return rtn;
+    }
+
+    public void writeResponse(){
+        for(String line:response()){
+            _output.PrintLn(line);
+        }
     }
 
 

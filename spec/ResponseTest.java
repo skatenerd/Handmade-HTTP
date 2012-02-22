@@ -25,7 +25,7 @@ public class ResponseTest {
         List<String> body = new ArrayList<String>();
         FileBrowser mockBrowser=new MockFileBrowser(toList,files);
         Request mockRequest = new MockRequest("UBERPOST",toList,body);
-        Response response = new Response(mockRequest,mockBrowser);
+        Response response = new Response(mockRequest,mockBrowser, new MockWriteable());
         assertArrayEquals(files,response.listFiles());
     }
     
@@ -36,7 +36,7 @@ public class ResponseTest {
         List<String> body=new ArrayList<String>();
         FileBrowser mockBrowser=new MockFileBrowser(toList, files);
         Request mockRequest = new MockRequest("UBERGET","/fizz/buzz",body);
-        Response response=new Response(mockRequest,mockBrowser);
+        Response response=new Response(mockRequest,mockBrowser, new MockWriteable());
         
         assertEquals("HTTP/1.1 200 OK", response.statusLine());
         
@@ -50,7 +50,7 @@ public class ResponseTest {
         List<String> body=new ArrayList<String>();
         FileBrowser mockBrowser=new MockFileBrowser(toList, files);
         Request mockRequest = new MockRequest("UBERGET","/fizz/buzz",body);
-        Response response=new Response(mockRequest,mockBrowser);
+        Response response=new Response(mockRequest,mockBrowser, new MockWriteable());
 
         assertEquals("HTTP/1.1 404 Not Found", response.statusLine());
     }
@@ -62,7 +62,8 @@ public class ResponseTest {
         List<String> body = new ArrayList<String>();
         FileBrowser mockBrowser=new MockFileBrowser(toList,files);
         Request mockRequest = new MockRequest("UBERPOST",toList,body);
-        Response response = new Response(mockRequest,mockBrowser);
+        MockWriteable mockWriteable=new MockWriteable();
+        Response response = new Response(mockRequest,mockBrowser, mockWriteable);
                  
         List<String> desiredResponse = new ArrayList<String>();
         desiredResponse.add("HTTP/1.1 200 OK");
@@ -75,6 +76,9 @@ public class ResponseTest {
         }
         assertArrayEquals(desiredResponse.toArray(), response.response().toArray());
         
-                
+        response.writeResponse();
+        
+        assertArrayEquals(desiredResponse.toArray(), mockWriteable.get_writtenText().toArray());
     }
+    
 }
