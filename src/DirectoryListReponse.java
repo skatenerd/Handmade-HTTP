@@ -45,12 +45,7 @@ public class DirectoryListReponse extends Response {
     }
     
     protected String status(){
-        String [] files = _browser.ListDirectory(_request.get_path());
-        if (files==null){
-            return "404 Not Found";
-        }else{
             return "200 OK";
-        }
     }
 
     
