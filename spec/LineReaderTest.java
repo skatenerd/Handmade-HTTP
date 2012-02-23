@@ -20,7 +20,7 @@ public class LineReaderTest {
         byte [] toReadBytes=toRead.getBytes();
         InputStream streamToRead = new ByteArrayInputStream(toReadBytes);
         
-        LineReader reader = new LineReader(new InputStreamReader(streamToRead));
+        LineReader reader = new LineReader(streamToRead);
         assertEquals("foo fing telephon",reader.readLine());
         assertEquals("fizz", reader.readLine());
         assertEquals("",reader.readLine());

@@ -10,51 +10,70 @@ import java.io.*;
 public class RequestImpl implements Request{
 
     private static String[] _requestTypes = {"GET", "POST"};
+    private static int _defaultContentLength=-1;
+    private static String _defaultPath=null;
+    private static String _defaultRequestType=null;
+    private static byte [] _default_body = new byte[0];
+
+    
     private String _requestType;
     private String _path;
     private List<String> _header;
     private byte [] _body;
+    private int _contentLength;
 
 
     public RequestImpl(InputStream request)
     throws IOException{
-        assignHeaderAndBody(request);
+        _header= extractHeader(request);
         _requestType=requestType();
         _path=path();
-
-
-    }
-
-    private void assignHeaderAndBody(InputStream request)
-    throws IOException{
-        _header= extractHeader(request);
-        _body=extractBody(request, 0);
+        _contentLength=contentLength();
+        _body=extractBody(request, _contentLength);
 
     }
-
-    private LineReader getLineReader(InputStream stream)
-            throws IOException {
-        return new LineReader(new InputStreamReader(stream));
+    
+    private int contentLength(){
+        //should look for exceptions here
+        int contentLength=_defaultContentLength;
+        try{
+            for(String headerLine:_header){
+                String [] splitted = headerLine.split("[ ]+");
+                if (splitted[0].equalsIgnoreCase("Content-length:")){
+                    contentLength = Integer.parseInt(splitted[1]);
+                }
+            }
+        }catch(NumberFormatException e){
+            //redundant
+            contentLength = _defaultContentLength;
+        }finally{
+            return contentLength;
+        }
     }
 
     public String requestType() {
-        String requestLine = _header.get(0);
-        String [] splitted = requestLine.split("[ ]+");
-        String firstToken=splitted[0];
+        String requestType=_defaultRequestType;
+        if(_header.size()>0){
+            String requestLine = _header.get(0);
+            String [] splitted = requestLine.split("[ ]+");
+            String firstToken=splitted[0];
 
-        if (isValidRequestType(firstToken)) {
-            return firstToken;
+            if (isValidRequestType(firstToken)) {
+                requestType = firstToken;
+            }
         }
-        return null;
+        return requestType;
     }
 
     public String path() {
-        String requestLine = _header.get(0);
-        String [] splitted = requestLine.split("[ ]+");
-        String path=null;
-        if(splitted.length>1){
-        String secondToken=splitted[1];
-            path=secondToken;
+        String path=_defaultPath;
+        if(_header.size()>0){
+            String requestLine = _header.get(0);
+            String [] splitted = requestLine.split("[ ]+");
+            if(splitted.length>1){
+            String secondToken=splitted[1];
+                path=secondToken;
+            }
         }
         return path;
     }
@@ -71,7 +90,7 @@ public class RequestImpl implements Request{
     public List<String> extractHeader(InputStream stream)
             throws IOException {
 
-        LineReader reader= getLineReader(stream);
+        LineReader reader= new LineReader(stream);
         List<String> rtnList = new ArrayList<String>();
         String curString;
 
@@ -84,8 +103,12 @@ public class RequestImpl implements Request{
 
     public byte [] extractBody(InputStream stream, int contentLength)
     throws IOException{
-        byte [] body= new byte[contentLength];
-        stream.read(body);
+        byte [] body=_default_body;
+        if(contentLengthSupplied()){
+            body= new byte[contentLength];
+            stream.read(body);
+        }
+
         return body;
     }
 
@@ -107,5 +130,21 @@ public class RequestImpl implements Request{
         List<String> rtn=new ArrayList<String>();
         rtn.addAll(_header);
         return rtn;
+    }
+
+    public int get_ContentLength(){
+        return _contentLength;
+    }
+
+    public boolean contentLengthSupplied(){
+        return _contentLength!=_defaultContentLength;
+    }
+
+    public boolean requestTypeSupplied(){
+        return _requestType!=_defaultRequestType;
+    }
+
+    public boolean pathSupplied(){
+        return _path!=_defaultPath;
     }
 }

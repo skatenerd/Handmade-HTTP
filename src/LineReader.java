@@ -1,5 +1,5 @@
 import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.InputStream;
 
 /**
  * Created by IntelliJ IDEA.
@@ -9,18 +9,19 @@ import java.io.InputStreamReader;
  * To change this template use File | Settings | File Templates.
  */
 public class LineReader {
-    InputStreamReader _streamReader;
-    public LineReader(InputStreamReader streamReader){
-        _streamReader=streamReader;
+    InputStream _stream;
+    public LineReader(InputStream stream){
+        _stream=stream;
     }
     
     public String readLine()
     throws IOException{
         char curChar;
         StringBuilder builder=new StringBuilder();
-        while(!shouldStopReading(curChar=(char)_streamReader.read())){
+        while(!shouldStopReading(curChar=(char)_stream.read())){
             builder.append(curChar);
         }
+        System.out.println(builder.toString());
         return builder.toString();
     }
     

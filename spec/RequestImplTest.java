@@ -1,5 +1,7 @@
 import org.junit.*;
 import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+
 import java.util.*;
 import java.io.*;
 ///**
@@ -56,17 +58,50 @@ public class RequestImplTest {
     @Test
     public void extractsBody()
     throws IOException{
-        String bodyString="abcdefghijklmnop";
-        String requestText=postPath+"\n"+"junk: fizz\n\n"+bodyString;
+        String bodyString="abcdefg";
+        int length=bodyString.getBytes().length;
+        String lengthString=new Integer(length).toString();
+                
+        String requestText=postPath+"\n"+"Content-Length: "+lengthString+"\n\n"+bodyString;
         byte [] requestBytes=requestText.getBytes();
         InputStream requestStream = new ByteArrayInputStream(requestBytes);
 
-        Request request=new RequestImpl(requestStream);
-        System.out.println(request.get_Body());
-        assertEquals(bodyString.getBytes(), request.get_Body());
+        RequestImpl request=new RequestImpl(requestStream);
+        assertEquals(length,request.get_ContentLength());
+        assertArrayEquals(bodyString.getBytes(), request.get_Body());
+    }
+    
+    @Test
+    public void garbageContentLength()
+    throws IOException{
+        String bodyString="abcdefg";
+        String lengthString="overfishing";
 
+        String requestText=postPath+"\n"+"Content-Length: "+lengthString+"\n\n"+bodyString;
+        byte [] requestBytes=requestText.getBytes();
+        InputStream requestStream = new ByteArrayInputStream(requestBytes);
 
+        RequestImpl request=new RequestImpl(requestStream);
+        assert(!request.contentLengthSupplied());
+        assertEquals("POST",request.get_RequestType());
+        assertEquals("/path/script.cgi",request.get_path());
+        
+    }
+    
+    @Test
+    public void emptyRequest()
+    throws IOException{
 
+        String requestText="";
+        byte [] requestBytes=requestText.getBytes();
+        InputStream requestStream = new ByteArrayInputStream(requestBytes);
+
+        RequestImpl request=new RequestImpl(requestStream);
+        assertEquals(-1,request.get_ContentLength());
+        assertArrayEquals(new byte[0], request.get_Body());
+        assert(!request.contentLengthSupplied());
+        assert(!request.requestTypeSupplied());
+        assert(!request.pathSupplied());
     }
 }
 
