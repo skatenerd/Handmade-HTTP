@@ -28,6 +28,7 @@ public class MarkupGeneratorImpl implements MarkupGenerator{
         return builder.toString();
     }
     private String link(String url){
-        return "<a href="+url+">"+url+"</a>";
+        String groomedUrl=url.replace(" ","%20");
+        return "<a href="+groomedUrl+">"+url+"</a>";
     }
 }

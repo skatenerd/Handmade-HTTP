@@ -17,12 +17,11 @@ public class RequestHandler {
     
     public void handleResponse()
     throws IOException{
-        FileBrowser browser=new FileBrowserImpl("/Users");
+
         Request request=RequestFactory.BuildRequest(_socket.getInputStream());
-        Response response=new DirectoryListReponse(request,
-                                                   browser,
-                                                   getServerSocketOutputStream(_socket),
-                                                   new MarkupGeneratorImpl());
+        ResponseFactory factory=new ResponseFactoryImpl();
+        OutputStream stream=getServerSocketOutputStream(_socket);
+        Response response= factory.buildResponse(request, stream, new FileBrowserImpl("/Users"));
         response.writeResponse();
         _socket.close();
     }

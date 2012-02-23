@@ -16,7 +16,7 @@ public class MockRequestTest {
         byte [] body = bodyString.getBytes();
         MockRequest mock=new MockRequest("SUPERGET","/path/foo.jpg",body);
         assertEquals("SUPERGET",mock.get_RequestType());
-        assertEquals("/path/to/your/password.jpg",mock.get_path());
+        assertEquals("/path/foo.jpg",mock.get_path());
         assertEquals(body,mock.get_Body());
     }
 }

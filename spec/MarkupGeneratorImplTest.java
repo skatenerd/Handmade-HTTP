@@ -18,7 +18,8 @@ public class MarkupGeneratorImplTest {
         urls.add("bar");
         
         String markup=generator.pageWithLinks(urls);
-        String desiredMarkup="<html><head/><body><a href=foo>foo</a><a href=bar>bar</a></body></html>";
+        String desiredMarkup="<html><head/><body>"+
+                "<ul><li><a href=foo>foo</a></li><li><a href=bar>bar</a></li></ul></body></html>";
         
         assertEquals(desiredMarkup, markup);
     }

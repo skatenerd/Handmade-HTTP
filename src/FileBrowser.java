@@ -7,5 +7,7 @@
  */
 public interface FileBrowser {
     String [] ListDirectory(String path);
-    boolean ValidPath(String path);
+    boolean isValidPath(String path);
+    boolean isDirectory(String path);
+
 }

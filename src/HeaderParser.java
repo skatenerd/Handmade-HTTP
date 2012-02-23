@@ -47,7 +47,9 @@ public class HeaderParser {
         String path=_defaultPath;
         if(header.size()>0){
             String requestLine = header.get(0);
+            System.out.println(requestLine);
             String [] splitted = requestLine.split("[ ]+");
+
             if(splitted.length>1){
                 String secondToken=splitted[1];
                 path=secondToken;

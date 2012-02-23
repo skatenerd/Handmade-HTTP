@@ -17,19 +17,22 @@ public class FileBrowserImpl implements FileBrowser{
         return new File(_root+relativePath);
     }
     
-    public boolean ValidPath(String path){
+    public boolean isValidPath(String path){
         Object files=getFileFromPath(path).list();
         return files!=null;
     }
     
     public String [] ListDirectory(String path){
-        if (ValidPath(path)){
+        if (isValidPath(path)){
             return getFileFromPath(path).list();
         }else{
             System.out.println(path);
             return null;
         }
-
-
+    }
+    
+    public boolean isDirectory(String path){
+        File file=getFileFromPath(path);
+        return file.isDirectory();
     }
 }
