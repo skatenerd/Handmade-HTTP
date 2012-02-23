@@ -1,5 +1,6 @@
 import org.junit.*;
 import java.io.ByteArrayOutputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.*;
@@ -14,7 +15,8 @@ import static org.junit.Assert.*;
  */
 public class DirectoryListResponseTest {
     @Test
-    public void responseBody(){
+    public void responseBody()
+    throws FileNotFoundException{
         String toList="/bin/fizz/to/list";
         String [] files = {"PPP.pdf","PPP.txt","C#.txt","pirated_cartoons"};
         FileBrowser mockBrowser=new MockFileBrowser(toList,files);
@@ -56,14 +58,21 @@ public class DirectoryListResponseTest {
     public void statusCodeForInvalidFolderPath(){
         String toList = "";
         String [] files = {};
-
+        boolean thrown=false;
         FileBrowser mockBrowser=new MockFileBrowser(toList, files);
 
         Request mockRequest = new MockRequest("UBERGET","/fizz/buzz",new byte[0]);
         OutputStream stream=new ByteArrayOutputStream();
         Response response = new DirectoryListReponse(mockRequest,mockBrowser, stream, new MockMarkupGenerator());
+        try{
+        response.getBody();}
+        catch(FileNotFoundException e){
+            thrown=true;
+        }finally{
+            assertTrue(thrown);
+        }
+        
 
-        assertEquals("404 Not Found", response.status());
     }
     
     @Test

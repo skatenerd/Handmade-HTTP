@@ -26,6 +26,7 @@ public class FileBrowserImpl implements FileBrowser{
         if (ValidPath(path)){
             return getFileFromPath(path).list();
         }else{
+            System.out.println(path);
             return null;
         }
 

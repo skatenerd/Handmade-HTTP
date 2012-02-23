@@ -14,10 +14,15 @@ public class MarkupGeneratorImpl implements MarkupGenerator{
         builder.append("<html>");
         builder.append("<head/>");
         builder.append("<body>");
+        builder.append("<ul>");
 
         for(String url:urls){
+            builder.append("<li>");
             builder.append(link(url));
+            builder.append("</li>");
         }
+        
+        builder.append("</ul>");
         builder.append("</body>");
         builder.append("</html>");
         return builder.toString();

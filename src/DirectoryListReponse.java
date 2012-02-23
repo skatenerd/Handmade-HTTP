@@ -1,3 +1,4 @@
+import java.io.FileNotFoundException;
 import java.util.*;
 import java.io.OutputStream;
 
@@ -20,18 +21,21 @@ public class DirectoryListReponse extends Response {
     }
 
     
-    protected int contentLength(){
+    protected int contentLength()
+    throws FileNotFoundException{
         return getBody().length;
     }
     
-    protected byte[] getBody(){
+    protected byte[] getBody()
+    throws FileNotFoundException{
         if(_body==_defaultBody){
             _body=getBodyText().getBytes();
         }
         return _body;
     }
     
-    private String getBodyText(){
+    private String getBodyText()
+    throws FileNotFoundException{
         return _markup.pageWithLinks(listFileURLS());
     }
 
@@ -50,12 +54,17 @@ public class DirectoryListReponse extends Response {
     }
 
     
-    protected List<String> listFileURLS(){
+    protected List<String> listFileURLS()
+    throws FileNotFoundException{
         List<String> rtn=new ArrayList<String>();
         String [] files = (_browser.ListDirectory(_request.get_path()));
-        for(String file:files){
-            String url="http://localhost:8080"+_request.get_path()+file+"/";
-            rtn.add(url);
+        if(files!=null){
+            for(String file:files){
+                String url="http://localhost:8080"+_request.get_path()+file+"/";
+                rtn.add(url);
+            }
+        }else{
+            throw new FileNotFoundException("Should only receive calls to existing directories");
         }
         return rtn;
     }
