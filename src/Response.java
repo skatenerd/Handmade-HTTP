@@ -1,4 +1,7 @@
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.*;
+import java.io.OutputStream;
 /**
  * Created by IntelliJ IDEA.
  * User: 8thlight
@@ -6,63 +9,69 @@ import java.util.*;
  * Time: 6:18 PM
  * To change this template use File | Settings | File Templates.
  */
-public class Response {
-    Request _request;
-    FileBrowser _browser;
-    String _status;
-    Writeable _output;
-    static String connection="close";
-    static String contentType="text";
-    public Response(Request request, FileBrowser browser, Writeable output){
+public abstract class Response {
+    protected Request _request;
+    protected FileBrowser _browser;
+    protected OutputStream _output;
+    static String _defaultConnectionType="close";
+    protected static byte [] _defaultBody=null;
+    public Response(Request request, FileBrowser browser, OutputStream output){
         _request=request;
         _browser=browser;
-        _status=responseStatus(request,browser);
         _output=output;
     }
-    
-    public String [] listFiles(){
-        return _browser.ListDirectory(_request.get_path());
+
+
+    public void writeResponse()
+    throws IOException{
+        writeHeader();
+        writeBody();
     }
-    
-    private static String responseStatus(Request request,FileBrowser browser){
-        String [] files = browser.ListDirectory(request.get_path());
-        if (files==null){
-            return "404 Not Found";
-        }else{
-            return "200 OK";
+    private void writeHeader(){
+        PrintWriter writer=new PrintWriter(_output,true);
+        for(String line:getHeader()){
+            writer.println(line);
         }
+        writer.println("");
+    }
+    private void writeBody()
+    throws IOException{
+        _output.write(getBody());
+    }
+
+    protected abstract byte[] getBody();
+    protected abstract String status();
+    protected abstract String contentType();
+    protected abstract int contentLength();
+
+    private String statusLine(){
+        return "HTTP/1.1 "+status();
+    }
+
+    private String connectionTypeHeader(){
+        return "Connection: " + _defaultConnectionType;
+    }
+
+    private String contentTypeHeader(){
+        return "Content-Type: "+contentType();
     }
     
-    public String statusLine(){
-        return "HTTP/1.1 "+_status;
+    private String contentLengthHeader(){
+        String lengthString=new Integer(contentLength()).toString();
+        return "Content-Length: "+lengthString;
     }
+
+
     
-    public String connectionTypeHeader(){
-        return "Connection: " + connection;
-    }
-    
-    public String contentTypeHeader(){
-        return "Content-Type: "+contentType;
-    }
-    
-    public List<String> response(){
+    protected List<String> getHeader(){
         List<String> rtn=new ArrayList<String>();
         rtn.add(statusLine());
         rtn.add(connectionTypeHeader());
         rtn.add(contentTypeHeader());
-        rtn.add("");
-        for(String file:listFiles()){
-            rtn.add(file);
-        }
-        
+        rtn.add(contentLengthHeader());
         return rtn;
     }
 
-    public void writeResponse(){
-        for(String line:response()){
-            _output.PrintLn(line);
-        }
-    }
 
 
 

@@ -1,7 +1,5 @@
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintStream;
+import java.io.OutputStream;
 import java.net.Socket;
 
 /**
@@ -21,13 +19,16 @@ public class RequestHandler {
     throws IOException{
         FileBrowser browser=new FileBrowserImpl("/Users");
         Request request=RequestFactory.BuildRequest(_socket.getInputStream());
-        Response response=new Response(request, browser, getServerSocketOutputStream(_socket));
+        Response response=new DirectoryListReponse(request,
+                                                   browser,
+                                                   getServerSocketOutputStream(_socket),
+                                                   new MarkupGeneratorImpl());
         response.writeResponse();
         _socket.close();
     }
 
-    private PrintStreamWriteable getServerSocketOutputStream(Socket socket)
+    private OutputStream getServerSocketOutputStream(Socket socket)
             throws IOException {
-        return new PrintStreamWriteable(new PrintStream(socket.getOutputStream()));
+        return socket.getOutputStream();
     }
 }

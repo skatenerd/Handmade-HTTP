@@ -69,7 +69,7 @@ extends Thread{
             }
         }
         catch (IOException e){
-            System.out.println("IOException closing server socket");
+            System.out.println("IOException when closing server socket");
             e.printStackTrace();
         }
 

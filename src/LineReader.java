@@ -21,7 +21,6 @@ public class LineReader {
         while(!shouldStopReading(curChar=(char)_stream.read())){
             builder.append(curChar);
         }
-        System.out.println(builder.toString());
         return builder.toString();
     }
     
