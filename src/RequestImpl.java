@@ -9,10 +9,7 @@ import java.io.*;
  */
 public class RequestImpl implements Request{
 
-    private static String[] _requestTypes = {"GET", "POST"};
-    private static int _defaultContentLength=-1;
-    private static String _defaultPath=null;
-    private static String _defaultRequestType=null;
+
     private static byte [] _default_body = new byte[0];
 
     
@@ -26,66 +23,13 @@ public class RequestImpl implements Request{
     public RequestImpl(InputStream request)
     throws IOException{
         _header= extractHeader(request);
-        _requestType=requestType();
-        _path=path();
-        _contentLength=contentLength();
+        _requestType=HeaderParser.requestType(_header);
+        _path=HeaderParser.path(_header);
+        _contentLength=HeaderParser.contentLength(_header);
         _body=extractBody(request, _contentLength);
 
     }
     
-    private int contentLength(){
-        //should look for exceptions here
-        int contentLength=_defaultContentLength;
-        try{
-            for(String headerLine:_header){
-                String [] splitted = headerLine.split("[ ]+");
-                if (splitted[0].equalsIgnoreCase("Content-length:")){
-                    contentLength = Integer.parseInt(splitted[1]);
-                }
-            }
-        }catch(NumberFormatException e){
-            //redundant
-            contentLength = _defaultContentLength;
-        }finally{
-            return contentLength;
-        }
-    }
-
-    public String requestType() {
-        String requestType=_defaultRequestType;
-        if(_header.size()>0){
-            String requestLine = _header.get(0);
-            String [] splitted = requestLine.split("[ ]+");
-            String firstToken=splitted[0];
-
-            if (isValidRequestType(firstToken)) {
-                requestType = firstToken;
-            }
-        }
-        return requestType;
-    }
-
-    public String path() {
-        String path=_defaultPath;
-        if(_header.size()>0){
-            String requestLine = _header.get(0);
-            String [] splitted = requestLine.split("[ ]+");
-            if(splitted.length>1){
-            String secondToken=splitted[1];
-                path=secondToken;
-            }
-        }
-        return path;
-    }
-
-    private static boolean isValidRequestType(String requestType) {
-        for (String current : _requestTypes) {
-            if (current.equalsIgnoreCase(requestType)) {
-                return true;
-            }
-        }
-        return false;
-    }
 
     public List<String> extractHeader(InputStream stream)
             throws IOException {
@@ -113,7 +57,6 @@ public class RequestImpl implements Request{
     }
 
 
-
     public String get_path(){
         return _path;
     }
@@ -137,14 +80,14 @@ public class RequestImpl implements Request{
     }
 
     public boolean contentLengthSupplied(){
-        return _contentLength!=_defaultContentLength;
+        return HeaderParser.validContentLength(_contentLength);
     }
 
     public boolean requestTypeSupplied(){
-        return _requestType!=_defaultRequestType;
+        return HeaderParser.validRequestType(_requestType);
     }
 
     public boolean pathSupplied(){
-        return _path!=_defaultPath;
+        return HeaderParser.validPath(_path);
     }
 }
