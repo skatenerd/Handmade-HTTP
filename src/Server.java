@@ -37,7 +37,7 @@ extends Thread{
             while (keepRunning){
                 Socket connection=_serverSocket.accept();
                 RequestHandler handler=new RequestHandler(connection);
-                handler.handleResponse();
+                handler.start();
                 connection=null;
             }
         }
