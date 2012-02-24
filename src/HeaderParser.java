@@ -49,10 +49,10 @@ public class HeaderParser {
             String requestLine = header.get(0);
             System.out.println(requestLine);
             String [] splitted = requestLine.split("[ ]+");
-
             if(splitted.length>1){
                 String secondToken=splitted[1];
-                path=secondToken;
+                String rawPath=secondToken;
+                path=rawPath.replace("%20"," ");
             }
         }
         return path;

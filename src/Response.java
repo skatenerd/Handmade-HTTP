@@ -29,7 +29,7 @@ public abstract class Response {
         writeBody();
     }
     private void writeHeader()
-    throws FileNotFoundException{
+    throws IOException{
         PrintWriter writer=new PrintWriter(_output,true);
         for(String line:getHeader()){
             writer.println(line);
@@ -41,10 +41,10 @@ public abstract class Response {
         _output.write(getBody());
     }
 
-    protected abstract byte[] getBody() throws FileNotFoundException;
+    protected abstract byte[] getBody() throws IOException;
     protected abstract String status();
     protected abstract String contentType();
-    protected abstract int contentLength() throws FileNotFoundException;
+    protected abstract int contentLength() throws IOException;
 
     private String statusLine(){
         return "HTTP/1.1 "+status();
@@ -59,7 +59,7 @@ public abstract class Response {
     }
     
     private String contentLengthHeader()
-    throws FileNotFoundException{
+    throws IOException{
         String lengthString=new Integer(contentLength()).toString();
         return "Content-Length: "+lengthString;
     }
@@ -67,7 +67,7 @@ public abstract class Response {
 
     
     protected List<String> getHeader()
-    throws FileNotFoundException{
+    throws IOException{
         List<String> rtn=new ArrayList<String>();
         rtn.add(statusLine());
         rtn.add(connectionTypeHeader());

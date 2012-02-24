@@ -1,4 +1,9 @@
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.*;
+
 /**
  * Created by IntelliJ IDEA.
  * User: 8thlight
@@ -34,5 +39,21 @@ public class FileBrowserImpl implements FileBrowser{
     public boolean isDirectory(String path){
         File file=getFileFromPath(path);
         return file.isDirectory();
+    }
+    
+    public byte [] getFileBytes(String path)
+    throws IOException{
+        File file=getFileFromPath(path);
+        FileInputStream stream=new FileInputStream(file);
+
+        byte [] fileBytes = new byte [(int)file.length()];
+        stream.read(fileBytes);
+
+        return fileBytes;
+    }
+    
+    public boolean isFile(String path){
+        File file=getFileFromPath(path);
+        return file.isFile();
     }
 }

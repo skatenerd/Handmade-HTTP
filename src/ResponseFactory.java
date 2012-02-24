@@ -7,5 +7,7 @@ import java.io.*;
  * To change this template use File | Settings | File Templates.
  */
 public interface ResponseFactory {
-    public Response buildResponse(Request request, OutputStream stream, FileBrowser browser);
+    public Response buildResponse(Request request,
+                                  OutputStream stream,
+                                  FileBrowser browser);
 }

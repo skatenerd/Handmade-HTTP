@@ -16,6 +16,7 @@ public class MockFileBrowserTest {
         FileBrowser mockBrowser = new MockFileBrowser(path,files);
         assertArrayEquals(mockBrowser.ListDirectory(path),files);
         assertArrayEquals(null,mockBrowser.ListDirectory("/not/valid"));
+        assertTrue(mockBrowser.isFile("/biz/foo/potato/a.txt"));
 
     }
 }

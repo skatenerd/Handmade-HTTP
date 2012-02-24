@@ -20,17 +20,15 @@ public class ResponseFactoryImplTest {
         FileBrowser mockBrowser=new MockFileBrowser(path,files);
         
         ResponseFactory factory=new ResponseFactoryImpl();
-        
-        MarkupGenerator generator=new MarkupGeneratorImpl();
+
         List<String> links=new ArrayList<String>();
         links.add("fizz");
 
-        Request mockRequest=new MockRequest("GET",path,generator.pageWithLinks(links).getBytes());
+        Request mockRequest=new MockRequest("GET",path,"".getBytes());
         
         Response response=factory.buildResponse(mockRequest, new ByteArrayOutputStream(), mockBrowser);
 
         assertEquals(DirectoryListReponse.class, response.getClass());
-
     }
 
     @Test
@@ -42,15 +40,33 @@ public class ResponseFactoryImplTest {
 
         ResponseFactory factory=new ResponseFactoryImpl();
 
-        MarkupGenerator generator=new MarkupGeneratorImpl();
         List<String> links=new ArrayList<String>();
         links.add("fizz");
 
-        Request mockRequest=new MockRequest("GET",wrongPath,generator.pageWithLinks(links).getBytes());
+        Request mockRequest=new MockRequest("GET",wrongPath,"fnorb".getBytes());
 
         Response response=factory.buildResponse(mockRequest, new ByteArrayOutputStream(), mockBrowser);
 
         assertEquals(response.getClass(), NotFoundResponse.class);
+    }
+
+    @Test
+    public void buildsFileResponses(){
+        String rootPath="/";
+        String [] files={"foo.pdf","bar.jpg"};
+        String filePath= rootPath+files[0];
+        FileBrowser mockBrowser=new MockFileBrowser(rootPath,files);
+
+        ResponseFactory factory=new ResponseFactoryImpl();
+
+        List<String> links=new ArrayList<String>();
+        links.add("fizz");
+
+        Request mockRequest=new MockRequest("GET",filePath,"".getBytes());
+
+        Response response=factory.buildResponse(mockRequest, new ByteArrayOutputStream(), mockBrowser);
+
+        assertEquals(FileResponse.class, response.getClass());
     }
     
 }

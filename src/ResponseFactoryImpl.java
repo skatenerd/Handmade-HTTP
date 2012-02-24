@@ -19,6 +19,11 @@ public class ResponseFactoryImpl implements ResponseFactory{
                                            browser,
                                            stream,
                                            generator);
+        }else if(browser.isFile(request.get_path())){
+            response = new FileResponse(request,
+                                          browser,
+                                          stream);
+
         }else{
             System.out.println(request.get_path());
             response=new NotFoundResponse(stream,generator);

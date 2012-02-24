@@ -7,16 +7,16 @@
  */
 public class MockFileBrowser implements FileBrowser{
     private String _directoryPath;
-    private String [] _files;
+    private String [] _fileNames;
     
-    public MockFileBrowser(String path, String [] files){
+    public MockFileBrowser(String path, String [] fileNames){
         _directoryPath =path;
-        _files = files;
+        _fileNames = fileNames;
     }
     
     public String [] ListDirectory(String path){
        if(isValidPath(path)){
-           return _files;
+           return _fileNames;
        }else{
            return null;
        }
@@ -28,5 +28,19 @@ public class MockFileBrowser implements FileBrowser{
     
     public boolean isDirectory(String path){
         return path.equals(_directoryPath);
+    }
+    
+    public byte [] getFileBytes(String path){
+        return "overfishing is a major problem".getBytes();
+    }
+    
+    public boolean isFile(String path){
+        boolean isFile=false;
+        for(String fileName:_fileNames){
+            if(path.equals(_directoryPath+fileName)){
+                isFile = true;
+            }
+        }
+        return isFile;
     }
 }

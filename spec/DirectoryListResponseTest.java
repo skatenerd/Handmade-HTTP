@@ -55,7 +55,7 @@ public class DirectoryListResponseTest {
     }
 
     @Test
-    public void statusCodeForInvalidFolderPath(){
+    public void statusCodeForInvalidFolderPath() throws IOException{
         String toList = "";
         String [] files = {};
         boolean thrown=false;

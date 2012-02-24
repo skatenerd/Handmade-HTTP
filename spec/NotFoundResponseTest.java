@@ -11,7 +11,7 @@ import static org.junit.Assert.*;
 public class NotFoundResponseTest {
     @Test
     public void contentLength()
-    throws FileNotFoundException{
+    throws IOException{
         OutputStream stream= new ByteArrayOutputStream();
         Response notFound=new NotFoundResponse(stream,new MarkupGeneratorImpl());
         byte [] body=notFound.getBody();
