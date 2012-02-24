@@ -1,4 +1,7 @@
 import org.junit.Test;
+
+import java.io.IOException;
+
 import static org.junit.Assert.*;
 /**
  * Created by IntelliJ IDEA.
@@ -10,7 +13,18 @@ import static org.junit.Assert.*;
 public class FileBrowserImplTest {
     @Test
     public void returnsNullForInvalidDirectories(){
-        assertArrayEquals(null,new FileBrowserImpl("/woiejf/efiowfw/").ListDirectory("ej/ef.foiw"));
+        assertArrayEquals(null,new FileBrowserImpl("/woiejf/efiowfw").ListDirectory("ej/ef.foiw"));
+    }
+
+    @Test
+    public void encodesFiles()
+    throws IOException{
+        FileBrowser browser=new FileBrowserImpl("/Users/8thlight/Programs");
+        byte [] uncompressed=browser.getFileBytes("/foo.txt");
+        byte [] compressed = browser.getZippedFileBytes("/foo.txt");
+        assertTrue(uncompressed.length>compressed.length);
+
+
     }
     
 }

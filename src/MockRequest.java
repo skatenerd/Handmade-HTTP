@@ -11,13 +11,19 @@ import java.util.List;
 public class MockRequest implements Request{
     String _requestType;
     String _path;
+    String _acceptEncoding;
     byte [] _body;
     List<String> _header;
             
-    public MockRequest(String requestType, String path, byte [] body){
+    public MockRequest(String requestType, String path, byte [] body, String acceptEncoding){
         _requestType = requestType;
         _path=path;
         _body=body;
+        _acceptEncoding=acceptEncoding;
+    }
+    
+    public String get_acceptEncoding(){
+        return _acceptEncoding;
     }
 
     public String get_path(){

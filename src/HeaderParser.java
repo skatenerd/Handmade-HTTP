@@ -11,6 +11,7 @@ public class HeaderParser {
     private static int _defaultContentLength=-1;
     private static String _defaultPath=null;
     private static String _defaultRequestType=null;
+    private static String _defaultAcceptEncoding="*";
 
     public static int contentLength(List<String> header){
         int contentLength=_defaultContentLength;
@@ -47,7 +48,6 @@ public class HeaderParser {
         String path=_defaultPath;
         if(header.size()>0){
             String requestLine = header.get(0);
-            System.out.println(requestLine);
             String [] splitted = requestLine.split("[ ]+");
             if(splitted.length>1){
                 String secondToken=splitted[1];
@@ -57,6 +57,18 @@ public class HeaderParser {
         }
         return path;
     }
+    
+    public static String acceptEncoding(List<String> header){
+        String encoding=_defaultAcceptEncoding;
+        for(String headerLine:header){
+            String [] splitted = headerLine.split(",?[ ]+");
+            if (splitted[0].equalsIgnoreCase("Accept-Encoding:")){
+                encoding=splitted[1];
+            }
+        }
+        return encoding;
+    }
+
 
     private static boolean isValidRequestType(String requestType) {
         for (String current : _requestTypes) {
@@ -66,6 +78,8 @@ public class HeaderParser {
         }
         return false;
     }
+    
+    
 
     public static boolean validContentLength(int contentLength){
         return contentLength!=_defaultContentLength;

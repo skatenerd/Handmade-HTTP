@@ -34,6 +34,10 @@ public class MockFileBrowser implements FileBrowser{
         return "overfishing is a major problem".getBytes();
     }
     
+    public byte [] getZippedFileBytes(String path){
+        return "foo".getBytes();
+    }
+    
     public boolean isFile(String path){
         boolean isFile=false;
         for(String fileName:_fileNames){

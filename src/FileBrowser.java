@@ -13,6 +13,7 @@ public interface FileBrowser {
     boolean isValidPath(String path);
     boolean isDirectory(String path);
     boolean isFile(String path);
-    byte [] getFileBytes(String path) throws FileNotFoundException, IOException;
+    byte [] getFileBytes(String path) throws IOException;
+    byte [] getZippedFileBytes(String path) throws  IOException;
 
 }

@@ -37,9 +37,9 @@ public class RequestImplTest {
 
 
     @Test
-    public void getsRequestTypeAndPath()
+    public void getsRequestTypeAndPathAndEncoding()
     throws IOException{
-        String requestText=postPath+"\n"+"junk: fizz\n\n";
+        String requestText=postPath+"\n"+"junk: fizz\nAccept-Encoding: gzip, fizz\n\n";
         byte [] requestBytes=requestText.getBytes();
         InputStream requestStream = new ByteArrayInputStream(requestBytes);
 
@@ -47,9 +47,11 @@ public class RequestImplTest {
 
         String parsedRequestType= request.get_RequestType();
         String parsedPath=request.get_path();
+        String encoding=request.get_acceptEncoding();
 
         assertEquals("POST",parsedRequestType);
         assertEquals("/path/script.cgi",parsedPath);
+        assertEquals("gzip",encoding);
         
         
     }

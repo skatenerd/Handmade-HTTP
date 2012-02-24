@@ -14,7 +14,7 @@ public class MockRequestTest {
     public void constructor(){
         String bodyString="foo\nbar\nsoymilk\nfree-range eggs";
         byte [] body = bodyString.getBytes();
-        MockRequest mock=new MockRequest("SUPERGET","/path/foo.jpg",body);
+        MockRequest mock=new MockRequest("SUPERGET","/path/foo.jpg",body,"*");
         assertEquals("SUPERGET",mock.get_RequestType());
         assertEquals("/path/foo.jpg",mock.get_path());
         assertEquals(body,mock.get_Body());

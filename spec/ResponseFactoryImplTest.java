@@ -24,7 +24,7 @@ public class ResponseFactoryImplTest {
         List<String> links=new ArrayList<String>();
         links.add("fizz");
 
-        Request mockRequest=new MockRequest("GET",path,"".getBytes());
+        Request mockRequest=new MockRequest("GET",path,"".getBytes(),"*");
         
         Response response=factory.buildResponse(mockRequest, new ByteArrayOutputStream(), mockBrowser);
 
@@ -43,7 +43,7 @@ public class ResponseFactoryImplTest {
         List<String> links=new ArrayList<String>();
         links.add("fizz");
 
-        Request mockRequest=new MockRequest("GET",wrongPath,"fnorb".getBytes());
+        Request mockRequest=new MockRequest("GET",wrongPath,"fnorb".getBytes(), "*");
 
         Response response=factory.buildResponse(mockRequest, new ByteArrayOutputStream(), mockBrowser);
 
@@ -62,7 +62,7 @@ public class ResponseFactoryImplTest {
         List<String> links=new ArrayList<String>();
         links.add("fizz");
 
-        Request mockRequest=new MockRequest("GET",filePath,"".getBytes());
+        Request mockRequest=new MockRequest("GET",filePath,"".getBytes(), "*");
 
         Response response=factory.buildResponse(mockRequest, new ByteArrayOutputStream(), mockBrowser);
 

@@ -9,5 +9,6 @@ import java.util.*;
 public interface Request {
     String get_RequestType();
     String get_path();
+    String get_acceptEncoding();
     byte [] get_Body();
 }

@@ -61,12 +61,13 @@ public abstract class Response {
     private String contentLengthHeader()
     throws IOException{
         String lengthString=new Integer(contentLength()).toString();
+        System.out.println(lengthString);
         return "Content-Length: "+lengthString;
     }
 
 
     
-    protected List<String> getHeader()
+    public List<String> getHeader()
     throws IOException{
         List<String> rtn=new ArrayList<String>();
         rtn.add(statusLine());
