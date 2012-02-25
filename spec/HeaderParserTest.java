@@ -23,7 +23,7 @@ public class HeaderParserTest {
         header.add("GET /a/b%20c%20d/e HTTP/1.1");
         header.add("Content-Type: joke");
         header.add("Accept-Encoding: gzip, overfishing");
-        assertEquals("gzip", HeaderParser.acceptEncoding(header));
+        assertTrue(HeaderParser.acceptEncodings(header).contains("gzip"));
     }
     
     

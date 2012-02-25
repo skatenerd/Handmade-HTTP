@@ -11,7 +11,7 @@ public class HeaderParser {
     private static int _defaultContentLength=-1;
     private static String _defaultPath=null;
     private static String _defaultRequestType=null;
-    private static String _defaultAcceptEncoding="*";
+    private static String _defaultAcceptEncoding="identity";
 
     public static int contentLength(List<String> header){
         int contentLength=_defaultContentLength;
@@ -58,15 +58,17 @@ public class HeaderParser {
         return path;
     }
     
-    public static String acceptEncoding(List<String> header){
+    public static List<String> acceptEncodings(List<String> header){
         String encoding=_defaultAcceptEncoding;
+        List<String> encodings=new ArrayList<String>();
+        encodings.add(encoding);
         for(String headerLine:header){
             String [] splitted = headerLine.split(",?[ ]+");
             if (splitted[0].equalsIgnoreCase("Accept-Encoding:")){
-                encoding=splitted[1];
+                encodings.add(splitted[1]);
             }
         }
-        return encoding;
+        return encodings;
     }
 
 

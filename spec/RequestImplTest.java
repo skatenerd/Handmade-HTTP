@@ -47,11 +47,11 @@ public class RequestImplTest {
 
         String parsedRequestType= request.get_RequestType();
         String parsedPath=request.get_path();
-        String encoding=request.get_acceptEncoding();
+        List<String> encodings=request.get_acceptEncodings();
 
         assertEquals("POST",parsedRequestType);
         assertEquals("/path/script.cgi",parsedPath);
-        assertEquals("gzip",encoding);
+        assertTrue(encodings.contains("gzip"));
         
         
     }

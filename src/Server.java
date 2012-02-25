@@ -12,7 +12,6 @@ import java.net.*;
  */
 public class Server
 extends Thread{
-    private boolean keepRunning=true;
     private int _port;
     public String lastRequestType;
     private ServerSocket _serverSocket;
@@ -34,7 +33,7 @@ extends Thread{
     {
         try{
             _serverSocket = new ServerSocket(_port);
-            while (keepRunning){
+            while (true){
                 Socket connection=_serverSocket.accept();
                 RequestHandler handler=new RequestHandler(connection);
                 handler.start();
@@ -56,8 +55,6 @@ extends Thread{
 
 
     public void kill(){
-        System.out.println(getState());
-        keepRunning=false;
         closeServerSocket();
     }
     

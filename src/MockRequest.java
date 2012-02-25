@@ -11,7 +11,7 @@ import java.util.List;
 public class MockRequest implements Request{
     String _requestType;
     String _path;
-    String _acceptEncoding;
+    List<String> _acceptEncodings;
     byte [] _body;
     List<String> _header;
             
@@ -19,11 +19,12 @@ public class MockRequest implements Request{
         _requestType = requestType;
         _path=path;
         _body=body;
-        _acceptEncoding=acceptEncoding;
+        _acceptEncodings=new ArrayList<String>();
+        _acceptEncodings.add(acceptEncoding);
     }
     
-    public String get_acceptEncoding(){
-        return _acceptEncoding;
+    public List<String> get_acceptEncodings(){
+        return _acceptEncodings;
     }
 
     public String get_path(){

@@ -17,11 +17,7 @@ public class FileResponse extends Response{
 
     public byte [] getBody() throws IOException{
         String path=_request.get_path();
-        if(_request.get_acceptEncoding().equals("gzip")){
-            return _browser.getZippedFileBytes(path);
-        }else{
-            return _browser.getFileBytes(path);
-        }
+        return _browser.getFileBytes(path);
     }
 
     public String contentType(){
@@ -60,12 +56,5 @@ public class FileResponse extends Response{
     public int contentLength() throws IOException{
         return getBody().length;
     }
-    
-    public List<String> getHeader()
-    throws IOException{
-        List<String> standardHeader=super.getHeader();
-        standardHeader.add("Content-Encoding: gzip");
-        return standardHeader;
-        
-    }
+
 }
