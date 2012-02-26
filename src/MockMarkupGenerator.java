@@ -1,5 +1,4 @@
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 /**
  * Created by IntelliJ IDEA.
  * User: 8thlight
@@ -20,5 +19,13 @@ public class MockMarkupGenerator implements MarkupGenerator{
         calls.add("pageWithLinks");
         args.add(urls);
         return "Bzzzzzzz";
+    }
+    
+    public String submitForm(){
+        return "fnorb";
+    }
+    
+    public String displayForm(Map<String,String> values){
+        return "smog";
     }
 }

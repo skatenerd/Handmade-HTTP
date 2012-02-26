@@ -74,30 +74,7 @@ public class DirectoryListResponseTest {
         
 
     }
-    
-    @Test
-    public void totalResponse()
-    throws IOException{
-        String toList="/bin/fizz/to/list";
-        String [] files = {"PPP.pdf","PPP.txt","C#.txt","pirated_cartoons"};
-        FileBrowser mockBrowser=new MockFileBrowser(toList,files);
-        Request mockRequest = new MockRequest("UBERPOST",toList,new byte[0],"*");
-        OutputStream stream=new ByteArrayOutputStream();
-        Response response = new DirectoryListReponse(mockRequest,mockBrowser, stream, new MockMarkupGenerator());
-        response.writeResponse();
 
-        StringBuilder headerStringBuilder=new StringBuilder();
-        for(String line:response.getHeader()){
-            headerStringBuilder.append(line+"\n");
-        }
-        String headerString = headerStringBuilder.toString();
-        
-        String desiredResponse=(headerString +"\n"+ new String(response.getBody()));
-
-        assertEquals(desiredResponse, stream.toString());
-        
-
-    }
     @Test
     public void responseHeaderForValidFolderPath()
     throws IOException{

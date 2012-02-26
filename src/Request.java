@@ -10,5 +10,6 @@ public interface Request {
     String get_RequestType();
     String get_path();
     List<String> get_acceptEncodings();
+    boolean requestTypeSupplied();
     byte [] get_Body();
 }

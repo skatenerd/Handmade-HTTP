@@ -27,7 +27,7 @@ public class RequestHandler extends Thread{
     public void handleResponse()
     throws IOException{
 
-        Request request=RequestFactory.BuildRequest(_socket.getInputStream());
+        Request request=new RequestImpl(_socket.getInputStream());
         ResponseFactory factory=new ResponseFactoryImpl();
         OutputStream stream=_socket.getOutputStream();
         Response response= factory.buildResponse(request, stream, new FileBrowserImpl("/Users"));

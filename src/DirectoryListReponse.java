@@ -55,7 +55,7 @@ public class DirectoryListReponse extends Response {
         String [] files = (_browser.ListDirectory(_request.get_path()));
         if(files!=null){
             for(String file:files){
-                String url="http://localhost:8080"+_request.get_path()+file+"/";
+                String url="http://localhost:"+new Integer(ConfigConstants.port).toString()+_request.get_path()+file+"/";
                 rtn.add(url);
             }
         }else{

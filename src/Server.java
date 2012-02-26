@@ -16,15 +16,6 @@ extends Thread{
     public String lastRequestType;
     private ServerSocket _serverSocket;
 
-    public static void main(String [] args)
-    throws InterruptedException{
-        Server foo = new Server(8080);
-        foo.start();
-        Thread.sleep(15000);
-        foo.kill();
-    }
-
-
     public Server (int port){
         _port=port;
     }
@@ -42,6 +33,7 @@ extends Thread{
         }
         catch (SocketException e){
             System.out.println("swallowing expected shutdown exception");
+            //e.printStackTrace();
         }
         catch (IOException e){
             System.out.println("exception in main server loop");

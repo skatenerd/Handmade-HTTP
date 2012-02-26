@@ -17,6 +17,10 @@ public class FileBrowserImpl implements FileBrowser{
     public FileBrowserImpl(String root){
         _root=root;        
     }
+
+    public FileBrowserImpl(){
+        _root="";
+    }
     
     public File getFileFromPath(String relativePath){
         return new File(_root+relativePath);

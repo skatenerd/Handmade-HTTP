@@ -41,7 +41,7 @@ public class IntegrationTest {
     @Test
     public void responds() throws IOException{
         Socket testSocket=getTestSocket();
-        testSocket.getOutputStream().write("abc\n\n".getBytes());
+        testSocket.getOutputStream().write("abc\n\ndef\ngh\n".getBytes());
         int socketResponse=readSocket(testSocket);
         assertTrue(socketResponse>0);
         testSocket.close();

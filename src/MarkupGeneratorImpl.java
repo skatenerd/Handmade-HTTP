@@ -1,4 +1,4 @@
-import java.util.List;
+import java.util.*;
 /**
  * Created by IntelliJ IDEA.
  * User: 8thlight
@@ -10,25 +10,58 @@ public class MarkupGeneratorImpl implements MarkupGenerator{
     public MarkupGeneratorImpl(){}
     
     public String pageWithLinks(List<String> urls){
-        StringBuilder builder=new StringBuilder();
-        builder.append("<html>");
-        builder.append("<head/>");
-        builder.append("<body>");
-        builder.append("<ul>");
-
+        StringBuilder bodyBuilder=new StringBuilder();
+        bodyBuilder.append("<ul>");
         for(String url:urls){
-            builder.append("<li>");
-            builder.append(link(url));
-            builder.append("</li>");
-        }
-        
-        builder.append("</ul>");
-        builder.append("</body>");
-        builder.append("</html>");
-        return builder.toString();
+            bodyBuilder.append("<li>");
+            bodyBuilder.append(link(url));
+            bodyBuilder.append("</li>");
+        }        
+        bodyBuilder.append("</ul>");
+
+        return pageWithBody(bodyBuilder.toString());
     }
+    
     private String link(String url){
         String groomedUrl=url.replace(" ","%20");
         return "<a href="+groomedUrl+">"+url+"</a>";
     }
+    
+    private String pageWithBody(String body){
+        StringBuilder builder=new StringBuilder();
+        builder.append("<html>");
+        builder.append("<head/>");
+        builder.append("<body>");
+        builder.append(body);
+        builder.append("</body>");
+        builder.append("</html>");
+        return builder.toString();
+    }
+    
+    public String submitForm(){
+        StringBuilder bodyBuilder=new StringBuilder();
+        bodyBuilder.append("<form name=\"input\" action=\"form\" method=\"post\">");
+        for(String name: ConfigConstants.inputs){
+            bodyBuilder.append("<input type=text name=\""+name+"\" />");
+            bodyBuilder.append("<br/>");
+        }
+        bodyBuilder.append("<input type=\"submit\" value=\"Submit\" />");
+        bodyBuilder.append("</form>");
+        return pageWithBody(bodyBuilder.toString());
+
+    }
+
+    public String displayForm(Map<String,String> values){
+        StringBuilder bodyBuilder=new StringBuilder();
+        Iterator valueIterator = values.entrySet().iterator();
+        
+        while(valueIterator.hasNext()){
+            Map.Entry entry=(Map.Entry<String,String>)(valueIterator.next());
+            bodyBuilder.append((String)entry.getValue());
+        }
+
+        return pageWithBody(bodyBuilder.toString());
+    }
+
+
 }

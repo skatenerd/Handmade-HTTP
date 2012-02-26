@@ -17,6 +17,6 @@ public class MockFileBrowserTest {
         assertArrayEquals(mockBrowser.ListDirectory(path),files);
         assertArrayEquals(null,mockBrowser.ListDirectory("/not/valid"));
         assertTrue(mockBrowser.isFile("/biz/foo/potato/a.txt"));
-
     }
+
 }

@@ -39,4 +39,8 @@ public class MockRequest implements Request{
         return _body;
     }
 
+    public boolean requestTypeSupplied(){
+        return _requestType!=null;
+    }
+
 }

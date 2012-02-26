@@ -23,4 +23,15 @@ public class MarkupGeneratorImplTest {
         
         assertEquals(desiredMarkup, markup);
     }
+
+    @Test
+    public void BuildsForm(){
+        MarkupGenerator generator=new MarkupGeneratorImpl();
+        String form=generator.submitForm();
+        String firstInput= ConfigConstants.inputs[0];
+
+        assertTrue(form.indexOf("<input type=text name=\""+firstInput+"\" />")>0);
+        assertTrue(form.indexOf("<input type=\"submit\" value=\"Submit\" />")>0);
+
+    }
 }

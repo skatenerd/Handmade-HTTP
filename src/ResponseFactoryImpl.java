@@ -12,24 +12,44 @@ public class ResponseFactoryImpl implements ResponseFactory{
     }
     
     public Response buildResponse(Request request, OutputStream stream, FileBrowser browser){
-        Response response=null;
+        if(!request.requestTypeSupplied()){
+            return new NotFoundResponse(stream, new MarkupGeneratorImpl());
+        }else if (request.get_RequestType().equals("GET")){
+            return handleGetResponse(request, stream, browser);
+        }else if (request.get_RequestType().equals("POST")){
+            return handlePostResponse(request,stream,browser);
+        }else{
+            return handleGetResponse(request, stream, browser);
+        }
+    }
+    
+    private Response handlePostResponse(Request request, OutputStream stream, FileBrowser browser){
+        if(request.get_path().equals(ConfigConstants.formLocation)){
+            return new FormPostResponse(stream,request,new MarkupGeneratorImpl());
+        }else{
+            return new BadRequestResponse(stream);
+        }
+    }
+    
+    private Response handleGetResponse(Request request, OutputStream stream, FileBrowser browser){
         MarkupGenerator generator=new MarkupGeneratorImpl();
         if(browser.isDirectory(request.get_path())){
-         response=new DirectoryListReponse(request,
-                                           browser,
-                                           stream,
-                                           generator);
+            return new DirectoryListReponse(request,
+                    browser,
+                    stream,
+                    generator);
         }else if(browser.isFile(request.get_path())){
-            response = new FileResponse(request,
-                                          browser,
-                                          stream);
+            return new FileResponse(request,
+                    browser,
+                    stream);
 
-        }else{
-            System.out.println(request.get_path());
-            response=new NotFoundResponse(stream,generator);
+        }else if(request.get_path()!=null && request.get_path().equals(ConfigConstants.formLocation)){
+            return new FormGetResponse(stream,generator);
         }
-        
-        return response;
+        else{
+            System.out.println(request.get_path());
+            return new NotFoundResponse(stream,generator);
+        }
     }
     
     
