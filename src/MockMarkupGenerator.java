@@ -9,6 +9,7 @@ import java.util.*;
 public class MockMarkupGenerator implements MarkupGenerator{
     public List<String> calls;
     public List<List<String>> args;
+    public Map<String,String> lastFormData;
     public MockMarkupGenerator(){
         calls=new ArrayList<String>();
         args=new ArrayList<List<String>>();
@@ -22,10 +23,13 @@ public class MockMarkupGenerator implements MarkupGenerator{
     }
     
     public String submitForm(){
+        calls.add("submitForm");
         return "fnorb";
     }
     
     public String displayForm(Map<String,String> values){
+        calls.add("displayForm");
+        lastFormData=values;
         return "smog";
     }
 }

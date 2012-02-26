@@ -1,7 +1,4 @@
-import com.sun.xml.internal.messaging.saaj.util.ByteOutputStream;
-
 import java.io.*;
-import java.util.*;
 import java.util.zip.GZIPOutputStream;
 
 /**
@@ -15,24 +12,27 @@ public class FileBrowserImpl implements FileBrowser{
     private String _root;
     
     public FileBrowserImpl(String root){
-        _root=root;        
+        _root=removeTrailingSlash(root);
     }
 
     public FileBrowserImpl(){
         _root="";
     }
     
+    private String removeTrailingSlash(String path){
+        if (path.endsWith("/")){
+            return path.substring(0,path.length()-1);
+        }else{
+            return path;
+        }
+    }
+    
     public File getFileFromPath(String relativePath){
         return new File(_root+relativePath);
     }
     
-    public boolean isValidPath(String path){
-        Object files=getFileFromPath(path).list();
-        return files!=null;
-    }
-    
     public String [] ListDirectory(String path){
-        if (isValidPath(path)){
+        if (isDirectory(path)){
             return getFileFromPath(path).list();
         }else{
             System.out.println(path);

@@ -18,7 +18,6 @@ public class RequestImpl implements Request{
     private List<String> _header;
     private byte [] _body;
     private int _contentLength;
-    private List<String> _acceptEncodings;
 
 
     public RequestImpl(InputStream request)
@@ -27,7 +26,6 @@ public class RequestImpl implements Request{
         _requestType=HeaderParser.requestType(_header);
         _path=HeaderParser.path(_header);
         _contentLength=HeaderParser.contentLength(_header);
-        _acceptEncodings=HeaderParser.acceptEncodings(_header);
         _body=extractBody(request, _contentLength);
 
     }
@@ -66,10 +64,6 @@ public class RequestImpl implements Request{
     public String get_RequestType(){
         return _requestType;
     }
-    
-    public List<String> get_acceptEncodings(){
-        return _acceptEncodings;
-    }
 
     public byte [] get_Body(){
         return _body;
@@ -86,7 +80,7 @@ public class RequestImpl implements Request{
     }
 
     public boolean contentLengthSupplied(){
-        return HeaderParser.validContentLength(_contentLength);
+        return HeaderParser.contentLengthSupplied(_contentLength);
     }
 
     public boolean requestTypeSupplied(){
@@ -94,6 +88,6 @@ public class RequestImpl implements Request{
     }
 
     public boolean pathSupplied(){
-        return HeaderParser.validPath(_path);
+        return HeaderParser.pathSupplied(_path);
     }
 }

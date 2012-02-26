@@ -21,7 +21,7 @@ public class DirectoryListResponseTest {
         String [] files = {"PPP.pdf","PPP.txt","C#.txt","pirated_cartoons"};
         FileBrowser mockBrowser=new MockFileBrowser(toList,files);
 
-        Request mockRequest = new MockRequest("UBERPOST",toList,new byte[0],"*");
+        Request mockRequest = new MockRequest("UBERPOST",toList,new byte[0]);
 
         OutputStream stream=new ByteArrayOutputStream();
         MockMarkupGenerator mockMarkupGenerator=new MockMarkupGenerator();
@@ -42,26 +42,27 @@ public class DirectoryListResponseTest {
     }
 
     @Test
-    public void statusLineForValidFolderPath(){
+    public void statusLineAndContentType(){
         String toList = "/fizz/buzz";
         String [] files = {};
         FileBrowser mockBrowser=new MockFileBrowser(toList, files);
 
-        Request mockRequest = new MockRequest("UBERGET","/fizz/buzz",new byte[0],"*");
+        Request mockRequest = new MockRequest("UBERGET","/fizz/buzz",new byte[0]);
         OutputStream stream=new ByteArrayOutputStream();
         Response response = new DirectoryListReponse(mockRequest,mockBrowser, stream, new MockMarkupGenerator());
 
         assertEquals("200 OK", response.status());
+        assertEquals("text/html",response.contentType());
     }
 
     @Test
-    public void statusCodeForInvalidFolderPath() throws IOException{
+    public void throwsExceptionForInvalidPath() throws IOException{
         String toList = "";
         String [] files = {};
         boolean thrown=false;
         FileBrowser mockBrowser=new MockFileBrowser(toList, files);
 
-        Request mockRequest = new MockRequest("UBERGET","/fizz/buzz",new byte[0],"*");
+        Request mockRequest = new MockRequest("UBERGET","/fizz/buzz",new byte[0]);
         OutputStream stream=new ByteArrayOutputStream();
         Response response = new DirectoryListReponse(mockRequest,mockBrowser, stream, new MockMarkupGenerator());
         try{
@@ -75,29 +76,6 @@ public class DirectoryListResponseTest {
 
     }
 
-    @Test
-    public void responseHeaderForValidFolderPath()
-    throws IOException{
-        String toList="/bin/fizz/to/list";
-        String [] files = {"PPP.pdf","PPP.txt","C#.txt","pirated_cartoons"};
-        FileBrowser mockBrowser=new MockFileBrowser(toList,files);
-        Request mockRequest = new MockRequest("UBERPOST",toList,new byte[0],"*");
-        Response response = new DirectoryListReponse(mockRequest,mockBrowser, new ByteArrayOutputStream(), new MockMarkupGenerator());
-        String lengthString= new Integer(response.contentLength()).toString();
-        
-
-        List<String> header=new ArrayList<String>();
-        header.add("HTTP/1.1 200 OK");
-        header.add("Connection: close");
-        header.add("Content-Type: text");
-        header.add("Content-Length: "+lengthString);
-               
-        List<String> actualHeader=response.getHeader();
-
-        assertEquals(header,actualHeader);
-
-
-    }
 }
 
 

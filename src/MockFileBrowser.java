@@ -15,15 +15,12 @@ public class MockFileBrowser implements FileBrowser{
     }
     
     public String [] ListDirectory(String path){
-       if(isValidPath(path)){
+       if(isDirectory(path)){
            return _fileNames;
        }else{
            return null;
        }
 
-    }
-    public boolean isValidPath(String path){
-        return path.equals(_directoryPath);
     }
     
     public boolean isDirectory(String path){

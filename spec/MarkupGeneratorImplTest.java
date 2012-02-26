@@ -32,6 +32,16 @@ public class MarkupGeneratorImplTest {
 
         assertTrue(form.indexOf("<input type=text name=\""+firstInput+"\" />")>0);
         assertTrue(form.indexOf("<input type=\"submit\" value=\"Submit\" />")>0);
+    }
 
+    @Test
+    public void DisplaysPostData(){
+        MarkupGenerator generator=new MarkupGeneratorImpl();
+        Map<String,String>formValues=new HashMap<String, String>();
+        for(String inputName:ConfigConstants.inputs){
+            formValues.put(inputName,"fizz");
+        }
+        String displayedForm=generator.displayForm(formValues);
+        assertTrue(displayedForm.indexOf("fizz")>0);
     }
 }

@@ -30,7 +30,7 @@ public class RequestHandler extends Thread{
         Request request=new RequestImpl(_socket.getInputStream());
         ResponseFactory factory=new ResponseFactoryImpl();
         OutputStream stream=_socket.getOutputStream();
-        Response response= factory.buildResponse(request, stream, new FileBrowserImpl("/Users"));
+        Response response= factory.buildResponse(request, stream, new FileBrowserImpl(ConfigConstants.root));
         response.writeResponse();
         _socket.close();
     }

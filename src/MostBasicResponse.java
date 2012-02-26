@@ -6,8 +6,8 @@ import java.io.*;
  * Time: 4:57 PM
  * To change this template use File | Settings | File Templates.
  */
-public class TestResponse extends Response {
-    public TestResponse(OutputStream stream){
+public class MostBasicResponse extends Response {
+    public MostBasicResponse(OutputStream stream){
         super(null, null, stream);
     }
     

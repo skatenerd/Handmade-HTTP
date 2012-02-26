@@ -1,5 +1,6 @@
 import org.junit.Test;
 import static org.junit.Assert.*;
+import static org.junit.Assert.assertArrayEquals;
 
 /**
  * Created by IntelliJ IDEA.
@@ -15,8 +16,17 @@ public class MockFileBrowserTest {
         String [] files={"a.txt","boo.jar","fizzdir","bin"};
         FileBrowser mockBrowser = new MockFileBrowser(path,files);
         assertArrayEquals(mockBrowser.ListDirectory(path),files);
-        assertArrayEquals(null,mockBrowser.ListDirectory("/not/valid"));
         assertTrue(mockBrowser.isFile("/biz/foo/potato/a.txt"));
+        assertTrue(mockBrowser.isDirectory(path));
+    }
+    
+    @Test
+    public void invalidDirectories(){
+        String path="/biz/foo/potato/";
+        String [] files={"a.txt","boo.jar","fizzdir","bin"};
+        FileBrowser mockBrowser = new MockFileBrowser(path,files);
+        assertArrayEquals(null,mockBrowser.ListDirectory("/not/valid"));
+        assertFalse(mockBrowser.isFile("/not/valid/foo.txt"));
     }
 
 }

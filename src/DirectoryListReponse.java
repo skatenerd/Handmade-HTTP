@@ -10,7 +10,7 @@ import java.io.OutputStream;
  * To change this template use File | Settings | File Templates.
  */
 public class DirectoryListReponse extends Response {
-    private static String _contentType="text";
+    private static String _contentType="text/html";
     private byte [] _body;
     private MarkupGenerator _markup;
 

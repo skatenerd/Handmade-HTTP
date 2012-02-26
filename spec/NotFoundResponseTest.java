@@ -16,5 +16,7 @@ public class NotFoundResponseTest {
         Response notFound=new NotFoundResponse(stream,new MarkupGeneratorImpl());
         byte [] body=notFound.getBody();
         assertEquals(body.length, notFound.contentLength());
+        assertEquals("404 Not Found",notFound.status());
+        assertEquals("text/html",notFound.contentType());
     }
 }

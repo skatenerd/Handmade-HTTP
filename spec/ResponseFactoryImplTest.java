@@ -18,16 +18,11 @@ public class ResponseFactoryImplTest {
         String path="/";
         String [] files={"foo","bar"};
         FileBrowser mockBrowser=new MockFileBrowser(path,files);
-        
         ResponseFactory factory=new ResponseFactoryImpl();
-
         List<String> links=new ArrayList<String>();
         links.add("fizz");
-
-        Request mockRequest=new MockRequest("GET",path,"".getBytes(),"*");
-        
+        Request mockRequest=new MockRequest("GET",path,"".getBytes());
         Response response=factory.buildResponse(mockRequest, new ByteArrayOutputStream(), mockBrowser);
-
         assertEquals(DirectoryListReponse.class, response.getClass());
     }
 
@@ -37,16 +32,11 @@ public class ResponseFactoryImplTest {
         String [] files={"foo","bar"};
         String wrongPath="/foo/bizz/shabang.sdfljwef";
         FileBrowser mockBrowser=new MockFileBrowser("/",files);
-
         ResponseFactory factory=new ResponseFactoryImpl();
-
         List<String> links=new ArrayList<String>();
         links.add("fizz");
-
-        Request mockRequest=new MockRequest("GET",wrongPath,"fnorb".getBytes(), "*");
-
+        Request mockRequest=new MockRequest("GET",wrongPath,"fnorb".getBytes());
         Response response=factory.buildResponse(mockRequest, new ByteArrayOutputStream(), mockBrowser);
-
         assertEquals(response.getClass(), NotFoundResponse.class);
     }
 
@@ -62,11 +52,41 @@ public class ResponseFactoryImplTest {
         List<String> links=new ArrayList<String>();
         links.add("fizz");
 
-        Request mockRequest=new MockRequest("GET",filePath,"".getBytes(), "*");
+        Request mockRequest=new MockRequest("GET",filePath,"".getBytes());
 
         Response response=factory.buildResponse(mockRequest, new ByteArrayOutputStream(), mockBrowser);
 
         assertEquals(FileResponse.class, response.getClass());
+    }
+
+    @Test
+    public void buildsBadRequestResponses(){
+        String [] files={};
+        FileBrowser mockBrowser=new MockFileBrowser("",files);
+        ResponseFactory factory=new ResponseFactoryImpl();
+        Request mockRequest=new MockRequest("POST","/some/crazy/bad/form/path","".getBytes());
+        Response response=factory.buildResponse(mockRequest, new ByteArrayOutputStream(), mockBrowser);
+        assertEquals(BadRequestResponse.class, response.getClass());
+    }
+
+    @Test
+    public void buildsFormPostResponses(){
+        String [] files={};
+        FileBrowser mockBrowser=new MockFileBrowser("",files);
+        ResponseFactory factory=new ResponseFactoryImpl();
+        Request mockRequest=new MockRequest("POST",ConfigConstants.formLocation,"".getBytes());
+        Response response=factory.buildResponse(mockRequest, new ByteArrayOutputStream(), mockBrowser);
+        assertEquals(FormPostResponse.class, response.getClass());
+    }
+
+    @Test
+    public void buildsFormGetResponses(){
+        String [] files={};
+        FileBrowser mockBrowser=new MockFileBrowser("",files);
+        ResponseFactory factory=new ResponseFactoryImpl();
+        Request mockRequest=new MockRequest("GET",ConfigConstants.formLocation,"".getBytes());
+        Response response=factory.buildResponse(mockRequest, new ByteArrayOutputStream(), mockBrowser);
+        assertEquals(FormGetResponse.class, response.getClass());
     }
     
 }

@@ -12,7 +12,7 @@ import static org.junit.Assert.*;
 */
 public class IntegrationTest {
     Server testServer;
-    int portNumber=8080;
+    int portNumber=8083;
 
     @Before
     public void setUp()

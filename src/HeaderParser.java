@@ -57,19 +57,6 @@ public class HeaderParser {
         }
         return path;
     }
-    
-    public static List<String> acceptEncodings(List<String> header){
-        String encoding=_defaultAcceptEncoding;
-        List<String> encodings=new ArrayList<String>();
-        encodings.add(encoding);
-        for(String headerLine:header){
-            String [] splitted = headerLine.split(",?[ ]+");
-            if (splitted[0].equalsIgnoreCase("Accept-Encoding:")){
-                encodings.add(splitted[1]);
-            }
-        }
-        return encodings;
-    }
 
 
     private static boolean isValidRequestType(String requestType) {
@@ -83,16 +70,16 @@ public class HeaderParser {
     
     
 
-    public static boolean validContentLength(int contentLength){
+    public static boolean contentLengthSupplied(int contentLength){
         return contentLength!=_defaultContentLength;
     }
 
     public static boolean validRequestType(String requestType){
-        return requestType!=_defaultRequestType;
+        return (requestType !=null) && (!requestType.equals(_defaultRequestType));
     }
 
-    public static boolean validPath(String path){
-        return path!=_defaultPath;
+    public static boolean pathSupplied(String path){
+        return (path != null) && (!path.equals(_defaultPath));
     }
 
 }

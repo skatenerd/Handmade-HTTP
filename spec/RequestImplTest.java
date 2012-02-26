@@ -12,9 +12,6 @@ import java.io.*;
 // * To change this template use File | Settings | File Templates.
 // */
 public class RequestImplTest {
-    String getBasic="GET / HTTP/1.1";
-    String getPath="GET /foo/bar HTTP/1.1";
-    String getImgPath="GET /foo/bar.img HTTP/1.1";
     String postPath="POST /path/script.cgi HTTP/1.0";
     
     @Test
@@ -47,12 +44,9 @@ public class RequestImplTest {
 
         String parsedRequestType= request.get_RequestType();
         String parsedPath=request.get_path();
-        List<String> encodings=request.get_acceptEncodings();
 
         assertEquals("POST",parsedRequestType);
         assertEquals("/path/script.cgi",parsedPath);
-        assertTrue(encodings.contains("gzip"));
-        
         
     }
 
@@ -62,7 +56,7 @@ public class RequestImplTest {
     throws IOException{
         String bodyString="abcdefg";
         int length=bodyString.getBytes().length;
-        String lengthString=new Integer(length).toString();
+        String lengthString=Integer.toString(length);
                 
         String requestText=postPath+"\n"+"Content-Length: "+lengthString+"\n\n"+bodyString;
         byte [] requestBytes=requestText.getBytes();

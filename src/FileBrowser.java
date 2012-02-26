@@ -10,7 +10,6 @@ import java.io.IOException;
  */
 public interface FileBrowser {
     String [] ListDirectory(String path);
-    boolean isValidPath(String path);
     boolean isDirectory(String path);
     boolean isFile(String path);
     byte [] getFileBytes(String path) throws IOException;

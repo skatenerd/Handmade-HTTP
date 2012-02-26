@@ -10,11 +10,24 @@ import java.util.*;
  */
 public class HeaderParserTest {
     @Test
-    public void parsesPath(){
+    public void parsesPathAndRequstType(){
         List<String>header=new ArrayList<String>();
         header.add("GET /a/b%20c%20d/e HTTP/1.1");
         header.add("Content-Type: joke");
         assertEquals("/a/b c d/e", HeaderParser.path(header));
+        assertFalse(HeaderParser.contentLengthSupplied(HeaderParser.contentLength(header)));
+        assertTrue(HeaderParser.validRequestType(HeaderParser.requestType(header)));
+        assertTrue(HeaderParser.pathSupplied(HeaderParser.path(header)));
+    }
+    
+    @Test
+    public void parsesContentLength(){
+        List<String>header=new ArrayList<String>();
+        header.add("GET /a/b%20c%20d/e HTTP/1.1");
+        header.add("Content-Type: joke");
+        header.add("Content-Length: 74");
+        assertEquals(74, HeaderParser.contentLength(header));
+        assertTrue(HeaderParser.contentLengthSupplied(HeaderParser.contentLength(header)));
     }
     
     @Test
@@ -23,7 +36,6 @@ public class HeaderParserTest {
         header.add("GET /a/b%20c%20d/e HTTP/1.1");
         header.add("Content-Type: joke");
         header.add("Accept-Encoding: gzip, overfishing");
-        assertTrue(HeaderParser.acceptEncodings(header).contains("gzip"));
     }
     
     
