@@ -3,6 +3,7 @@ import org.junit.Test;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.List;
 
 import static org.junit.Assert.*;
 /**
@@ -23,10 +24,25 @@ public class FileResponseTest {
         Request jpgRequest = new MockRequest("UBERGET","fzzzz.jpg",new byte[0]);
         FileResponse jpgResponse=new FileResponse(jpgRequest,mockBrowser,stream);
 
-
         assertArrayEquals(mockBrowser.getFileBytes("fzzzz.jpg"),jpgResponse.getBody());
         assertEquals(mockBrowser.getFileBytes("fzzzz.jpg").length,jpgResponse.contentLength());
         assertEquals("200 OK",jpgResponse.status());
+    }
+    
+    @Test
+    public void addsContentDispositionToPDF()
+    throws IOException{
+        String [] files={};
+        FileBrowser mockBrowser=new MockFileBrowser("",files);
+        OutputStream stream=new ByteArrayOutputStream();
+
+        Request pdfRequest = new MockRequest("UBERGET","fzzzz.pdf",new byte[0]);
+        FileResponse pdfResponse=new FileResponse(pdfRequest,mockBrowser,stream);
+        List<String> header=pdfResponse.getHeader();
+        String lastHeader=header.get(header.size()-1);
+        assertEquals("Content-Disposition: attachment; filename=fzzzz.pdf",lastHeader);
+        
+        
     }
     
     

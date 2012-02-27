@@ -57,4 +57,15 @@ public class FileResponse extends Response{
         return getBody().length;
     }
 
+    public List<String> getHeader()
+    throws IOException{
+        List<String> baseHeader=super.getHeader();
+        if(contentType().equals("application/pdf")){
+            String [] splittedPath=_request.get_path().split("/");
+            String filename=splittedPath[splittedPath.length-1];
+            baseHeader.add("Content-Disposition: attachment; filename="+filename);
+        }
+        return baseHeader;
+    }
+
 }

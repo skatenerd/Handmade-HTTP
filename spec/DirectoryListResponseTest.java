@@ -29,7 +29,7 @@ public class DirectoryListResponseTest {
         List<String> urls=response.listFileURLS();
         response.getBody();
 
-
+        assertTrue(urls.get(0).equals("http://localhost:"+ConfigConstants.port+"/bin/fizz/to/list/PPP.pdf"));
         assertEquals("pageWithLinks", mockMarkupGenerator.calls.get(0));
         assertEquals(urls,mockMarkupGenerator.args.get(0));
 
