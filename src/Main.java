@@ -1,3 +1,5 @@
+import com.sun.tools.internal.xjc.reader.xmlschema.bindinfo.BIConversion;
+
 import java.io.IOException;
 /**
  * Created by IntelliJ IDEA.
@@ -9,22 +11,20 @@ import java.io.IOException;
 public class Main {
     public static void main(String [] args)
     throws IOException{
-
-        boolean inputValid=false;
-        CommandLineParser parser=null;
-        while(!inputValid){
-            parser=new CommandLineParser(args, new FileBrowserImpl());
-            inputValid=parser.isValidInput();
+        CommandLineParser parser=new CommandLineParser(args, new FileBrowserImpl());
+        if(parser.isValidInput()){
+            setGlobals(parser.path(), parser.port());
+            Server server=new Server(parser.port());
+            server.start();
+            System.out.println("Press any key to kill");
+            System.in.read();
+            server.kill();
+        }else{
+            System.out.println("Invalid inputs pleas try again");
         }
-
-        Server server=new Server(parser.port());
-        ConfigConstants.root=parser.path();
-        ConfigConstants.port = parser.port();
-        server.start();
-        System.out.println("Press any key to kill");
-        System.in.read();
-        server.kill();
-        
-
+    }
+    public static void setGlobals(String path, int port){
+        ConfigConstants.root=path;
+        ConfigConstants.port = port;
     }
 }

@@ -35,7 +35,6 @@ public class FileBrowserImpl implements FileBrowser{
         if (isDirectory(path)){
             return getFileFromPath(path).list();
         }else{
-            System.out.println(path);
             return null;
         }
     }

@@ -33,7 +33,6 @@ extends Thread{
         }
         catch (SocketException e){
             System.out.println("swallowing expected shutdown exception");
-            e.printStackTrace();
         }
         catch (IOException e){
             System.out.println("exception in main server loop");
