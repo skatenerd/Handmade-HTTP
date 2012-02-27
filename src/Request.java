@@ -12,4 +12,5 @@ public interface Request {
     boolean pathSupplied();
     boolean requestTypeSupplied();
     byte [] get_Body();
+    boolean timedOut();
 }

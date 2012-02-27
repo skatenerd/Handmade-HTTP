@@ -1,3 +1,4 @@
+import java.net.SocketTimeoutException;
 import java.util.*;
 import java.io.*;
 /**
@@ -18,28 +19,31 @@ public class RequestImpl implements Request{
     private List<String> _header;
     private byte [] _body;
     private int _contentLength;
+    private boolean _timeout;
 
 
     public RequestImpl(InputStream request)
     throws IOException{
-        _header= extractHeader(request);
+        _header= extractHeaderAndSetTimeoutBool(request);
         _requestType=HeaderParser.requestType(_header);
         _path=HeaderParser.path(_header);
         _contentLength=HeaderParser.contentLength(_header);
         _body=extractBody(request, _contentLength);
 
     }
-    
 
-    public List<String> extractHeader(InputStream stream)
+    public List<String> extractHeaderAndSetTimeoutBool(InputStream stream)
             throws IOException {
-
+        _timeout = false;
         LineReader reader= new LineReader(stream);
         List<String> rtnList = new ArrayList<String>();
         String curString;
-
-        while((curString=reader.readLine().trim()).length()>0){
-            rtnList.add(curString);
+        try{
+            while((curString=reader.readLine().trim()).length()>0){
+                rtnList.add(curString);
+            }
+        }catch(SocketTimeoutException e){
+            _timeout = true;
         }
         return rtnList;
 
@@ -90,4 +94,9 @@ public class RequestImpl implements Request{
     public boolean pathSupplied(){
         return HeaderParser.pathSupplied(_path);
     }
+
+    public boolean timedOut(){
+        return _timeout;
+    }
+
 }

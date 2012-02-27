@@ -1,6 +1,9 @@
 import org.junit.*;
 import java.io.*;
 import java.net.*;
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.Assert.*;
 
 /**
@@ -68,24 +71,29 @@ public class IntegrationTest {
         }
     }
     
-//    @Test
-//    public void garbageRequests(){
-//        try{
-//            Socket emptyInputSocket=getTestSocket();
-//            int firstResponse=readSocket(emptyInputSocket);
-//            assertTrue(firstResponse> 0);
-//            emptyInputSocket.close();
-//
-//            Socket garbageInputSocket=getTestSocket();
-//            garbageInputSocket.getOutputStream().write("global warming sucks".getBytes());
-//            int secondResponse=readSocket(garbageInputSocket);
-//            assertTrue(secondResponse>0);
-//            garbageInputSocket.close();
-//        }
-//        catch (IOException e){
-//            e.printStackTrace();
-//        }
-//    }
+    @Test
+    public void timeoutOnEmptyRequest()
+    throws IOException{
+        Socket emptyInputSocket=getTestSocket();
+        BufferedReader reader=new BufferedReader(new InputStreamReader(emptyInputSocket.getInputStream()));
+
+        String status=reader.readLine();
+        assertTrue(status.indexOf("408")>0);
+        emptyInputSocket.close();
+    }
+
+    @Test
+    public void timeoutOnGarbageRequest()
+    throws IOException{
+
+        Socket garbageInputSocket=getTestSocket();
+        garbageInputSocket.getOutputStream().write("global warming sucks".getBytes());
+        BufferedReader reader=new BufferedReader(new InputStreamReader(garbageInputSocket.getInputStream()));
+        String status=reader.readLine();
+        assertTrue(status.indexOf("408")>0);
+        garbageInputSocket.close();
+
+    }
 
 }
 

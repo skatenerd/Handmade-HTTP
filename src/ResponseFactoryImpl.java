@@ -12,7 +12,10 @@ public class ResponseFactoryImpl implements ResponseFactory{
     }
     
     public Response buildResponse(Request request, OutputStream stream, FileBrowser browser){
-        if(!request.requestTypeSupplied()){
+        if(request.timedOut()){
+            return new TimeoutResponse(stream);
+        }
+        else if(!request.requestTypeSupplied()){
             return new BadRequestResponse(stream);
         }else if (request.get_RequestType().equalsIgnoreCase("GET")){
             return handleGetResponse(request, stream, browser);
@@ -34,19 +37,13 @@ public class ResponseFactoryImpl implements ResponseFactory{
     private Response handleGetResponse(Request request, OutputStream stream, FileBrowser browser){
         MarkupGenerator generator=new MarkupGeneratorImpl();
         if(browser.isDirectory(request.get_path())){
-            return new DirectoryListReponse(request,
-                    browser,
-                    stream,
-                    generator);
+            return new DirectoryListReponse(request, browser, stream, generator);
         }else if(browser.isFile(request.get_path())){
-            return new FileResponse(request,
-                    browser,
-                    stream);
+            return new FileResponse(request, browser, stream);
         }else if(request.pathSupplied() && request.get_path().equals(ConfigConstants.formLocation)){
             return new FormGetResponse(stream,generator);
         }
         else{
-            System.out.println(request.get_path());
             return new NotFoundResponse(stream,generator);
         }
     }

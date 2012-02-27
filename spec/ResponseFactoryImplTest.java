@@ -1,7 +1,11 @@
+import com.sun.imageio.spi.InputStreamImageInputStreamSpi;
 import org.junit.Test;
 import org.w3c.dom.stylesheets.LinkStyle;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.*;
 
 import static org.junit.Assert.*;
@@ -101,9 +105,17 @@ public class ResponseFactoryImplTest {
         Request randomPut=new MockRequest("POST","/fizz/buzz","".getBytes());
         Response putResponse=factory.buildResponse(randomPut, new ByteArrayOutputStream(), mockBrowser);
         assertEquals(NotAllowedResponse.class, putResponse.getClass());
+    }
 
-
-
+    @Test
+    public void buildsTimeoutResponses(){
+        String [] files={};
+        FileBrowser mockBrowser=new MockFileBrowser("",files);
+        ResponseFactory factory=new ResponseFactoryImpl();
+        Request timeoutRequest=new MockRequest("POST","/bbb","".getBytes(),true);
+        
+        Response timeoutResponse=factory.buildResponse(timeoutRequest,new ByteArrayOutputStream(),mockBrowser);
+        assertEquals(TimeoutResponse.class,timeoutResponse.getClass());
     }
     
 }

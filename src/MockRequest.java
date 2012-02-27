@@ -13,11 +13,17 @@ public class MockRequest implements Request{
     String _path;
     byte [] _body;
     List<String> _header;
+    boolean _timedOut;
             
     public MockRequest(String requestType, String path, byte [] body){
         _requestType = requestType;
         _path=path;
         _body=body;
+        _timedOut=false;
+    }
+    public MockRequest(String requestType, String path, byte [] body,boolean timedOut){
+        new MockRequest(requestType, path, body);
+        _timedOut = timedOut;
     }
 
 
@@ -40,5 +46,10 @@ public class MockRequest implements Request{
     public boolean pathSupplied(){
         return _path!=null;
     }
+
+    public boolean timedOut(){
+        return _timedOut;
+    }
+
 
 }

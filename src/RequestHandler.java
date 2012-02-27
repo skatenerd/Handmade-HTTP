@@ -20,13 +20,14 @@ public class RequestHandler extends Thread{
             handleResponse();
         }catch (IOException e){
             System.out.println("Exception in response handler");
+            e.printStackTrace();
         }
             
     }
     
     public void handleResponse()
     throws IOException{
-
+        _socket.setSoTimeout(800);
         Request request=new RequestImpl(_socket.getInputStream());
         ResponseFactory factory=new ResponseFactoryImpl();
         OutputStream stream=_socket.getOutputStream();
