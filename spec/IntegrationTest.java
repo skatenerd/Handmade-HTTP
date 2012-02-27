@@ -79,6 +79,19 @@ public class IntegrationTest {
     }
 
     @Test
+    public void badRequestResponseWithBadSyntax()
+    throws IOException{
+        Socket malformedRequestSocket=getTestSocket();
+        malformedRequestSocket.getOutputStream().write("HTTP/1.1 whatever i don't care\n\n".getBytes());
+        
+        BufferedReader reader=new BufferedReader(new InputStreamReader(malformedRequestSocket.getInputStream()));
+
+        String status=reader.readLine();
+        assertTrue(status.indexOf("400")>0);
+        malformedRequestSocket.close();
+    }
+
+    @Test
     public void timeoutOnGarbageRequest()
     throws IOException{
 

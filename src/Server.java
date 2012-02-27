@@ -31,11 +31,14 @@ extends Thread{
                 connection=null;
             }
         }
+        catch (BindException e){
+            System.out.println("Address In Use!");
+        }
         catch (SocketException e){
             System.out.println("swallowing expected shutdown exception");
         }
         catch (IOException e){
-            System.out.println("exception in main server loop");
+            System.out.println("Unknown Exception!");
             e.printStackTrace();
         }
         finally{
