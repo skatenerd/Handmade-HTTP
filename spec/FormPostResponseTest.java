@@ -18,7 +18,6 @@ public class FormPostResponseTest {
     public void responseBody()
     throws FileNotFoundException {
         String [] files = {};
-        FileBrowser mockBrowser=new MockFileBrowser("",files);
         Request mockRequest = new MockRequest("post","/form","fizz=74".getBytes());
 
         OutputStream stream=new ByteArrayOutputStream();

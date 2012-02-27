@@ -39,8 +39,6 @@ public class MostBasicResponseTest {
     public void createsValidHeader()
     throws IOException{
         String [] files = {};
-        FileBrowser mockBrowser=new MockFileBrowser("",files);
-        Request mockRequest = new MockRequest("UBERPOST","/",new byte[0]);
         Response response = new MostBasicResponse(new ByteArrayOutputStream());
         String lengthString= Integer.toString(response.contentLength());
 

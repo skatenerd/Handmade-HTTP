@@ -26,6 +26,7 @@ public class FileResponseTest {
 
         assertArrayEquals(mockBrowser.getFileBytes("fzzzz.jpg"),jpgResponse.getBody());
         assertEquals(mockBrowser.getFileBytes("fzzzz.jpg").length,jpgResponse.contentLength());
+        assertEquals("200 OK",jpgResponse.status());
     }
     
     

@@ -9,6 +9,7 @@ import java.util.*;
 public interface Request {
     String get_RequestType();
     String get_path();
+    boolean pathSupplied();
     boolean requestTypeSupplied();
     byte [] get_Body();
 }

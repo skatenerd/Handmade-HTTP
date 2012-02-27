@@ -39,9 +39,11 @@ public class MarkupGeneratorImplTest {
         MarkupGenerator generator=new MarkupGeneratorImpl();
         Map<String,String>formValues=new HashMap<String, String>();
         for(String inputName:ConfigConstants.inputs){
-            formValues.put(inputName,"fizz");
+            formValues.put(inputName,inputName);
         }
         String displayedForm=generator.displayForm(formValues);
-        assertTrue(displayedForm.indexOf("fizz")>0);
+        for(String inputName:ConfigConstants.inputs){
+            assertTrue(displayedForm.indexOf(inputName)>0);
+        }
     }
 }

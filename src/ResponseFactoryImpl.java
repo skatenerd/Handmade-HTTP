@@ -14,12 +14,12 @@ public class ResponseFactoryImpl implements ResponseFactory{
     public Response buildResponse(Request request, OutputStream stream, FileBrowser browser){
         if(!request.requestTypeSupplied()){
             return new BadRequestResponse(stream);
-        }else if (request.get_RequestType().equals("GET")){
+        }else if (request.get_RequestType().equalsIgnoreCase("GET")){
             return handleGetResponse(request, stream, browser);
-        }else if (request.get_RequestType().equals("POST")){
+        }else if (request.get_RequestType().equalsIgnoreCase("POST")){
             return handlePostResponse(request,stream,browser);
         }else{
-            return new BadRequestResponse(stream);
+            return new NotAllowedResponse(stream);
         }
     }
     
@@ -27,7 +27,7 @@ public class ResponseFactoryImpl implements ResponseFactory{
         if(request.get_path().equals(ConfigConstants.formLocation)){
             return new FormPostResponse(stream,request,new MarkupGeneratorImpl());
         }else{
-            return new BadRequestResponse(stream);
+            return new NotAllowedResponse(stream);
         }
     }
     
@@ -42,7 +42,7 @@ public class ResponseFactoryImpl implements ResponseFactory{
             return new FileResponse(request,
                     browser,
                     stream);
-        }else if(request.get_path()!=null && request.get_path().equals(ConfigConstants.formLocation)){
+        }else if(request.pathSupplied() && request.get_path().equals(ConfigConstants.formLocation)){
             return new FormGetResponse(stream,generator);
         }
         else{

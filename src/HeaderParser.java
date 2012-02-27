@@ -11,7 +11,6 @@ public class HeaderParser {
     private static int _defaultContentLength=-1;
     private static String _defaultPath=null;
     private static String _defaultRequestType=null;
-    private static String _defaultAcceptEncoding="identity";
 
     public static int contentLength(List<String> header){
         int contentLength=_defaultContentLength;

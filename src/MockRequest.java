@@ -37,4 +37,8 @@ public class MockRequest implements Request{
         return _requestType!=null;
     }
 
+    public boolean pathSupplied(){
+        return _path!=null;
+    }
+
 }

@@ -37,17 +37,12 @@ public class DirectoryListResponseTest {
     }
 
     @Test
-    public void generatesURLs(){
-        //implement me!
-    }
-
-    @Test
     public void statusLineAndContentType(){
         String toList = "/fizz/buzz";
         String [] files = {};
         FileBrowser mockBrowser=new MockFileBrowser(toList, files);
 
-        Request mockRequest = new MockRequest("UBERGET","/fizz/buzz",new byte[0]);
+        Request mockRequest = new MockRequest("GET","/fizz/buzz",new byte[0]);
         OutputStream stream=new ByteArrayOutputStream();
         Response response = new DirectoryListReponse(mockRequest,mockBrowser, stream, new MockMarkupGenerator());
 

@@ -34,9 +34,9 @@ public class RequestImplTest {
 
 
     @Test
-    public void getsRequestTypeAndPathAndEncoding()
+    public void getsRequestTypeAndPath()
     throws IOException{
-        String requestText=postPath+"\n"+"junk: fizz\nAccept-Encoding: gzip, fizz\n\n";
+        String requestText=postPath+"\n"+"junk: fizz\nAccept-Encoding: gzip, fizz\n\nfnorb";
         byte [] requestBytes=requestText.getBytes();
         InputStream requestStream = new ByteArrayInputStream(requestBytes);
 
