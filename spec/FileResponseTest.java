@@ -24,6 +24,10 @@ public class FileResponseTest {
         Request jpgRequest = new MockRequest("UBERGET","fzzzz.jpg",new byte[0]);
         FileResponse jpgResponse=new FileResponse(jpgRequest,mockBrowser,stream);
 
+        for(String header:jpgResponse.getHeader()){
+            assertFalse(header.startsWith("Content-Disposition"));
+        }
+        
         assertArrayEquals(mockBrowser.getFileBytes("fzzzz.jpg"),jpgResponse.getBody());
         assertEquals(mockBrowser.getFileBytes("fzzzz.jpg").length,jpgResponse.contentLength());
         assertEquals("200 OK",jpgResponse.status());
