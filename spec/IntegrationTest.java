@@ -19,9 +19,11 @@ public class IntegrationTest {
 
     @Before
     public void setUp()
+    throws InterruptedException
     {
         testServer = new Server(portNumber);
         testServer.start();
+        Thread.sleep(1000);
     }
 
     @After
