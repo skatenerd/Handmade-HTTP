@@ -35,11 +35,17 @@ public abstract class Response {
 
     private void writeHeader()
             throws IOException {
-        PrintWriter writer = new PrintWriter(_output, true);
+        try{
         for (String line : getHeader()) {
-            writer.println(line);
+            //writer.println(line);
+            _output.write(line.getBytes());
+            _output.write("\n".getBytes());
         }
-        writer.println("");
+        _output.write("\n".getBytes());
+        }catch (SocketException e){
+            System.out.println("fizzzaaa  " + getHeader());
+            throw e;
+        }
     }
 
     private void writeBody()

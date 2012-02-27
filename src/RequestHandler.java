@@ -21,25 +21,22 @@ public class RequestHandler extends Thread {
             handleResponse();
         } catch (IOException e) {
             System.out.println("Exception in response handler");
-            e.printStackTrace();
         }
     }
 
     public void handleResponse()
             throws IOException {
         try{
-        _socket.setSoTimeout(200);
-        Request request = new RequestImpl(_socket.getInputStream());
-        ResponseFactory factory = new ResponseFactoryImpl();
-        OutputStream stream = _socket.getOutputStream();
-        Response response = factory.buildResponse(request, stream, new FileBrowserImpl(ConfigConstants.root));
-        response.writeResponse();
+            _socket.setSoTimeout(50);
+            Request request = new RequestImpl(_socket.getInputStream());
+            ResponseFactory factory = new ResponseFactoryImpl();
+            OutputStream stream = _socket.getOutputStream();
+            Response response = factory.buildResponse(request, stream, new FileBrowserImpl(ConfigConstants.root));
+            response.writeResponse();
         }catch (IOException e){
             throw e;
         }finally{
-          if(!_socket.isClosed()){
             _socket.close();
-          }
         }
     }
 
