@@ -52,8 +52,8 @@ public class IntegrationTest {
 
 
     @Test
-    public void respondsToTwoRequests(){
-        try{
+    public void respondsToTwoRequests()
+    throws IOException{
             Socket firstSocket=getTestSocket();
             firstSocket.getOutputStream().write("ijk\n\n".getBytes());
             int firstResponse=readSocket(firstSocket);
@@ -65,10 +65,6 @@ public class IntegrationTest {
             int secondResponse=readSocket(secondSocket);
             assertTrue(secondResponse>0);
             secondSocket.close();
-        }
-        catch (IOException e){
-            e.printStackTrace();
-        }
     }
     
     @Test
