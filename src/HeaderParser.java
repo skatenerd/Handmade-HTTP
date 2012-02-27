@@ -52,6 +52,9 @@ public class HeaderParser {
                 String secondToken=splitted[1];
                 String rawPath=secondToken;
                 path=rawPath.replace("%20"," ");
+                if (path.endsWith("/")){
+                    path=path.substring(0,path.length()-1);
+                }
             }
         }
         return path;
