@@ -1,4 +1,5 @@
 import java.util.*;
+
 /**
  * Created by IntelliJ IDEA.
  * User: 8thlight
@@ -8,6 +9,8 @@ import java.util.*;
  */
 public interface MarkupGenerator {
     public String pageWithLinks(List<String> url);
+
     public String submitForm();
-    public String displayForm(Map<String,String> values);
+
+    public String displayForm(Map<String, String> values);
 }

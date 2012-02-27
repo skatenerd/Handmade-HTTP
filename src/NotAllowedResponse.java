@@ -7,24 +7,24 @@ import java.io.OutputStream;
  * Time: 8:25 PM
  * To change this template use File | Settings | File Templates.
  */
-public class NotAllowedResponse extends Response{
-    public NotAllowedResponse (OutputStream output){
-        super(null,null,output);
+public class NotAllowedResponse extends Response {
+    public NotAllowedResponse(OutputStream output) {
+        super(null, null, output);
     }
 
-    public byte [] getBody(){
+    public byte[] getBody() {
         return "<html><head>NOT ALLOWED</head><body/></html>".getBytes();
     }
 
-    public String contentType(){
+    public String contentType() {
         return "text/html";
     }
 
-    public String status(){
+    public String status() {
         return "405 Method Not Allowed";
     }
 
-    public int contentLength(){
+    public int contentLength() {
         return getBody().length;
     }
 }

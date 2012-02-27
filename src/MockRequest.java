@@ -8,46 +8,47 @@ import java.util.List;
  * Time: 6:27 PM
  * To change this template use File | Settings | File Templates.
  */
-public class MockRequest implements Request{
+public class MockRequest implements Request {
     String _requestType;
     String _path;
-    byte [] _body;
+    byte[] _body;
     List<String> _header;
     boolean _timedOut;
-            
-    public MockRequest(String requestType, String path, byte [] body){
+
+    public MockRequest(String requestType, String path, byte[] body) {
         _requestType = requestType;
-        _path=path;
-        _body=body;
-        _timedOut=false;
+        _path = path;
+        _body = body;
+        _timedOut = false;
     }
-    public MockRequest(String requestType, String path, byte [] body,boolean timedOut){
+
+    public MockRequest(String requestType, String path, byte[] body, boolean timedOut) {
         new MockRequest(requestType, path, body);
         _timedOut = timedOut;
     }
 
 
-    public String get_path(){
+    public String get_path() {
         return _path;
     }
 
-    public String get_RequestType(){
+    public String get_RequestType() {
         return _requestType;
     }
 
-    public byte [] get_Body(){
+    public byte[] get_Body() {
         return _body;
     }
 
-    public boolean requestTypeSupplied(){
-        return _requestType!=null;
+    public boolean requestTypeSupplied() {
+        return _requestType != null;
     }
 
-    public boolean pathSupplied(){
-        return _path!=null;
+    public boolean pathSupplied() {
+        return _path != null;
     }
 
-    public boolean timedOut(){
+    public boolean timedOut() {
         return _timedOut;
     }
 

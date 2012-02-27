@@ -1,4 +1,5 @@
 import java.io.*;
+
 /**
  * Created by IntelliJ IDEA.
  * User: 8thlight
@@ -7,23 +8,23 @@ import java.io.*;
  * To change this template use File | Settings | File Templates.
  */
 public class MostBasicResponse extends Response {
-    public MostBasicResponse(OutputStream stream){
+    public MostBasicResponse(OutputStream stream) {
         super(null, null, stream);
     }
-    
-    public byte[] getBody(){
+
+    public byte[] getBody() {
         return "workers\nrevolt\nin\nsouth asia".getBytes();
     }
-    
-    public String contentType(){
+
+    public String contentType() {
         return "text/plain";
     }
-    
-    public String status(){
+
+    public String status() {
         return "200 OK";
     }
-    
-    public int contentLength(){
+
+    public int contentLength() {
         return getBody().length;
     }
 }

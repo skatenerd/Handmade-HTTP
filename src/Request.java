@@ -1,4 +1,5 @@
 import java.util.*;
+
 /**
  * Created by IntelliJ IDEA.
  * User: 8thlight
@@ -8,9 +9,14 @@ import java.util.*;
  */
 public interface Request {
     String get_RequestType();
+
     String get_path();
+
     boolean pathSupplied();
+
     boolean requestTypeSupplied();
-    byte [] get_Body();
+
+    byte[] get_Body();
+
     boolean timedOut();
 }

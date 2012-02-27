@@ -1,4 +1,5 @@
 import java.util.*;
+
 /**
  * Created by IntelliJ IDEA.
  * User: 8thlight
@@ -6,30 +7,31 @@ import java.util.*;
  * Time: 1:54 PM
  * To change this template use File | Settings | File Templates.
  */
-public class MockMarkupGenerator implements MarkupGenerator{
+public class MockMarkupGenerator implements MarkupGenerator {
     public List<String> calls;
     public List<List<String>> args;
-    public Map<String,String> lastFormData;
-    public MockMarkupGenerator(){
-        calls=new ArrayList<String>();
-        args=new ArrayList<List<String>>();
+    public Map<String, String> lastFormData;
+
+    public MockMarkupGenerator() {
+        calls = new ArrayList<String>();
+        args = new ArrayList<List<String>>();
     }
-    
-    
-    public String pageWithLinks(List<String> urls){
+
+
+    public String pageWithLinks(List<String> urls) {
         calls.add("pageWithLinks");
         args.add(urls);
         return "Bzzzzzzz";
     }
-    
-    public String submitForm(){
+
+    public String submitForm() {
         calls.add("submitForm");
         return "fnorb";
     }
-    
-    public String displayForm(Map<String,String> values){
+
+    public String displayForm(Map<String, String> values) {
         calls.add("displayForm");
-        lastFormData=values;
+        lastFormData = values;
         return "smog";
     }
 }

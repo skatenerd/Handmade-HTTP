@@ -10,22 +10,23 @@ import java.io.InputStream;
  */
 public class LineReader {
     InputStream _stream;
-    public LineReader(InputStream stream){
-        _stream=stream;
+
+    public LineReader(InputStream stream) {
+        _stream = stream;
     }
-    
+
     public String readLine()
-    throws IOException{
+            throws IOException {
         char curChar;
-        StringBuilder builder=new StringBuilder();
-        while(!shouldStopReading(curChar=(char)_stream.read())){
+        StringBuilder builder = new StringBuilder();
+        while (!shouldStopReading(curChar = (char) _stream.read())) {
             builder.append(curChar);
         }
         return builder.toString();
     }
-    
-    private boolean shouldStopReading(char curChar){
-        return (curChar=='\n' || curChar ==-1 || curChar==65535);
+
+    private boolean shouldStopReading(char curChar) {
+        return (curChar == '\n' || curChar == -1 || curChar == 65535);
     }
-    
+
 }

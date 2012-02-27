@@ -9,10 +9,14 @@ import java.io.IOException;
  * To change this template use File | Settings | File Templates.
  */
 public interface FileBrowser {
-    String [] ListDirectory(String path);
+    String[] ListDirectory(String path);
+
     boolean isDirectory(String path);
+
     boolean isFile(String path);
-    byte [] getFileBytes(String path) throws IOException;
-    byte [] getZippedFileBytes(String path) throws  IOException;
+
+    byte[] getFileBytes(String path) throws IOException;
+
+    byte[] getZippedFileBytes(String path) throws IOException;
 
 }

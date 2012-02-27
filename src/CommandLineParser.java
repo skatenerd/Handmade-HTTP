@@ -14,56 +14,53 @@ public class CommandLineParser {
     private boolean _pathValid;
 
 
-    public CommandLineParser(String [] args, FileBrowser browser){
-        String pathArg="";
-        String portArg="";
-        String previousArg="";
+    public CommandLineParser(String[] args, FileBrowser browser) {
+        String pathArg = "";
+        String portArg = "";
+        String previousArg = "";
 
-        for(String arg:args){
-            if(previousArg.equals("-p")){
+        for (String arg : args) {
+            if (previousArg.equals("-p")) {
                 parsePort(arg);
-            }else if(previousArg.equals("-d")){
-                parsePath(arg,browser);
+            } else if (previousArg.equals("-d")) {
+                parsePath(arg, browser);
             }
-            previousArg=arg;
+            previousArg = arg;
         }
-                
+
     }
-    
-    private void parsePath(String path, FileBrowser browser){
-        if(browser.isDirectory(path)){
-            _path=path;
-            _pathValid=true;
-        }else{
-            _pathValid=false;
-        }
-    }
-    
-    private void parsePort(String port){
-        boolean isValid=false;
-        try{
-            _port=Integer.parseInt(port);
-            _portValid=true;
-        }catch(NumberFormatException e) {
-            _portValid=false;
+
+    private void parsePath(String path, FileBrowser browser) {
+        if (browser.isDirectory(path)) {
+            _path = path;
+            _pathValid = true;
+        } else {
+            _pathValid = false;
         }
     }
-    
-    
-    
-    public int port(){
+
+    private void parsePort(String port) {
+        boolean isValid = false;
+        try {
+            _port = Integer.parseInt(port);
+            _portValid = true;
+        } catch (NumberFormatException e) {
+            _portValid = false;
+        }
+    }
+
+
+    public int port() {
         return _port;
     }
-    
-    public String path(){
+
+    public String path() {
         return _path;
     }
 
-    public boolean isValidInput(){
+    public boolean isValidInput() {
         return _portValid && _pathValid;
     }
-
-
 
 
 }

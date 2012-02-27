@@ -11,62 +11,52 @@ import java.net.*;
  * To change this template use File | Settings | File Templates.
  */
 public class Server
-extends Thread{
+        extends Thread {
     private int _port;
     public String lastRequestType;
     private ServerSocket _serverSocket;
 
-    public Server (int port){
-        _port=port;
+    public Server(int port) {
+        _port = port;
     }
 
-    public void run()
-    {
-        try{
+    public void run() {
+        try {
             _serverSocket = new ServerSocket(_port);
-            while (true){
-                Socket connection=_serverSocket.accept();
-                RequestHandler handler=new RequestHandler(connection);
-                handler.start();
-                connection=null;
-            }
-        }
-        catch (BindException e){
+            while (true) {
+                Socket connection = _serverSocket.accept();
+                RequestHandler handler = new RequestHandler(connection);
+                handler.start();            }
+        } catch (BindException e) {
             System.out.println("Address In Use!");
-        }
-        catch (SocketException e){
+        } catch (SocketException e) {
             System.out.println("swallowing expected shutdown exception");
-        }
-        catch (IOException e){
+        } catch (IOException e) {
             System.out.println("Unknown Exception!");
             e.printStackTrace();
-        }
-        finally{
+        } finally {
             closeServerSocket();
         }
 
-        }
+    }
 
 
-    public void kill(){
+    public void kill() {
         closeServerSocket();
     }
-    
 
-    private void closeServerSocket(){
-        try{
-            if(_serverSocket != null && !_serverSocket.isClosed()){
+
+    private void closeServerSocket() {
+        try {
+            if (_serverSocket != null && !_serverSocket.isClosed()) {
                 _serverSocket.close();
             }
-        }
-        catch (IOException e){
+        } catch (IOException e) {
             System.out.println("IOException when closing server socket");
             e.printStackTrace();
         }
 
     }
-    
-
 
 
 }

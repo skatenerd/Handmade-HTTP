@@ -7,26 +7,27 @@ import java.io.OutputStream;
  * Time: 5:08 PM
  * To change this template use File | Settings | File Templates.
  */
-public class FormGetResponse extends Response{
+public class FormGetResponse extends Response {
     MarkupGenerator _generator;
-    public FormGetResponse(OutputStream stream, MarkupGenerator generator){
+
+    public FormGetResponse(OutputStream stream, MarkupGenerator generator) {
         super(null, null, stream);
-        _generator=generator;
+        _generator = generator;
     }
 
-    public byte[] getBody(){
+    public byte[] getBody() {
         return _generator.submitForm().getBytes();
     }
 
-    public String contentType(){
+    public String contentType() {
         return "text/html";
     }
 
-    public String status(){
+    public String status() {
         return "200 OK";
     }
 
-    public int contentLength(){
+    public int contentLength() {
         return getBody().length;
     }
 }
