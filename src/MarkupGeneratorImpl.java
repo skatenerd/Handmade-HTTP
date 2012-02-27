@@ -42,6 +42,7 @@ public class MarkupGeneratorImpl implements MarkupGenerator{
         StringBuilder bodyBuilder=new StringBuilder();
         bodyBuilder.append("<form name=\"input\" action=\"form\" method=\"post\">");
         for(String name: ConfigConstants.inputs){
+            bodyBuilder.append(name+": ");
             bodyBuilder.append("<input type=text name=\""+name+"\" />");
             bodyBuilder.append("<br/>");
         }
@@ -54,11 +55,14 @@ public class MarkupGeneratorImpl implements MarkupGenerator{
     public String displayForm(Map<String,String> values){
         StringBuilder bodyBuilder=new StringBuilder();
         Iterator valueIterator = values.entrySet().iterator();
-        
+        bodyBuilder.append("<ul>");
         while(valueIterator.hasNext()){
             Map.Entry entry=(Map.Entry<String,String>)(valueIterator.next());
-            bodyBuilder.append((String)entry.getValue());
+            bodyBuilder.append("<li>");
+            bodyBuilder.append((String)entry.getKey()+": "+(String)entry.getValue());
+            bodyBuilder.append("</li>");
         }
+        bodyBuilder.append("</ul>");
 
         return pageWithBody(bodyBuilder.toString());
     }
