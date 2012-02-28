@@ -27,7 +27,7 @@ public class RequestHandler extends Thread {
     public void handleResponse()
             throws IOException {
         try{
-            _socket.setSoTimeout(50);
+            _socket.setSoTimeout(200);
             Request request = new RequestImpl(_socket.getInputStream());
             ResponseFactory factory = new ResponseFactoryImpl();
             OutputStream stream = _socket.getOutputStream();

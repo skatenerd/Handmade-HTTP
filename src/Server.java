@@ -22,11 +22,12 @@ public class Server
 
     public void run() {
         try {
-            _serverSocket = new ServerSocket(_port);
+            _serverSocket = new ServerSocket(_port,1000);
             while (true) {
                 Socket connection = _serverSocket.accept();
                 RequestHandler handler = new RequestHandler(connection);
-                handler.start();            }
+                handler.start();
+            }
         } catch (BindException e) {
             System.out.println("Address In Use!");
         } catch (SocketException e) {

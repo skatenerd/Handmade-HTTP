@@ -29,21 +29,30 @@ public abstract class Response {
 
     public void writeResponse()
             throws IOException {
+        try{
         writeHeader();
         writeBody();
+        }catch (SocketException e){
+            if(e.getMessage().equals("Broken pipe") || e.getMessage().equals("Connection reset")){
+                //pass, the client closed the connection
+            }else{
+                throw(e);
+            }
+        }catch (IOException e){
+            throw e;
+        }
     }
 
     private void writeHeader()
             throws IOException {
         try{
         for (String line : getHeader()) {
-            //writer.println(line);
             _output.write(line.getBytes());
             _output.write("\n".getBytes());
         }
         _output.write("\n".getBytes());
         }catch (SocketException e){
-            System.out.println("fizzzaaa  " + getHeader());
+            //System.out.println("fizzzaaa  " + getHeader());
             throw e;
         }
     }
