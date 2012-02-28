@@ -24,7 +24,4 @@ public class NotFoundResponse extends Response {
         return "404 Not Found";
     }
 
-    public int contentLength() {
-        return getBody().length;
-    }
 }

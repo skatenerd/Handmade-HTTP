@@ -68,7 +68,10 @@ public abstract class Response {
 
     protected abstract String contentType();
 
-    protected abstract int contentLength() throws IOException;
+    protected int contentLength()
+    throws IOException{
+        return getBody().length;
+    }
 
     private String statusLine() {
         return "HTTP/1.1 " + status();

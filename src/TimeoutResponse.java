@@ -23,8 +23,4 @@ public class TimeoutResponse extends Response {
     public String status() {
         return "408 Request Timeout";
     }
-
-    public int contentLength() {
-        return getBody().length;
-    }
 }

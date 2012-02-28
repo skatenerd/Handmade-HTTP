@@ -27,7 +27,4 @@ public class FormGetResponse extends Response {
         return "200 OK";
     }
 
-    public int contentLength() {
-        return getBody().length;
-    }
 }

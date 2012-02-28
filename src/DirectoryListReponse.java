@@ -21,11 +21,6 @@ public class DirectoryListReponse extends Response {
     }
 
 
-    protected int contentLength()
-            throws FileNotFoundException {
-        return getBody().length;
-    }
-
     protected byte[] getBody()
             throws FileNotFoundException {
         if (_body == _defaultBody) {

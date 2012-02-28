@@ -23,7 +23,7 @@ public class IntegrationTest {
     {
         testServer = new Server(portNumber);
         testServer.start();
-        Thread.sleep(1000);
+        Thread.sleep(500);
     }
 
     @After
@@ -103,7 +103,41 @@ public class IntegrationTest {
         String status=reader.readLine();
         assertTrue(status.indexOf("408")>0);
         garbageInputSocket.close();
+    }
 
+    private class SocketConnector implements Runnable{
+        public Socket _socket;
+        public void run(){
+            try{
+                _socket=(new Socket("localhost",portNumber));
+                OutputStream outputStream = _socket.getOutputStream();
+                outputStream.write(("GET "+ConfigConstants.pingLocation+" HTTP/1.1\n\n").getBytes());
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+
+    }
+
+    @Test
+    public void concurrentPingResponses()
+    throws Exception{
+        List<SocketConnector> connectors=new ArrayList<SocketConnector>();
+
+        long startTime = System.currentTimeMillis();
+
+        for(int i=0;i<10;i++){
+            SocketConnector connector=new SocketConnector();
+            connectors.add(connector);
+            new Thread(connector).start();
+        }
+        Thread.sleep(50);
+        for(SocketConnector connector:connectors){
+            BufferedReader reader=new BufferedReader(new InputStreamReader(connector._socket.getInputStream()));
+        }
+        long endTime = System.currentTimeMillis();
+        long elapsedTime=endTime - startTime;
+        assertTrue(elapsedTime<3000);
     }
 
 }

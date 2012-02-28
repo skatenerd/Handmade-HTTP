@@ -24,7 +24,4 @@ public class NotAllowedResponse extends Response {
         return "405 Method Not Allowed";
     }
 
-    public int contentLength() {
-        return getBody().length;
-    }
 }

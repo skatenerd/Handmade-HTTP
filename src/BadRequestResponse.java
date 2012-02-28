@@ -23,8 +23,4 @@ public class BadRequestResponse extends Response {
     public String status() {
         return "400 Bad Request";
     }
-
-    public int contentLength() {
-        return getBody().length;
-    }
 }

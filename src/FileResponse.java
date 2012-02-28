@@ -54,10 +54,6 @@ public class FileResponse extends Response {
         return "200 OK";
     }
 
-    public int contentLength() throws IOException {
-        return getBody().length;
-    }
-
     public List<String> getHeader()
             throws IOException {
         List<String> baseHeader = super.getHeader();

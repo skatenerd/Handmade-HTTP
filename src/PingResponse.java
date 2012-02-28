@@ -21,10 +21,6 @@ public class PingResponse extends Response{
         return "PONG!".getBytes();
     }
     
-    protected int contentLength(){
-        return getBody().length;
-    }
-    
     protected String contentType(){
         return "text/html";
     }
