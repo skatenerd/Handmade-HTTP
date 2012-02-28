@@ -13,7 +13,7 @@ public class NotFoundResponseTest {
     public void contentLength()
     throws IOException{
         OutputStream stream= new ByteArrayOutputStream();
-        Response notFound=new NotFoundResponse(stream,new MarkupGeneratorImpl());
+        Response notFound=new NotFoundResponse(stream);
         byte [] body=notFound.getBody();
         assertEquals(body.length, notFound.contentLength());
         assertEquals("404 Not Found",notFound.status());

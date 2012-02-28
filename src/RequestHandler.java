@@ -29,7 +29,7 @@ public class RequestHandler extends Thread {
         try{
             _socket.setSoTimeout(200);
             Request request = new RequestImpl(_socket.getInputStream());
-            ResponseFactory factory = new ResponseFactoryImpl();
+            ResponseFactory factory = new ResponseFactory();
             OutputStream stream = _socket.getOutputStream();
             Response response = factory.buildResponse(request, stream, new FileBrowserImpl(ConfigConstants.root));
             response.writeResponse();

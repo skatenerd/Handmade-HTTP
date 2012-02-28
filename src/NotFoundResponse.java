@@ -8,7 +8,7 @@ import java.io.OutputStream;
  * To change this template use File | Settings | File Templates.
  */
 public class NotFoundResponse extends Response {
-    public NotFoundResponse(OutputStream output, MarkupGenerator markup) {
+    public NotFoundResponse(OutputStream output) {
         super(null, output);
     }
 
