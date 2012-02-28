@@ -7,10 +7,10 @@ import java.io.OutputStream;
  * Time: 12:40 PM
  * To change this template use File | Settings | File Templates.
  */
-public class FileServerResponder implements ResponseSubsystem{
+public class FileServerSubsystem implements ResponseSubsystem{
     FileBrowser _browser;
 
-    public FileServerResponder(FileBrowser browser){
+    public FileServerSubsystem(FileBrowser browser){
         _browser = browser;
     }
 

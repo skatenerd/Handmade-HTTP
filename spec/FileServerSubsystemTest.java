@@ -10,13 +10,13 @@ import static org.junit.Assert.assertEquals;
  * Time: 12:44 PM
  * To change this template use File | Settings | File Templates.
  */
-public class FileServerResponderTest {
+public class FileServerSubsystemTest {
     @Test
     public void buildsDirectoryResponses(){
         String path="/";
         String [] files={"foo","bar"};
         FileBrowser mockBrowser=new MockFileBrowser(path,files);
-        FileServerResponder factory=new FileServerResponder(mockBrowser);
+        FileServerSubsystem factory=new FileServerSubsystem(mockBrowser);
         Request mockRequest=new MockRequest("GET",path,"".getBytes(),false,true);
         Response response=factory.buildResponse(mockRequest, new ByteArrayOutputStream());
         assertEquals(DirectoryListReponse.class, response.getClass());
@@ -28,7 +28,7 @@ public class FileServerResponderTest {
         String [] files={"foo","bar"};
         String wrongPath="/foo/bizz/shabang.sdfljwef";
         FileBrowser mockBrowser=new MockFileBrowser(path,files);
-        FileServerResponder factory=new FileServerResponder(mockBrowser);
+        FileServerSubsystem factory=new FileServerSubsystem(mockBrowser);
         Request mockRequest=new MockRequest("GET",wrongPath,"".getBytes(),false,true);
         Response response=factory.buildResponse(mockRequest, new ByteArrayOutputStream());
         assertEquals(response.getClass(), NotFoundResponse.class);
@@ -41,7 +41,7 @@ public class FileServerResponderTest {
         String filePath= rootPath+files[0];
         FileBrowser mockBrowser=new MockFileBrowser(rootPath,files);
 
-        FileServerResponder factory=new FileServerResponder(mockBrowser);
+        FileServerSubsystem factory=new FileServerSubsystem(mockBrowser);
 
         Request mockRequest=new MockRequest("GET",filePath,"".getBytes(),false,true);
         Response response=factory.buildResponse(mockRequest, new ByteArrayOutputStream());

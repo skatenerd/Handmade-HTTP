@@ -131,9 +131,10 @@ public class IntegrationTest {
             connectors.add(connector);
             new Thread(connector).start();
         }
-        Thread.sleep(50);
+        Thread.sleep(100);
         for(SocketConnector connector:connectors){
             BufferedReader reader=new BufferedReader(new InputStreamReader(connector._socket.getInputStream()));
+            reader.read();
         }
         long endTime = System.currentTimeMillis();
         long elapsedTime=endTime - startTime;

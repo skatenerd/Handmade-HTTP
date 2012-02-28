@@ -13,10 +13,10 @@ import static org.junit.Assert.assertTrue;
  * Time: 1:37 PM
  * To change this template use File | Settings | File Templates.
  */
-public class MalformedRequestResponderTest {
+public class MalformedRequestSubsystemTest {
     @Test
     public void buildsTimeoutResponses(){
-        MalformedRequestResponder factory=new MalformedRequestResponder();
+        MalformedRequestSubsystem factory=new MalformedRequestSubsystem();
         Request timeoutRequest=new MockRequest("POST","/bbb","".getBytes(),true,true);
 
         Response timeoutResponse=factory.buildResponse(timeoutRequest,new ByteArrayOutputStream());
@@ -25,7 +25,7 @@ public class MalformedRequestResponderTest {
 
     @Test
     public void buildsBadRequestResponses(){
-        MalformedRequestResponder factory=new MalformedRequestResponder();
+        MalformedRequestSubsystem factory=new MalformedRequestSubsystem();
         Request mockRequest=new MockRequest("GET","/some/crazy/bad/form/path","".getBytes(),false,false);
         Response response=factory.buildResponse(mockRequest, new ByteArrayOutputStream());
         assertEquals(BadRequestResponse.class, response.getClass());
@@ -33,7 +33,7 @@ public class MalformedRequestResponderTest {
 
     @Test
     public void buildsNotAllowedResponses(){
-        MalformedRequestResponder factory=new MalformedRequestResponder();
+        MalformedRequestSubsystem factory=new MalformedRequestSubsystem();
         Request randomPut=new MockRequest(null,"/","".getBytes(),false,true);
         Response putResponse=factory.buildResponse(randomPut, new ByteArrayOutputStream());
         assertEquals(NotAllowedResponse.class, putResponse.getClass());
@@ -41,7 +41,7 @@ public class MalformedRequestResponderTest {
 
     @Test
     public void knowsWhatToHandle(){
-        MalformedRequestResponder factory=new MalformedRequestResponder();
+        MalformedRequestSubsystem factory=new MalformedRequestSubsystem();
 
         Request malformed=new MockRequest(null,"/some/crazy/bad/form/path","".getBytes(),false,false);
         assertTrue(factory.shouldHandle(malformed));

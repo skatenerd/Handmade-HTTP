@@ -7,8 +7,8 @@ import java.io.OutputStream;
  * Time: 2:45 PM
  * To change this template use File | Settings | File Templates.
  */
-public class FormRequestHandler implements ResponseSubsystem {
-    public FormRequestHandler(){}
+public class FormRequestSubsystem implements ResponseSubsystem {
+    public FormRequestSubsystem(){}
     public Response buildResponse(Request request, OutputStream stream){
         if(request.get_requestType().equalsIgnoreCase("GET")){
             return new FormGetResponse(stream,new MarkupGeneratorImpl());

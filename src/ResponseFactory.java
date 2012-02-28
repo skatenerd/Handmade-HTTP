@@ -13,10 +13,10 @@ public class ResponseFactory {
     }
 
     public Response buildResponse(Request request, OutputStream stream) {
-        ResponseSubsystem malformed=new MalformedRequestResponder();
-        ResponseSubsystem form=new FormRequestHandler();
+        ResponseSubsystem malformed=new MalformedRequestSubsystem();
+        ResponseSubsystem form=new FormRequestSubsystem();
         ResponseSubsystem ping=new PingSubsystem();
-        ResponseSubsystem file=new FileServerResponder(new FileBrowserImpl(ConfigConstants.root));
+        ResponseSubsystem file=new FileServerSubsystem(new FileBrowserImpl(ConfigConstants.root));
 
         if(malformed.shouldHandle(request)){
             return malformed.buildResponse(request, stream);

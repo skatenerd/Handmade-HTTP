@@ -7,8 +7,8 @@ import java.io.OutputStream;
  * Time: 1:37 PM
  * To change this template use File | Settings | File Templates.
  */
-public class MalformedRequestResponder implements ResponseSubsystem {
-    public MalformedRequestResponder(){}
+public class MalformedRequestSubsystem implements ResponseSubsystem {
+    public MalformedRequestSubsystem(){}
     
     public Response buildResponse(Request request,OutputStream stream){
         if(request.get_timedOut()){
