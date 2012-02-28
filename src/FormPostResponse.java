@@ -12,7 +12,7 @@ public class FormPostResponse extends Response {
     MarkupGenerator _generator;
 
     public FormPostResponse(OutputStream stream, Request request, MarkupGenerator generator) {
-        super(request, null, stream);
+        super(request, stream);
         _generator = generator;
     }
 

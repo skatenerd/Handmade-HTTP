@@ -9,7 +9,7 @@ import java.io.OutputStream;
  */
 public class BadRequestResponse extends Response {
     public BadRequestResponse(OutputStream output) {
-        super(null, null, output);
+        super(null, output);
     }
 
     public byte[] getBody() {

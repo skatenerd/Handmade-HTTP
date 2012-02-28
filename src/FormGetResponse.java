@@ -11,7 +11,7 @@ public class FormGetResponse extends Response {
     MarkupGenerator _generator;
 
     public FormGetResponse(OutputStream stream, MarkupGenerator generator) {
-        super(null, null, stream);
+        super(null, stream);
         _generator = generator;
     }
 

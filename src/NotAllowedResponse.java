@@ -9,7 +9,7 @@ import java.io.OutputStream;
  */
 public class NotAllowedResponse extends Response {
     public NotAllowedResponse(OutputStream output) {
-        super(null, null, output);
+        super(null, output);
     }
 
     public byte[] getBody() {

@@ -13,11 +13,13 @@ public class DirectoryListReponse extends Response {
     private static String _contentType = "text/html";
     private byte[] _body;
     private MarkupGenerator _markup;
+    private FileBrowser _browser;
 
     public DirectoryListReponse(Request request, FileBrowser browser, OutputStream output, MarkupGenerator markup) {
-        super(request, browser, output);
+        super(request, output);
         _body = _defaultBody;
         _markup = markup;
+        _browser = browser;
     }
 
 

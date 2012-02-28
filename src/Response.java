@@ -15,14 +15,12 @@ import java.io.OutputStream;
  */
 public abstract class Response {
     protected Request _request;
-    protected FileBrowser _browser;
     protected OutputStream _output;
     static String _defaultConnectionType = "close";
     protected static byte[] _defaultBody = null;
 
-    public Response(Request request, FileBrowser browser, OutputStream output) {
+    public Response(Request request, OutputStream output) {
         _request = request;
-        _browser = browser;
         _output = output;
     }
 
@@ -52,7 +50,6 @@ public abstract class Response {
         }
         _output.write("\n".getBytes());
         }catch (SocketException e){
-            //System.out.println("fizzzaaa  " + getHeader());
             throw e;
         }
     }

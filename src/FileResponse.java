@@ -11,9 +11,10 @@ import java.util.List;
  * To change this template use File | Settings | File Templates.
  */
 public class FileResponse extends Response {
-
+    private FileBrowser _browser;
     public FileResponse(Request request, FileBrowser browser, OutputStream output) {
-        super(request, browser, output);
+        super(request, output);
+        _browser = browser;
     }
 
     public byte[] getBody() throws IOException {

@@ -9,7 +9,7 @@ import java.io.OutputStream;
  */
 public class NotFoundResponse extends Response {
     public NotFoundResponse(OutputStream output, MarkupGenerator markup) {
-        super(null, null, output);
+        super(null, output);
     }
 
     public byte[] getBody() {

@@ -9,7 +9,7 @@ import java.io.OutputStream;
  */
 public class PingResponse extends Response{
     public PingResponse(OutputStream stream){
-        super(null,null,stream);
+        super(null,stream);
         try{
             Thread.sleep(1000);
         }catch(InterruptedException e){

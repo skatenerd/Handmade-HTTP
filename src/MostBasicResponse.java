@@ -9,7 +9,7 @@ import java.io.*;
  */
 public class MostBasicResponse extends Response {
     public MostBasicResponse(OutputStream stream) {
-        super(null, null, stream);
+        super(null, stream);
     }
 
     public byte[] getBody() {

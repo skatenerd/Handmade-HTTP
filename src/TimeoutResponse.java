@@ -9,7 +9,7 @@ import java.io.OutputStream;
  */
 public class TimeoutResponse extends Response {
     public TimeoutResponse(OutputStream output) {
-        super(null, null, output);
+        super(null, output);
     }
 
     public byte[] getBody() {
