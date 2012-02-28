@@ -89,7 +89,7 @@ public class IntegrationTest {
         BufferedReader reader=new BufferedReader(new InputStreamReader(malformedRequestSocket.getInputStream()));
 
         String status=reader.readLine();
-        assertTrue(status.indexOf("400")>0);
+        assertTrue(status.indexOf("405")>0);
         malformedRequestSocket.close();
     }
 

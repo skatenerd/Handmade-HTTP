@@ -26,11 +26,19 @@ public class MalformedRequestResponderTest {
     @Test
     public void buildsBadRequestResponses(){
         MalformedRequestResponder factory=new MalformedRequestResponder();
-        Request mockRequest=new MockRequest(null,"/some/crazy/bad/form/path","".getBytes(),false,false);
+        Request mockRequest=new MockRequest("GET","/some/crazy/bad/form/path","".getBytes(),false,false);
         Response response=factory.buildResponse(mockRequest, new ByteArrayOutputStream());
         assertEquals(BadRequestResponse.class, response.getClass());
     }
-    
+
+    @Test
+    public void buildsNotAllowedResponses(){
+        MalformedRequestResponder factory=new MalformedRequestResponder();
+        Request randomPut=new MockRequest(null,"/","".getBytes(),false,true);
+        Response putResponse=factory.buildResponse(randomPut, new ByteArrayOutputStream());
+        assertEquals(NotAllowedResponse.class, putResponse.getClass());
+    }
+
     @Test
     public void knowsWhatToHandle(){
         MalformedRequestResponder factory=new MalformedRequestResponder();

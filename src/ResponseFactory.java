@@ -13,9 +13,12 @@ public class ResponseFactory {
     }
 
     public Response buildResponse(Request request, OutputStream stream, FileBrowser browser) {
-        MalformedRequestResponder malformed=new MalformedRequestResponder();
+        ResponseSubsystem malformed=new MalformedRequestResponder();
+        ResponseSubsystem form=new FormRequestHandler();
         if(malformed.shouldHandle(request)){
             return malformed.buildResponse(request, stream);
+        } else if(form.shouldHandle(request)){
+            return form.buildResponse(request, stream);
         } else if (request.get_requestType().equalsIgnoreCase("GET")) {
             return handleGetResponse(request, stream, browser);
         } else if (request.get_requestType().equalsIgnoreCase("POST")) {

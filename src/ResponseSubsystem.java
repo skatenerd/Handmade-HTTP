@@ -7,7 +7,7 @@ import java.io.OutputStream;
  * Time: 1:14 PM
  * To change this template use File | Settings | File Templates.
  */
-public interface ResponseSusbsystem {
+public interface ResponseSubsystem {
     boolean shouldHandle(Request request);
     Response buildResponse(Request request, OutputStream outputStream);
 
