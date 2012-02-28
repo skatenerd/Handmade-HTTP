@@ -12,17 +12,6 @@ import static org.junit.Assert.*;
  */
 public class ResponseFactoryTest {
 
-    @Test
-    public void buildsPingResponses(){
-        String [] files={};
-        FileBrowser mockBrowser=new MockFileBrowser("",files);
-        ResponseFactory factory=new ResponseFactory();
-        Request pingRequest=new MockRequest("GET", ConfigConstants.pingLocation, "".getBytes(),false,true);
-        Response pingResponse=factory.buildResponse(pingRequest,new ByteArrayOutputStream(), mockBrowser);
-        assertEquals(PingResponse.class,pingResponse.getClass());
-
-    }
-
 
     
 }
