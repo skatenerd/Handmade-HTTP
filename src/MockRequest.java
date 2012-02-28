@@ -53,7 +53,7 @@ public class MockRequest implements Request {
     }
 
     public boolean isWellFormed(){
-        return true;
+        return _wellFormed;
     }
 
 

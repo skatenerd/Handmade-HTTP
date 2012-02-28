@@ -3,6 +3,8 @@ import org.junit.Test;
 import java.io.ByteArrayOutputStream;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Created by IntelliJ IDEA.
@@ -15,7 +17,7 @@ public class MalformedRequestResponderTest {
     @Test
     public void buildsTimeoutResponses(){
         MalformedRequestResponder factory=new MalformedRequestResponder();
-        Request timeoutRequest=new MockRequest("POST","/bbb","".getBytes(),true,false);
+        Request timeoutRequest=new MockRequest("POST","/bbb","".getBytes(),true,true);
 
         Response timeoutResponse=factory.buildResponse(timeoutRequest,new ByteArrayOutputStream());
         assertEquals(TimeoutResponse.class,timeoutResponse.getClass());
@@ -28,4 +30,20 @@ public class MalformedRequestResponderTest {
         Response response=factory.buildResponse(mockRequest, new ByteArrayOutputStream());
         assertEquals(BadRequestResponse.class, response.getClass());
     }
+    
+    @Test
+    public void knowsWhatToHandle(){
+        MalformedRequestResponder factory=new MalformedRequestResponder();
+
+        Request malformed=new MockRequest(null,"/some/crazy/bad/form/path","".getBytes(),false,false);
+        assertTrue(factory.shouldHandle(malformed));
+
+        Request timedOut=new MockRequest(null,"/some/crazy/bad/form/path","".getBytes(),true,false);
+        assertTrue(factory.shouldHandle(timedOut));
+
+        Request valid=new MockRequest(null,"/some/crazy/bad/form/path","".getBytes(),false,true);
+        assertFalse(factory.shouldHandle(valid));
+    }
+
+
 }

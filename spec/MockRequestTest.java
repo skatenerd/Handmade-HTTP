@@ -18,15 +18,17 @@ public class MockRequestTest {
         assertTrue(mock.requestTypeSupplied());
         assertEquals("/path/foo.jpg",mock.get_path());
         assertEquals(body,mock.get_Body());
+        assertTrue(mock.isWellFormed());
     }
 
     @Test
     public void badRequest(){
         String bodyString="foo\nbar\nsoymilk\nfree-range eggs";
         byte [] body = bodyString.getBytes();
-        MockRequest mock=new MockRequest(null,"/path/foo.jpg",body,false,true);
+        MockRequest mock=new MockRequest(null,"/path/foo.jpg",body,false,false);
         assertFalse(mock.requestTypeSupplied());
         assertEquals("/path/foo.jpg",mock.get_path());
         assertEquals(body,mock.get_Body());
+        assertFalse(mock.isWellFormed());
     }
 }
