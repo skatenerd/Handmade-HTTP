@@ -18,7 +18,7 @@ public class FormPostResponseTest {
     public void responseBody()
     throws FileNotFoundException {
         String [] files = {};
-        Request mockRequest = new MockRequest("post","/form","fizz=74".getBytes());
+        Request mockRequest = new MockRequest("post","/form","fizz=74".getBytes(),false,true);
 
         OutputStream stream=new ByteArrayOutputStream();
         MockMarkupGenerator mockMarkupGenerator=new MockMarkupGenerator();

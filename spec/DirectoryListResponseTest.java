@@ -21,7 +21,7 @@ public class DirectoryListResponseTest {
         String [] files = {"PPP.pdf","PPP.txt","C#.txt","pirated_cartoons"};
         FileBrowser mockBrowser=new MockFileBrowser(toList,files);
 
-        Request mockRequest = new MockRequest("UBERPOST",toList,new byte[0]);
+        Request mockRequest = new MockRequest("UBERPOST",toList,new byte[0],false,true);
 
         OutputStream stream=new ByteArrayOutputStream();
         MockMarkupGenerator mockMarkupGenerator=new MockMarkupGenerator();
@@ -42,7 +42,7 @@ public class DirectoryListResponseTest {
         String [] files = {};
         FileBrowser mockBrowser=new MockFileBrowser(toList, files);
 
-        Request mockRequest = new MockRequest("GET","/fizz/buzz",new byte[0]);
+        Request mockRequest = new MockRequest("GET","/fizz/buzz",new byte[0],false,true);
         OutputStream stream=new ByteArrayOutputStream();
         Response response = new DirectoryListReponse(mockRequest,mockBrowser, stream, new MockMarkupGenerator());
 
@@ -57,7 +57,7 @@ public class DirectoryListResponseTest {
         boolean thrown=false;
         FileBrowser mockBrowser=new MockFileBrowser(toList, files);
 
-        Request mockRequest = new MockRequest("UBERGET","/fizz/buzz",new byte[0]);
+        Request mockRequest = new MockRequest("UBERGET","/fizz/buzz",new byte[0],false,true);
         OutputStream stream=new ByteArrayOutputStream();
         Response response = new DirectoryListReponse(mockRequest,mockBrowser, stream, new MockMarkupGenerator());
         try{

@@ -15,7 +15,7 @@ public class MalformedRequestResponderTest {
     @Test
     public void buildsTimeoutResponses(){
         MalformedRequestResponder factory=new MalformedRequestResponder();
-        Request timeoutRequest=new MockRequest("POST","/bbb","".getBytes(),true);
+        Request timeoutRequest=new MockRequest("POST","/bbb","".getBytes(),true,false);
 
         Response timeoutResponse=factory.buildResponse(timeoutRequest,new ByteArrayOutputStream());
         assertEquals(TimeoutResponse.class,timeoutResponse.getClass());
@@ -24,7 +24,7 @@ public class MalformedRequestResponderTest {
     @Test
     public void buildsBadRequestResponses(){
         MalformedRequestResponder factory=new MalformedRequestResponder();
-        Request mockRequest=new MockRequest(null,"/some/crazy/bad/form/path","".getBytes());
+        Request mockRequest=new MockRequest(null,"/some/crazy/bad/form/path","".getBytes(),false,false);
         Response response=factory.buildResponse(mockRequest, new ByteArrayOutputStream());
         assertEquals(BadRequestResponse.class, response.getClass());
     }

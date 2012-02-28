@@ -17,7 +17,7 @@ public class ResponseFactoryTest {
         String [] files={};
         FileBrowser mockBrowser=new MockFileBrowser("",files);
         ResponseFactory factory=new ResponseFactory();
-        Request mockRequest=new MockRequest("POST",ConfigConstants.formLocation,"".getBytes());
+        Request mockRequest=new MockRequest("POST",ConfigConstants.formLocation,"".getBytes(),false,true);
         Response response=factory.buildResponse(mockRequest, new ByteArrayOutputStream(), mockBrowser);
         assertEquals(FormPostResponse.class, response.getClass());
     }
@@ -27,7 +27,7 @@ public class ResponseFactoryTest {
         String [] files={};
         FileBrowser mockBrowser=new MockFileBrowser("",files);
         ResponseFactory factory=new ResponseFactory();
-        Request mockRequest=new MockRequest("GET",ConfigConstants.formLocation,"".getBytes());
+        Request mockRequest=new MockRequest("GET",ConfigConstants.formLocation,"".getBytes(),false,true);
         Response response=factory.buildResponse(mockRequest, new ByteArrayOutputStream(), mockBrowser);
         assertEquals(FormGetResponse.class, response.getClass());
     }
@@ -37,11 +37,11 @@ public class ResponseFactoryTest {
         String [] files={};
         FileBrowser mockBrowser=new MockFileBrowser("",files);
         ResponseFactory factory=new ResponseFactory();
-        Request randomPost=new MockRequest("POST","/fizz/buzz","".getBytes());
+        Request randomPost=new MockRequest("POST","/fizz/buzz","".getBytes(),false,true);
         Response postResponse=factory.buildResponse(randomPost, new ByteArrayOutputStream(), mockBrowser);
         assertEquals(NotAllowedResponse.class, postResponse.getClass());
 
-        Request randomPut=new MockRequest("POST","/fizz/buzz","".getBytes());
+        Request randomPut=new MockRequest("POST","/fizz/buzz","".getBytes(),false,true);
         Response putResponse=factory.buildResponse(randomPut, new ByteArrayOutputStream(), mockBrowser);
         assertEquals(NotAllowedResponse.class, putResponse.getClass());
     }
@@ -52,7 +52,7 @@ public class ResponseFactoryTest {
         String [] files={};
         FileBrowser mockBrowser=new MockFileBrowser("",files);
         ResponseFactory factory=new ResponseFactory();
-        Request pingRequest=new MockRequest("GET", ConfigConstants.pingLocation, "".getBytes());
+        Request pingRequest=new MockRequest("GET", ConfigConstants.pingLocation, "".getBytes(),false,true);
         Response pingResponse=factory.buildResponse(pingRequest,new ByteArrayOutputStream(), mockBrowser);
         assertEquals(PingResponse.class,pingResponse.getClass());
 

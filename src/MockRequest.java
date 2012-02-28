@@ -14,17 +14,17 @@ public class MockRequest implements Request {
     byte[] _body;
     List<String> _header;
     boolean _timedOut;
+    boolean _wellFormed;
 
-    public MockRequest(String requestType, String path, byte[] body) {
+
+
+    public MockRequest(String requestType, String path, byte[] body, boolean timedOut,boolean wellFormed) {
         _requestType = requestType;
         _path = path;
         _body = body;
         _timedOut = false;
-    }
-
-    public MockRequest(String requestType, String path, byte[] body, boolean timedOut) {
-        new MockRequest(requestType, path, body);
         _timedOut = timedOut;
+        _wellFormed = wellFormed;
     }
 
 

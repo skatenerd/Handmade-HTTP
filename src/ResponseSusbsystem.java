@@ -8,7 +8,7 @@ import java.io.OutputStream;
  * To change this template use File | Settings | File Templates.
  */
 public interface ResponseSusbsystem {
-    boolean shouldHandle(Response response);
+    boolean shouldHandle(Request request);
     Response buildResponse(Request request, OutputStream outputStream);
 
 }

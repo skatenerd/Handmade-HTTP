@@ -18,4 +18,8 @@ public class MalformedRequestResponder {
         }
     }
 
+    public boolean shouldHandle(Request request){
+        return !request.isWellFormed();
+    }
+
 }

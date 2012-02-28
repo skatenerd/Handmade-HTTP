@@ -17,7 +17,7 @@ public class FileServerResponderTest {
         String [] files={"foo","bar"};
         FileBrowser mockBrowser=new MockFileBrowser(path,files);
         FileServerResponder factory=new FileServerResponder(mockBrowser);
-        Request mockRequest=new MockRequest("GET",path,"".getBytes());
+        Request mockRequest=new MockRequest("GET",path,"".getBytes(),false,true);
         Response response=factory.buildResponse(mockRequest, new ByteArrayOutputStream());
         assertEquals(DirectoryListReponse.class, response.getClass());
     }
@@ -29,7 +29,7 @@ public class FileServerResponderTest {
         String wrongPath="/foo/bizz/shabang.sdfljwef";
         FileBrowser mockBrowser=new MockFileBrowser(path,files);
         FileServerResponder factory=new FileServerResponder(mockBrowser);
-        Request mockRequest=new MockRequest("GET",wrongPath,"".getBytes());
+        Request mockRequest=new MockRequest("GET",wrongPath,"".getBytes(),false,true);
         Response response=factory.buildResponse(mockRequest, new ByteArrayOutputStream());
         assertEquals(response.getClass(), NotFoundResponse.class);
     }
@@ -43,7 +43,7 @@ public class FileServerResponderTest {
 
         FileServerResponder factory=new FileServerResponder(mockBrowser);
 
-        Request mockRequest=new MockRequest("GET",filePath,"".getBytes());
+        Request mockRequest=new MockRequest("GET",filePath,"".getBytes(),false,true);
         Response response=factory.buildResponse(mockRequest, new ByteArrayOutputStream());
 
         assertEquals(FileResponse.class, response.getClass());

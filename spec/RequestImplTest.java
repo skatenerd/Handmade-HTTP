@@ -16,6 +16,7 @@ public class RequestImplTest {
     String noRequestType="/path/img.jpg HTTP/1.0\n\n";
     String badRequestType="FIZZ /path/frog.txt HTTP/1.0\n\n";
     String noContentLength="POST /path/form HTTP/1.0\nJunk: Freak\n\nbodayyy";
+    String postWithContentLength="POST /path/form HTTP/1.0\nContent-Length: 33\n\nbodayyy";
     
     @Test
     public void extractsHeader()
@@ -114,6 +115,26 @@ public class RequestImplTest {
         InputStream stream=new ByteArrayInputStream(noContentLength.getBytes());
         Request request=new RequestImpl(stream);
         assertFalse(request.isWellFormed());
+    }
+
+    @Test
+    public void validPostWithContentLength()
+    throws IOException{
+        InputStream stream=new ByteArrayInputStream(postWithContentLength.getBytes());
+        Request request=new RequestImpl(stream);
+        assertTrue(request.isWellFormed());
+    }
+
+    @Test
+    public void basicInvalidation()
+    throws IOException{
+        InputStream noRequestTypeStream=new ByteArrayInputStream(noRequestType.getBytes());
+        Request noRequestTypeRequest=new RequestImpl(noRequestTypeStream);
+        assertFalse(noRequestTypeRequest.isWellFormed());
+
+        InputStream badRequestTypeStream=new ByteArrayInputStream(badRequestType.getBytes());
+        Request badRequestTypeRequest=new RequestImpl(noRequestTypeStream);
+        assertFalse(badRequestTypeRequest.isWellFormed());
     }
 }
 

@@ -13,7 +13,7 @@ public class MockRequestTest {
     public void constructor(){
         String bodyString="foo\nbar\nsoymilk\nfree-range eggs";
         byte [] body = bodyString.getBytes();
-        MockRequest mock=new MockRequest("SUPERGET","/path/foo.jpg",body);
+        MockRequest mock=new MockRequest("SUPERGET","/path/foo.jpg",body,false,true);
         assertEquals("SUPERGET",mock.get_requestType());
         assertTrue(mock.requestTypeSupplied());
         assertEquals("/path/foo.jpg",mock.get_path());
@@ -24,7 +24,7 @@ public class MockRequestTest {
     public void badRequest(){
         String bodyString="foo\nbar\nsoymilk\nfree-range eggs";
         byte [] body = bodyString.getBytes();
-        MockRequest mock=new MockRequest(null,"/path/foo.jpg",body);
+        MockRequest mock=new MockRequest(null,"/path/foo.jpg",body,false,true);
         assertFalse(mock.requestTypeSupplied());
         assertEquals("/path/foo.jpg",mock.get_path());
         assertEquals(body,mock.get_Body());
