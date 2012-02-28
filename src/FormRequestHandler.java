@@ -19,7 +19,7 @@ public class FormRequestHandler implements ResponseSubsystem {
         }
     }
     public boolean shouldHandle(Request request){
-        return false;
+        return request.pathSupplied() && request.get_path().equals(ConfigConstants.formLocation);
     }
 
 }

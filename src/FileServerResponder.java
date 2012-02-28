@@ -7,7 +7,7 @@ import java.io.OutputStream;
  * Time: 12:40 PM
  * To change this template use File | Settings | File Templates.
  */
-public class FileServerResponder {
+public class FileServerResponder implements ResponseSubsystem{
     FileBrowser _browser;
 
     public FileServerResponder(FileBrowser browser){
@@ -22,5 +22,9 @@ public class FileServerResponder {
         }else{
             return new NotFoundResponse(stream);
         }
+    }
+    
+    public boolean shouldHandle(Request request){
+        return request.requestTypeSupplied() && request.get_requestType().equalsIgnoreCase("GET");
     }
 }

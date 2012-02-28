@@ -3,6 +3,8 @@ import org.junit.Test;
 import java.io.ByteArrayOutputStream;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Created by IntelliJ IDEA.
@@ -27,5 +29,18 @@ public class FormRequestHandlerTest {
         Request mockRequest=new MockRequest("GET",ConfigConstants.formLocation,"".getBytes(),false,true);
         Response response=factory.buildResponse(mockRequest, new ByteArrayOutputStream());
         assertEquals(FormGetResponse.class, response.getClass());
+    }
+    
+    @Test
+    public void knowsWhatToHandle(){
+        FormRequestHandler factory=new FormRequestHandler();
+        Request formGetRequest=new MockRequest("GET",ConfigConstants.formLocation,"".getBytes(),false,true);
+        assertTrue(factory.shouldHandle(formGetRequest));
+
+        Request formPostRequest=new MockRequest("POST",ConfigConstants.formLocation,"".getBytes(),false,true);
+        assertTrue(factory.shouldHandle(formPostRequest));
+        
+        Request randomGetRequest=new MockRequest("GET","/something/way/random","".getBytes(),false,true);
+        assertFalse(factory.shouldHandle(randomGetRequest));
     }
 }
