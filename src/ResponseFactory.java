@@ -13,10 +13,9 @@ public class ResponseFactory {
     }
 
     public Response buildResponse(Request request, OutputStream stream, FileBrowser browser) {
-        if (request.get_timedOut()) {
-            return new TimeoutResponse(stream);
-        } else if (!request.requestTypeSupplied()) {
-            return new BadRequestResponse(stream);
+        MalformedRequestResponder malformed=new MalformedRequestResponder();
+        if(malformed.shouldHandle(request)){
+            return malformed.buildResponse(request, stream);
         } else if (request.get_requestType().equalsIgnoreCase("GET")) {
             return handleGetResponse(request, stream, browser);
         } else if (request.get_requestType().equalsIgnoreCase("POST")) {
