@@ -5,32 +5,8 @@
 \deftab720
 \pard\pardeftab720
 
-\f0\fs44 \cf0 GET / HTTP/1.1\
-Host: localhost:8080\
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.7; rv:9.0.1) Gecko/20100101 Firefox/9.0.1\
-Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8\
-Accept-Language: en-us,en;q=0.5\
-Accept-Encoding: gzip, deflate\
-Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7\
-Connection: keep-alive\
-\
-GET / HTTP/1.1\
-User-Agent: curl/7.21.4 (universal-apple-darwin11.0) libcurl/7.21.4 OpenSSL/0.9.8r zlib/1.2.5\
-Host: localhost:8080\
-Accept: */*\
-\
-\
---------------------------\
-refactor response object\
-empty input for request\
-default values for request\
-supports only default charset\
-names with spaces in them\
-\
-throw an exception for non-404 response types who can't find their files!\
-\
+\f0\fs44 \cf0 --------------------------\
 test the request handler with injected dependencies\
-\
-do I need to close streams?\
-\
-INJECT BROWSER DEPENDENCY INTO FACTORY}
+make timeouts sensitive to incomplete reads\
+what should the valid() behavior of mock request be?\
+don't send the stream into the response.  it should not be a field.}

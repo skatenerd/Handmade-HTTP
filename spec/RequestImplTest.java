@@ -12,7 +12,10 @@ import java.io.*;
 // * To change this template use File | Settings | File Templates.
 // */
 public class RequestImplTest {
-    String postPath="POST /path/script.cgi HTTP/1.0";
+    String postPath="POST /path/form HTTP/1.0";
+    String noRequestType="/path/img.jpg HTTP/1.0\n\n";
+    String badRequestType="FIZZ /path/frog.txt HTTP/1.0\n\n";
+    String noContentLength="POST /path/form HTTP/1.0\nJunk: Freak\n\nbodayyy";
     
     @Test
     public void extractsHeader()
@@ -29,6 +32,7 @@ public class RequestImplTest {
         desiredResult.add("fizz");
 
         assertTrue(desiredResult.equals(parsedHeader));
+        assertFalse(request.isWellFormed());
 
     }
 
@@ -36,17 +40,18 @@ public class RequestImplTest {
     @Test
     public void getsRequestTypeAndPath()
     throws IOException{
-        String requestText=postPath+"\n"+"junk: fizz\nAccept-Encoding: gzip, fizz\n\nfnorb";
+        String requestText=postPath+"\n"+"Content-Length: 772\nAccept-Encoding: gzip, fizz\n\nfnorb";
         byte [] requestBytes=requestText.getBytes();
         InputStream requestStream = new ByteArrayInputStream(requestBytes);
 
         Request request=new RequestImpl(requestStream);
 
-        String parsedRequestType= request.get_RequestType();
+        String parsedRequestType= request.get_requestType();
         String parsedPath=request.get_path();
 
         assertEquals("POST",parsedRequestType);
-        assertEquals("/path/script.cgi",parsedPath);
+        assertEquals("/path/form",parsedPath);
+        assertTrue(request.isWellFormed());
         
     }
 
@@ -65,6 +70,7 @@ public class RequestImplTest {
         RequestImpl request=new RequestImpl(requestStream);
         assertEquals(length,request.get_ContentLength());
         assertArrayEquals(bodyString.getBytes(), request.get_Body());
+        assertTrue(request.isWellFormed());
     }
     
     @Test
@@ -79,8 +85,9 @@ public class RequestImplTest {
 
         RequestImpl request=new RequestImpl(requestStream);
         assert(!request.contentLengthSupplied());
-        assertEquals("POST",request.get_RequestType());
-        assertEquals("/path/script.cgi",request.get_path());
+        assertEquals("POST",request.get_requestType());
+        assertEquals("/path/form",request.get_path());
+        assertFalse(request.isWellFormed());
         
     }
     
@@ -95,9 +102,18 @@ public class RequestImplTest {
         RequestImpl request=new RequestImpl(requestStream);
         assertEquals(-1,request.get_ContentLength());
         assertArrayEquals(new byte[0], request.get_Body());
-        assert(!request.contentLengthSupplied());
-        assert(!request.requestTypeSupplied());
-        assert(!request.pathSupplied());
+        assertFalse(request.contentLengthSupplied());
+        assertFalse(request.requestTypeSupplied());
+        assertFalse(request.pathSupplied());
+        assertFalse(request.isWellFormed());
+    }
+    
+    @Test
+    public void missingConentLength()
+    throws IOException{
+        InputStream stream=new ByteArrayInputStream(noContentLength.getBytes());
+        Request request=new RequestImpl(stream);
+        assertFalse(request.isWellFormed());
     }
 }
 

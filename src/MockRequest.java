@@ -32,7 +32,7 @@ public class MockRequest implements Request {
         return _path;
     }
 
-    public String get_RequestType() {
+    public String get_requestType() {
         return _requestType;
     }
 
@@ -48,8 +48,12 @@ public class MockRequest implements Request {
         return _path != null;
     }
 
-    public boolean timedOut() {
+    public boolean get_timedOut() {
         return _timedOut;
+    }
+
+    public boolean isWellFormed(){
+        return true;
     }
 
 

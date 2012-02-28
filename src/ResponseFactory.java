@@ -13,13 +13,13 @@ public class ResponseFactory {
     }
 
     public Response buildResponse(Request request, OutputStream stream, FileBrowser browser) {
-        if (request.timedOut()) {
+        if (request.get_timedOut()) {
             return new TimeoutResponse(stream);
         } else if (!request.requestTypeSupplied()) {
             return new BadRequestResponse(stream);
-        } else if (request.get_RequestType().equalsIgnoreCase("GET")) {
+        } else if (request.get_requestType().equalsIgnoreCase("GET")) {
             return handleGetResponse(request, stream, browser);
-        } else if (request.get_RequestType().equalsIgnoreCase("POST")) {
+        } else if (request.get_requestType().equalsIgnoreCase("POST")) {
             return handlePostResponse(request, stream, browser);
         } else {
             return new NotAllowedResponse(stream);
@@ -36,16 +36,13 @@ public class ResponseFactory {
 
     private Response handleGetResponse(Request request, OutputStream stream, FileBrowser browser) {
         MarkupGenerator generator = new MarkupGeneratorImpl();
-        if (browser.isDirectory(request.get_path())) {
-            return new DirectoryListReponse(request, browser, stream, generator);
-        } else if (browser.isFile(request.get_path())) {
-            return new FileResponse(request, browser, stream);
-        } else if (request.pathSupplied() && request.get_path().equals(ConfigConstants.formLocation)) {
+        if (request.pathSupplied() && request.get_path().equals(ConfigConstants.formLocation)) {
             return new FormGetResponse(stream, generator);
         } else if (request.pathSupplied() && request.get_path().equals(ConfigConstants.pingLocation)){
             return new PingResponse(stream);
         } else {
-            return new NotFoundResponse(stream);
+            FileServerResponder responder=new FileServerResponder(browser);
+            return responder.buildResponse(request,stream);
         }
     }
 

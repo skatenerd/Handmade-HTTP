@@ -66,7 +66,7 @@ public class RequestImpl implements Request {
         return _path;
     }
 
-    public String get_RequestType() {
+    public String get_requestType() {
         return _requestType;
     }
 
@@ -96,8 +96,20 @@ public class RequestImpl implements Request {
         return HeaderParser.pathSupplied(_path);
     }
 
-    public boolean timedOut() {
+    public boolean get_timedOut() {
         return _timeout;
+    }
+
+    public boolean isWellFormed(){
+        boolean wellFormed=false;
+        if(pathSupplied() && requestTypeSupplied()){
+            if(_requestType.equalsIgnoreCase("post")){
+                wellFormed = contentLengthSupplied();
+            }else{
+                wellFormed = true;
+            }
+        }
+        return wellFormed;
     }
 
 }

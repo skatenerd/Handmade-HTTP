@@ -13,16 +13,6 @@ import static org.junit.Assert.*;
 public class ResponseFactoryTest {
 
     @Test
-    public void buildsBadRequestResponses(){
-        String [] files={};
-        FileBrowser mockBrowser=new MockFileBrowser("",files);
-        ResponseFactory factory=new ResponseFactory();
-        Request mockRequest=new MockRequest(null,"/some/crazy/bad/form/path","".getBytes());
-        Response response=factory.buildResponse(mockRequest, new ByteArrayOutputStream(), mockBrowser);
-        assertEquals(BadRequestResponse.class, response.getClass());
-    }
-
-    @Test
     public void buildsFormPostResponses(){
         String [] files={};
         FileBrowser mockBrowser=new MockFileBrowser("",files);
@@ -56,16 +46,6 @@ public class ResponseFactoryTest {
         assertEquals(NotAllowedResponse.class, putResponse.getClass());
     }
 
-    @Test
-    public void buildsTimeoutResponses(){
-        String [] files={};
-        FileBrowser mockBrowser=new MockFileBrowser("",files);
-        ResponseFactory factory=new ResponseFactory();
-        Request timeoutRequest=new MockRequest("POST","/bbb","".getBytes(),true);
-        
-        Response timeoutResponse=factory.buildResponse(timeoutRequest,new ByteArrayOutputStream(),mockBrowser);
-        assertEquals(TimeoutResponse.class,timeoutResponse.getClass());
-    }
 
     @Test
     public void buildsPingResponses(){

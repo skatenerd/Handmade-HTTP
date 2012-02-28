@@ -8,7 +8,7 @@ import java.util.*;
  * To change this template use File | Settings | File Templates.
  */
 public interface Request {
-    String get_RequestType();
+    String get_requestType();
 
     String get_path();
 
@@ -18,5 +18,9 @@ public interface Request {
 
     byte[] get_Body();
 
-    boolean timedOut();
+    boolean get_timedOut();
+
+    boolean isWellFormed();
+
+
 }

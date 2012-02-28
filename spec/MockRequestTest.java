@@ -1,6 +1,5 @@
 import org.junit.Test;
 import static org.junit.Assert.*;
-import java.util.*;
 
 /**
  * Created by IntelliJ IDEA.
@@ -15,7 +14,7 @@ public class MockRequestTest {
         String bodyString="foo\nbar\nsoymilk\nfree-range eggs";
         byte [] body = bodyString.getBytes();
         MockRequest mock=new MockRequest("SUPERGET","/path/foo.jpg",body);
-        assertEquals("SUPERGET",mock.get_RequestType());
+        assertEquals("SUPERGET",mock.get_requestType());
         assertTrue(mock.requestTypeSupplied());
         assertEquals("/path/foo.jpg",mock.get_path());
         assertEquals(body,mock.get_Body());
