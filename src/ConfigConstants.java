@@ -9,6 +9,7 @@ import com.sun.tools.internal.xjc.reader.xmlschema.bindinfo.BIConversion;
  */
 public class ConfigConstants {
     public static String formLocation = "/form";
+    public static String pingLocation= "/ping";
     public static String[] inputs = {"fizz", "buzz", "foo"};
     public static String root = "";
     public static int port;

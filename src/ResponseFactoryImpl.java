@@ -42,6 +42,8 @@ public class ResponseFactoryImpl implements ResponseFactory {
             return new FileResponse(request, browser, stream);
         } else if (request.pathSupplied() && request.get_path().equals(ConfigConstants.formLocation)) {
             return new FormGetResponse(stream, generator);
+        } else if (request.pathSupplied() && request.get_path().equals(ConfigConstants.pingLocation)){
+            return new PingResponse(stream);
         } else {
             return new NotFoundResponse(stream, generator);
         }

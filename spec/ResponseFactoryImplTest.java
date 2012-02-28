@@ -117,5 +117,18 @@ public class ResponseFactoryImplTest {
         Response timeoutResponse=factory.buildResponse(timeoutRequest,new ByteArrayOutputStream(),mockBrowser);
         assertEquals(TimeoutResponse.class,timeoutResponse.getClass());
     }
+
+    @Test
+    public void buildsPingResponses(){
+        String [] files={};
+        FileBrowser mockBrowser=new MockFileBrowser("",files);
+        ResponseFactory factory=new ResponseFactoryImpl();
+        Request pingRequest=new MockRequest("GET", ConfigConstants.pingLocation, "".getBytes());
+        Response pingResponse=factory.buildResponse(pingRequest,new ByteArrayOutputStream(), mockBrowser);
+        assertEquals(PingResponse.class,pingResponse.getClass());
+
+    }
+
+
     
 }
