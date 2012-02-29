@@ -19,7 +19,7 @@ public class FormRequestSubsystemTest {
     public void buildsFormPostResponses(){
         FormRequestSubsystem factory=new FormRequestSubsystem();
         Request mockRequest=new MockRequest("POST",ConfigConstants.formLocation,"foo=22".getBytes(),false,true);
-        Response response=factory.buildResponse(mockRequest, new ByteArrayOutputStream());
+        Response response=factory.buildResponse(mockRequest);
         assertEquals(FormPostResponse.class, response.getClass());
     }
 
@@ -27,7 +27,7 @@ public class FormRequestSubsystemTest {
     public void buildsFormGetResponses(){
         FormRequestSubsystem factory=new FormRequestSubsystem();
         Request mockRequest=new MockRequest("GET",ConfigConstants.formLocation,"".getBytes(),false,true);
-        Response response=factory.buildResponse(mockRequest, new ByteArrayOutputStream());
+        Response response=factory.buildResponse(mockRequest);
         assertEquals(FormGetResponse.class, response.getClass());
     }
     

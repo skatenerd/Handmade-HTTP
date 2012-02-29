@@ -8,8 +8,8 @@ import java.io.OutputStream;
  * To change this template use File | Settings | File Templates.
  */
 public class BadRequestResponse extends Response {
-    public BadRequestResponse(OutputStream output) {
-        super(null, output);
+    public BadRequestResponse() {
+        super(null);
     }
 
     public byte[] getBody() {

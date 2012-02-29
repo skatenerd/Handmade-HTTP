@@ -10,8 +10,8 @@ import java.io.OutputStream;
 public class FormGetResponse extends Response {
     MarkupGenerator _generator;
 
-    public FormGetResponse(OutputStream stream, MarkupGenerator generator) {
-        super(null, stream);
+    public FormGetResponse(MarkupGenerator generator) {
+        super(null);
         _generator = generator;
     }
 

@@ -19,10 +19,9 @@ public class FileResponseTest {
     throws IOException{
         String [] files = {};
         FileBrowser mockBrowser=new MockFileBrowser("",files);
-        OutputStream stream=new ByteArrayOutputStream();
 
         Request jpgRequest = new MockRequest("UBERGET","fzzzz.jpg",new byte[0],false,true);
-        FileResponse jpgResponse=new FileResponse(jpgRequest,mockBrowser,stream);
+        FileResponse jpgResponse=new FileResponse(jpgRequest,mockBrowser);
 
         for(String header:jpgResponse.getHeader()){
             assertFalse(header.startsWith("Content-Disposition"));
@@ -38,10 +37,9 @@ public class FileResponseTest {
     throws IOException{
         String [] files={};
         FileBrowser mockBrowser=new MockFileBrowser("",files);
-        OutputStream stream=new ByteArrayOutputStream();
 
         Request pdfRequest = new MockRequest("UBERGET","fzzzz.pdf",new byte[0],false,true);
-        FileResponse pdfResponse=new FileResponse(pdfRequest,mockBrowser,stream);
+        FileResponse pdfResponse=new FileResponse(pdfRequest,mockBrowser);
         List<String> header=pdfResponse.getHeader();
         String lastHeader=header.get(header.size()-1);
         assertEquals("Content-Disposition: attachment; filename=fzzzz.pdf",lastHeader);
@@ -57,27 +55,27 @@ public class FileResponseTest {
         OutputStream stream=new ByteArrayOutputStream();
 
         Request jpgRequest = new MockRequest("UBERPOST","fzzzz.jpg",new byte[0],false,true);
-        FileResponse jpgResponse=new FileResponse(jpgRequest,mockBrowser,stream);
+        FileResponse jpgResponse=new FileResponse(jpgRequest,mockBrowser);
         assertEquals(jpgResponse.contentType(),"image/jpeg");
 
         Request bmpRequest = new MockRequest("UBERPOST","fzzzz.bmp",new byte[0],false,true);
-        FileResponse bmpResponse=new FileResponse(bmpRequest,mockBrowser,stream);
+        FileResponse bmpResponse=new FileResponse(bmpRequest,mockBrowser);
         assertEquals(bmpResponse.contentType(),"image/bmp");
 
         Request pdfRequest = new MockRequest("UBERPOST","fzzzz.pdf",new byte[0],false,true);
-        FileResponse pdfResponse=new FileResponse(pdfRequest,mockBrowser,stream);
+        FileResponse pdfResponse=new FileResponse(pdfRequest,mockBrowser);
         assertEquals(pdfResponse.contentType(),"application/pdf");
 
         Request gifRequest = new MockRequest("UBERPOST","fzzzz.gif",new byte[0],false,true);
-        FileResponse gifResponse=new FileResponse(gifRequest,mockBrowser,stream);
+        FileResponse gifResponse=new FileResponse(gifRequest,mockBrowser);
         assertEquals(gifResponse.contentType(),"image/gif");
 
         Request htmlRequest = new MockRequest("UBERPOST","fzzzz.html",new byte[0],false,true);
-        FileResponse htmlResponse=new FileResponse(htmlRequest,mockBrowser,stream);
+        FileResponse htmlResponse=new FileResponse(htmlRequest,mockBrowser);
         assertEquals(htmlResponse.contentType(),"text/html");
 
         Request badRequest = new MockRequest("UBERPOST","fnorbbbb",new byte[0],false,true);
-        FileResponse badResponse=new FileResponse(badRequest,mockBrowser,stream);
+        FileResponse badResponse=new FileResponse(badRequest,mockBrowser);
         assertEquals(badResponse.contentType(),"text/plain");
     }
 

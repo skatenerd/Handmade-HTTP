@@ -32,7 +32,7 @@ public class RequestHandler extends Thread {
             ResponseFactory factory = new ResponseFactory(null);
             OutputStream stream = _socket.getOutputStream();
             Response response = factory.buildResponse(request, stream);
-            response.writeResponse();
+            response.writeResponse(stream);
         }catch (IOException e){
             throw e;
         }finally{

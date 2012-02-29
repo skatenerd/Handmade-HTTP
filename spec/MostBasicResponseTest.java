@@ -21,8 +21,8 @@ public class MostBasicResponseTest {
     throws IOException {
 
         OutputStream stream=new ByteArrayOutputStream();
-        Response response = new MostBasicResponse(stream);
-        response.writeResponse();
+        Response response = new MostBasicResponse();
+        response.writeResponse(stream);
 
         StringBuilder headerStringBuilder=new StringBuilder();
         for(String line:response.getHeader()){
@@ -39,7 +39,7 @@ public class MostBasicResponseTest {
     public void createsValidHeader()
     throws IOException{
         String [] files = {};
-        Response response = new MostBasicResponse(new ByteArrayOutputStream());
+        Response response = new MostBasicResponse();
         String lengthString= Integer.toString(response.contentLength());
 
 

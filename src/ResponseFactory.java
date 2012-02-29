@@ -16,10 +16,10 @@ public class ResponseFactory {
     }
 
     public Response buildResponse(Request request, OutputStream stream){
-        return buildResponse(request, stream, new ArrayList<ResponseSubsystem>());
+        return buildResponse(request, new ArrayList<ResponseSubsystem>());
     }
     
-    public Response buildResponse(Request request, OutputStream stream,List<ResponseSubsystem> subsystems) {
+    public Response buildResponse(Request request, List<ResponseSubsystem> subsystems) {
 
         subsystems.add(new MalformedRequestSubsystem());
         subsystems.add(new FormRequestSubsystem());
@@ -28,11 +28,11 @@ public class ResponseFactory {
 
         for(ResponseSubsystem subsystem:subsystems){
             if(subsystem.shouldHandle(request)){
-                return subsystem.buildResponse(request,stream);
+                return subsystem.buildResponse(request);
             }
 
         }
-        return new NotAllowedResponse(stream);
+        return new NotAllowedResponse();
 
     }
 

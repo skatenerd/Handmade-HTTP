@@ -15,8 +15,8 @@ public class DirectoryListReponse extends Response {
     private MarkupGenerator _markup;
     private FileBrowser _browser;
 
-    public DirectoryListReponse(Request request, FileBrowser browser, OutputStream output, MarkupGenerator markup) {
-        super(request, output);
+    public DirectoryListReponse(Request request, FileBrowser browser, MarkupGenerator markup) {
+        super(request);
         _body = _defaultBody;
         _markup = markup;
         _browser = browser;

@@ -20,7 +20,7 @@ public class FormGetResponseTest {
         String [] files = {};
         OutputStream stream=new ByteArrayOutputStream();
         MockMarkupGenerator mockMarkupGenerator=new MockMarkupGenerator();
-        FormGetResponse response = new FormGetResponse(stream,mockMarkupGenerator);
+        FormGetResponse response = new FormGetResponse(mockMarkupGenerator);
 
         response.getBody();
         assertEquals("submitForm", mockMarkupGenerator.calls.get(0));

@@ -8,8 +8,8 @@ import java.io.OutputStream;
  * To change this template use File | Settings | File Templates.
  */
 public class TimeoutResponse extends Response {
-    public TimeoutResponse(OutputStream output) {
-        super(null, output);
+    public TimeoutResponse() {
+        super(null);
     }
 
     public byte[] getBody() {

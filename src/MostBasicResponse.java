@@ -8,8 +8,8 @@ import java.io.*;
  * To change this template use File | Settings | File Templates.
  */
 public class MostBasicResponse extends Response {
-    public MostBasicResponse(OutputStream stream) {
-        super(null, stream);
+    public MostBasicResponse() {
+        super(null);
     }
 
     public byte[] getBody() {

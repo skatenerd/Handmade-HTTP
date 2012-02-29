@@ -25,7 +25,7 @@ public class DirectoryListResponseTest {
 
         OutputStream stream=new ByteArrayOutputStream();
         MockMarkupGenerator mockMarkupGenerator=new MockMarkupGenerator();
-        DirectoryListReponse response = new DirectoryListReponse(mockRequest,mockBrowser, stream, mockMarkupGenerator);
+        DirectoryListReponse response = new DirectoryListReponse(mockRequest,mockBrowser, mockMarkupGenerator);
         List<String> urls=response.listFileURLS();
         response.getBody();
 
@@ -44,7 +44,7 @@ public class DirectoryListResponseTest {
 
         Request mockRequest = new MockRequest("GET","/fizz/buzz",new byte[0],false,true);
         OutputStream stream=new ByteArrayOutputStream();
-        Response response = new DirectoryListReponse(mockRequest,mockBrowser, stream, new MockMarkupGenerator());
+        Response response = new DirectoryListReponse(mockRequest,mockBrowser, new MockMarkupGenerator());
 
         assertEquals("200 OK", response.status());
         assertEquals("text/html",response.contentType());
@@ -59,7 +59,7 @@ public class DirectoryListResponseTest {
 
         Request mockRequest = new MockRequest("UBERGET","/fizz/buzz",new byte[0],false,true);
         OutputStream stream=new ByteArrayOutputStream();
-        Response response = new DirectoryListReponse(mockRequest,mockBrowser, stream, new MockMarkupGenerator());
+        Response response = new DirectoryListReponse(mockRequest,mockBrowser, new MockMarkupGenerator());
         try{
         response.getBody();}
         catch(FileNotFoundException e){

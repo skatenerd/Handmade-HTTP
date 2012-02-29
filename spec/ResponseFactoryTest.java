@@ -22,16 +22,15 @@ public class ResponseFactoryTest {
             }
 
             @Override
-            public Response buildResponse(Request request, OutputStream outputStream) {
-                return new PingResponse(outputStream);
+            public Response buildResponse(Request request) {
+                return new PingResponse();
             }
         };
         List<ResponseSubsystem> subsystemList=new ArrayList<ResponseSubsystem>();
         subsystemList.add(alwaysPing);
         ResponseFactory factory=new ResponseFactory(subsystemList);
         MockRequest mockRequest=new MockRequest("GET","asdf","".getBytes(),false,true);
-        OutputStream stream=new ByteArrayOutputStream();
-        Response response=factory.buildResponse(mockRequest, stream, subsystemList);
+        Response response=factory.buildResponse(mockRequest, subsystemList);
         assertEquals(PingResponse.class,response.getClass());
         
 

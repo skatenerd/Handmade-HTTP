@@ -8,8 +8,8 @@ import java.io.OutputStream;
  * To change this template use File | Settings | File Templates.
  */
 public class NotFoundResponse extends Response {
-    public NotFoundResponse(OutputStream output) {
-        super(null, output);
+    public NotFoundResponse() {
+        super(null);
     }
 
     public byte[] getBody() {

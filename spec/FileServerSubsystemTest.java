@@ -18,7 +18,7 @@ public class FileServerSubsystemTest {
         FileBrowser mockBrowser=new MockFileBrowser(path,files);
         FileServerSubsystem factory=new FileServerSubsystem(mockBrowser);
         Request mockRequest=new MockRequest("GET",path,"".getBytes(),false,true);
-        Response response=factory.buildResponse(mockRequest, new ByteArrayOutputStream());
+        Response response=factory.buildResponse(mockRequest);
         assertEquals(DirectoryListReponse.class, response.getClass());
     }
 
@@ -30,7 +30,7 @@ public class FileServerSubsystemTest {
         FileBrowser mockBrowser=new MockFileBrowser(path,files);
         FileServerSubsystem factory=new FileServerSubsystem(mockBrowser);
         Request mockRequest=new MockRequest("GET",wrongPath,"".getBytes(),false,true);
-        Response response=factory.buildResponse(mockRequest, new ByteArrayOutputStream());
+        Response response=factory.buildResponse(mockRequest);
         assertEquals(response.getClass(), NotFoundResponse.class);
     }
 
@@ -44,7 +44,7 @@ public class FileServerSubsystemTest {
         FileServerSubsystem factory=new FileServerSubsystem(mockBrowser);
 
         Request mockRequest=new MockRequest("GET",filePath,"".getBytes(),false,true);
-        Response response=factory.buildResponse(mockRequest, new ByteArrayOutputStream());
+        Response response=factory.buildResponse(mockRequest);
 
         assertEquals(FileResponse.class, response.getClass());
     }

@@ -10,13 +10,13 @@ import java.io.OutputStream;
 public class MalformedRequestSubsystem implements ResponseSubsystem {
     public MalformedRequestSubsystem(){}
     
-    public Response buildResponse(Request request,OutputStream stream){
+    public Response buildResponse(Request request){
         if(request.get_timedOut()){
-            return new TimeoutResponse(stream);
+            return new TimeoutResponse();
         }else if (!request.requestTypeSupplied()){
-            return new NotAllowedResponse(stream);
+            return new NotAllowedResponse();
         }else{
-            return new BadRequestResponse(stream);
+            return new BadRequestResponse();
         }
     }
 

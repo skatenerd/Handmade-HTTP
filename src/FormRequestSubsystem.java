@@ -9,11 +9,11 @@ import java.io.OutputStream;
  */
 public class FormRequestSubsystem implements ResponseSubsystem {
     public FormRequestSubsystem(){}
-    public Response buildResponse(Request request, OutputStream stream){
+    public Response buildResponse(Request request){
         if(request.get_requestType().equalsIgnoreCase("GET")){
-            return new FormGetResponse(stream,new MarkupGeneratorImpl());
+            return new FormGetResponse(new MarkupGeneratorImpl());
         }else if(request.get_requestType().equalsIgnoreCase("POST")){
-            return new FormPostResponse(stream, request, new MarkupGeneratorImpl());
+            return new FormPostResponse(request, new MarkupGeneratorImpl());
         }else{
             throw new NoSuchMethodError();
         }

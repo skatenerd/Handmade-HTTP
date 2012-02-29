@@ -15,21 +15,19 @@ import java.io.OutputStream;
  */
 public abstract class Response {
     protected Request _request;
-    protected OutputStream _output;
     static String _defaultConnectionType = "close";
     protected static byte[] _defaultBody = null;
 
-    public Response(Request request, OutputStream output) {
+    public Response(Request request) {
         _request = request;
-        _output = output;
     }
 
 
-    public void writeResponse()
+    public void writeResponse(OutputStream output)
             throws IOException {
         try{
-        writeHeader();
-        writeBody();
+        writeHeader(output);
+        writeBody(output);
         }catch (SocketException e){
             if(e.getMessage().equals("Broken pipe") || e.getMessage().equals("Connection reset")){
                 //pass, the client closed the connection
@@ -41,22 +39,22 @@ public abstract class Response {
         }
     }
 
-    private void writeHeader()
+    private void writeHeader(OutputStream output)
             throws IOException {
         try{
         for (String line : getHeader()) {
-            _output.write(line.getBytes());
-            _output.write("\n".getBytes());
+            output.write(line.getBytes());
+            output.write("\n".getBytes());
         }
-        _output.write("\n".getBytes());
+        output.write("\n".getBytes());
         }catch (SocketException e){
             throw e;
         }
     }
 
-    private void writeBody()
+    private void writeBody(OutputStream output)
             throws IOException {
-        _output.write(getBody());
+        output.write(getBody());
     }
 
     protected abstract byte[] getBody() throws IOException;

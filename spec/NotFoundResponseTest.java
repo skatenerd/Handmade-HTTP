@@ -12,8 +12,7 @@ public class NotFoundResponseTest {
     @Test
     public void contentLength()
     throws IOException{
-        OutputStream stream= new ByteArrayOutputStream();
-        Response notFound=new NotFoundResponse(stream);
+        Response notFound=new NotFoundResponse();
         byte [] body=notFound.getBody();
         assertEquals(body.length, notFound.contentLength());
         assertEquals("404 Not Found",notFound.status());

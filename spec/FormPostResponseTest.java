@@ -17,13 +17,11 @@ public class FormPostResponseTest {
     @Test
     public void responseBody()
     throws FileNotFoundException {
-        String [] files = {};
         Request mockRequest = new MockRequest("post","/form","fizz=74".getBytes(),false,true);
 
-        OutputStream stream=new ByteArrayOutputStream();
         MockMarkupGenerator mockMarkupGenerator=new MockMarkupGenerator();
 
-        FormPostResponse response = new FormPostResponse(stream, mockRequest, mockMarkupGenerator);
+        FormPostResponse response = new FormPostResponse(mockRequest, mockMarkupGenerator);
 
         response.getBody();
         assertEquals("displayForm", mockMarkupGenerator.calls.get(0));

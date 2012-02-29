@@ -8,8 +8,8 @@ import java.io.OutputStream;
  * To change this template use File | Settings | File Templates.
  */
 public class PingResponse extends Response{
-    public PingResponse(OutputStream stream){
-        super(null,stream);
+    public PingResponse(){
+        super(null);
         try{
             Thread.sleep(1000);
         }catch(InterruptedException e){

@@ -8,8 +8,8 @@ import java.io.OutputStream;
  * To change this template use File | Settings | File Templates.
  */
 public class NotAllowedResponse extends Response {
-    public NotAllowedResponse(OutputStream output) {
-        super(null, output);
+    public NotAllowedResponse() {
+        super(null);
     }
 
     public byte[] getBody() {

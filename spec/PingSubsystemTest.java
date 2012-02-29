@@ -17,7 +17,7 @@ public class PingSubsystemTest
     public void buildsPingResponses(){
         PingSubsystem factory=new PingSubsystem();
         Request pingRequest=new MockRequest("GET", ConfigConstants.pingLocation, "".getBytes(),false,true);
-        Response pingResponse=factory.buildResponse(pingRequest,new ByteArrayOutputStream());
+        Response pingResponse=factory.buildResponse(pingRequest);
         assertEquals(PingResponse.class,pingResponse.getClass());
     }
 

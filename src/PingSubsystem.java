@@ -11,8 +11,8 @@ public class PingSubsystem implements ResponseSubsystem {
 
     public PingSubsystem(){}
     
-    public Response buildResponse(Request request, OutputStream stream){
-        return new PingResponse(stream);
+    public Response buildResponse(Request request){
+        return new PingResponse();
     }
     
     public boolean shouldHandle(Request request){

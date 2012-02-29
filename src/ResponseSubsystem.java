@@ -9,6 +9,6 @@ import java.io.OutputStream;
  */
 public interface ResponseSubsystem {
     boolean shouldHandle(Request request);
-    Response buildResponse(Request request, OutputStream outputStream);
+    Response buildResponse(Request request);
 
 }

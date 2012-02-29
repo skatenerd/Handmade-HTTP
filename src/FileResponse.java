@@ -12,8 +12,8 @@ import java.util.List;
  */
 public class FileResponse extends Response {
     private FileBrowser _browser;
-    public FileResponse(Request request, FileBrowser browser, OutputStream output) {
-        super(request, output);
+    public FileResponse(Request request, FileBrowser browser) {
+        super(request);
         _browser = browser;
     }
 

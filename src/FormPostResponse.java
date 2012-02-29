@@ -11,8 +11,8 @@ import java.util.*;
 public class FormPostResponse extends Response {
     MarkupGenerator _generator;
 
-    public FormPostResponse(OutputStream stream, Request request, MarkupGenerator generator) {
-        super(request, stream);
+    public FormPostResponse(Request request, MarkupGenerator generator) {
+        super(request);
         _generator = generator;
     }
 

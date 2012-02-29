@@ -14,13 +14,13 @@ public class FileServerSubsystem implements ResponseSubsystem{
         _browser = browser;
     }
 
-    public Response buildResponse(Request request, OutputStream stream){
+    public Response buildResponse(Request request){
         if(_browser.isDirectory(request.get_path())){
-            return new DirectoryListReponse(request, _browser,stream, new MarkupGeneratorImpl());
+            return new DirectoryListReponse(request, _browser, new MarkupGeneratorImpl());
         }else if(_browser.isFile(request.get_path())){
-            return new FileResponse(request, _browser, stream);
+            return new FileResponse(request, _browser);
         }else{
-            return new NotFoundResponse(stream);
+            return new NotFoundResponse();
         }
     }
     

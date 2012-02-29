@@ -19,7 +19,7 @@ public class MalformedRequestSubsystemTest {
         MalformedRequestSubsystem factory=new MalformedRequestSubsystem();
         Request timeoutRequest=new MockRequest("POST","/bbb","".getBytes(),true,true);
 
-        Response timeoutResponse=factory.buildResponse(timeoutRequest,new ByteArrayOutputStream());
+        Response timeoutResponse=factory.buildResponse(timeoutRequest);
         assertEquals(TimeoutResponse.class,timeoutResponse.getClass());
     }
 
@@ -27,7 +27,7 @@ public class MalformedRequestSubsystemTest {
     public void buildsBadRequestResponses(){
         MalformedRequestSubsystem factory=new MalformedRequestSubsystem();
         Request mockRequest=new MockRequest("GET","/some/crazy/bad/form/path","".getBytes(),false,false);
-        Response response=factory.buildResponse(mockRequest, new ByteArrayOutputStream());
+        Response response=factory.buildResponse(mockRequest);
         assertEquals(BadRequestResponse.class, response.getClass());
     }
 
@@ -35,7 +35,7 @@ public class MalformedRequestSubsystemTest {
     public void buildsNotAllowedResponses(){
         MalformedRequestSubsystem factory=new MalformedRequestSubsystem();
         Request randomPut=new MockRequest(null,"/","".getBytes(),false,true);
-        Response putResponse=factory.buildResponse(randomPut, new ByteArrayOutputStream());
+        Response putResponse=factory.buildResponse(randomPut);
         assertEquals(NotAllowedResponse.class, putResponse.getClass());
     }
 
