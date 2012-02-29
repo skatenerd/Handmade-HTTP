@@ -1,5 +1,3 @@
-import com.sun.tools.internal.xjc.reader.xmlschema.bindinfo.BIConversion;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,16 +12,16 @@ public class ConfigConstants {
     public static String formLocation = "/form";
     public static String pingLocation= "/ping";
     public static String[] inputs = {"fizz", "buzz", "foo"};
-    public static String root = "";
-    public static int port;
+    public static int concurrentRequests=1000;
 
-    public static List<ResponseSubsystem> getDefaultSubsystems(){
+    public static List<ResponseSubsystem> getDefaultSubsystems(String root, int port){
         List<ResponseSubsystem> subsystems=new ArrayList<ResponseSubsystem>();
         subsystems.add(new MalformedRequestSubsystem());
         subsystems.add(new FormRequestSubsystem());
         subsystems.add(new PingSubsystem());
-        subsystems.add(new FileServerSubsystem(new FileBrowserImpl(ConfigConstants.root)));
+        subsystems.add(new FileServerSubsystem(new FileBrowserImpl(root),port));
         return subsystems;
     }
+
     
 }

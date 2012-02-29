@@ -15,8 +15,6 @@ public class CommandLineParser {
 
 
     public CommandLineParser(String[] args, FileBrowser browser) {
-        String pathArg = "";
-        String portArg = "";
         String previousArg = "";
 
         for (String arg : args) {
@@ -40,7 +38,6 @@ public class CommandLineParser {
     }
 
     private void parsePort(String port) {
-        boolean isValid = false;
         try {
             _port = Integer.parseInt(port);
             _portValid = true;

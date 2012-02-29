@@ -1,6 +1,7 @@
 import java.io.IOException;
 import java.io.*;
 import java.net.*;
+import java.util.List;
 
 
 /**
@@ -12,20 +13,25 @@ import java.net.*;
  */
 public class Server
         extends Thread {
-    private int _port;
-    public String lastRequestType;
-    private ServerSocket _serverSocket;
 
-    public Server(int port) {
+    private ServerSocket _serverSocket;
+    private String _path;
+    private int _port;
+    private List<ResponseSubsystem> _subsystems;
+
+    public Server(String path,int port,List<ResponseSubsystem> subsystems){
+        _path = path;
         _port = port;
+        _subsystems = subsystems;
     }
+
 
     public void run() {
         try {
-            _serverSocket = new ServerSocket(_port,1000);
+            _serverSocket = new ServerSocket(_port,ConfigConstants.concurrentRequests);
             while (true) {
                 Socket connection = _serverSocket.accept();
-                RequestHandler handler = new RequestHandler(connection);
+                RequestHandler handler = new RequestHandler(connection,_subsystems);
                 handler.start();
             }
         } catch (BindException e) {

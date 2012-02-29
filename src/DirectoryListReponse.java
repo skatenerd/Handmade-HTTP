@@ -13,13 +13,15 @@ public class DirectoryListReponse extends Response {
     private static String _contentType = "text/html";
     private byte[] _body;
     private MarkupGenerator _markup;
+    private int _port;
     private FileBrowser _browser;
 
-    public DirectoryListReponse(Request request, FileBrowser browser, MarkupGenerator markup) {
+    public DirectoryListReponse(Request request, FileBrowser browser, MarkupGenerator markup, int port) {
         super(request);
         _body = _defaultBody;
         _markup = markup;
         _browser = browser;
+        _port = port;
     }
 
 
@@ -52,7 +54,7 @@ public class DirectoryListReponse extends Response {
         String[] files = (_browser.ListDirectory(_request.get_path()));
         if (files != null) {
             for (String file : files) {
-                String url = "http://localhost:" + Integer.toString(ConfigConstants.port) + _request.get_path() + "/" + file;
+                String url = "http://localhost:" + Integer.toString(_port) + _request.get_path() + "/" + file;
                 rtn.add(url);
             }
         } else {

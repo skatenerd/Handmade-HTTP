@@ -16,12 +16,15 @@ import static org.junit.Assert.*;
 public class IntegrationTest {
     Server testServer;
     int portNumber=8083;
+    String path="/";
 
     @Before
     public void setUp()
     throws InterruptedException
-    {
-        testServer = new Server(portNumber);
+    {        
+        testServer = new Server(path,
+                                portNumber,
+                                ConfigConstants.getDefaultSubsystems(path,portNumber));
         testServer.start();
         Thread.sleep(500);
     }

@@ -14,6 +14,8 @@ import static org.junit.Assert.*;
  * To change this template use File | Settings | File Templates.
  */
 public class DirectoryListResponseTest {
+    int _port=8080;
+    
     @Test
     public void responseBody()
     throws FileNotFoundException{
@@ -25,11 +27,11 @@ public class DirectoryListResponseTest {
 
         OutputStream stream=new ByteArrayOutputStream();
         MockMarkupGenerator mockMarkupGenerator=new MockMarkupGenerator();
-        DirectoryListReponse response = new DirectoryListReponse(mockRequest,mockBrowser, mockMarkupGenerator);
+        DirectoryListReponse response = new DirectoryListReponse(mockRequest,mockBrowser, mockMarkupGenerator,_port);
         List<String> urls=response.listFileURLS();
         response.getBody();
 
-        assertTrue(urls.get(0).equals("http://localhost:"+ConfigConstants.port+"/bin/fizz/to/list/PPP.pdf"));
+        assertTrue(urls.get(0).equals("http://localhost:"+_port+"/bin/fizz/to/list/PPP.pdf"));
         assertEquals("pageWithLinks", mockMarkupGenerator.calls.get(0));
         assertEquals(urls,mockMarkupGenerator.args.get(0));
 
@@ -44,7 +46,7 @@ public class DirectoryListResponseTest {
 
         Request mockRequest = new MockRequest("GET","/fizz/buzz",new byte[0],false,true);
         OutputStream stream=new ByteArrayOutputStream();
-        Response response = new DirectoryListReponse(mockRequest,mockBrowser, new MockMarkupGenerator());
+        Response response = new DirectoryListReponse(mockRequest,mockBrowser, new MockMarkupGenerator(),_port);
 
         assertEquals("200 OK", response.status());
         assertEquals("text/html",response.contentType());
@@ -59,7 +61,7 @@ public class DirectoryListResponseTest {
 
         Request mockRequest = new MockRequest("UBERGET","/fizz/buzz",new byte[0],false,true);
         OutputStream stream=new ByteArrayOutputStream();
-        Response response = new DirectoryListReponse(mockRequest,mockBrowser, new MockMarkupGenerator());
+        Response response = new DirectoryListReponse(mockRequest,mockBrowser, new MockMarkupGenerator(),_port);
         try{
         response.getBody();}
         catch(FileNotFoundException e){

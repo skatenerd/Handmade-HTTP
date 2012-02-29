@@ -8,15 +8,17 @@ import java.io.OutputStream;
  * To change this template use File | Settings | File Templates.
  */
 public class FileServerSubsystem implements ResponseSubsystem{
-    FileBrowser _browser;
+    private FileBrowser _browser;
+    private int _port;
 
-    public FileServerSubsystem(FileBrowser browser){
+    public FileServerSubsystem(FileBrowser browser, int port){
         _browser = browser;
+        _port = port;
     }
 
     public Response buildResponse(Request request){
         if(_browser.isDirectory(request.get_path())){
-            return new DirectoryListReponse(request, _browser, new MarkupGeneratorImpl());
+            return new DirectoryListReponse(request, _browser, new MarkupGeneratorImpl(),_port);
         }else if(_browser.isFile(request.get_path())){
             return new FileResponse(request, _browser);
         }else{
