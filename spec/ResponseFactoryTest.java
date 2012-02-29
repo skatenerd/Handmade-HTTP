@@ -30,7 +30,7 @@ public class ResponseFactoryTest {
         subsystemList.add(alwaysPing);
         ResponseFactory factory=new ResponseFactory(subsystemList);
         MockRequest mockRequest=new MockRequest("GET","asdf","".getBytes(),false,true);
-        Response response=factory.buildResponse(mockRequest, subsystemList);
+        Response response=factory.buildResponse(mockRequest);
         assertEquals(PingResponse.class,response.getClass());
         
 

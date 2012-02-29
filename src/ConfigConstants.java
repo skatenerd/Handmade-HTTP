@@ -1,5 +1,8 @@
 import com.sun.tools.internal.xjc.reader.xmlschema.bindinfo.BIConversion;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by IntelliJ IDEA.
  * User: 8thlight
@@ -14,5 +17,13 @@ public class ConfigConstants {
     public static String root = "";
     public static int port;
 
+    public static List<ResponseSubsystem> getDefaultSubsystems(){
+        List<ResponseSubsystem> subsystems=new ArrayList<ResponseSubsystem>();
+        subsystems.add(new MalformedRequestSubsystem());
+        subsystems.add(new FormRequestSubsystem());
+        subsystems.add(new PingSubsystem());
+        subsystems.add(new FileServerSubsystem(new FileBrowserImpl(ConfigConstants.root)));
+        return subsystems;
+    }
     
 }
