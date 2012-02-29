@@ -55,7 +55,10 @@ public class RequestImpl implements Request {
         byte[] body = _default_body;
         if (contentLengthSupplied()) {
             body = new byte[contentLength];
-            stream.read(body);
+            int bytesRead=stream.read(body);
+            if (bytesRead<contentLength){
+                _timeout=true;
+            }
         }
 
         return body;

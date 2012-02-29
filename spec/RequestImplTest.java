@@ -133,8 +133,20 @@ public class RequestImplTest {
         assertFalse(noRequestTypeRequest.isWellFormed());
 
         InputStream badRequestTypeStream=new ByteArrayInputStream(badRequestType.getBytes());
-        Request badRequestTypeRequest=new RequestImpl(noRequestTypeStream);
+        Request badRequestTypeRequest=new RequestImpl(badRequestTypeStream);
         assertFalse(badRequestTypeRequest.isWellFormed());
+    }
+
+    @Test
+    public void timeoutForIncompleteBody()
+    throws IOException{
+        String incompleteRequestString=postPath+"\nContent-Length: 999999\n\nhello";
+        InputStream incompleteStream=new ByteArrayInputStream(incompleteRequestString.getBytes());
+        
+        Request incompleteStreamRequest=new RequestImpl(incompleteStream);
+        
+        assertTrue(incompleteStreamRequest.get_timedOut());
+
     }
 }
 
