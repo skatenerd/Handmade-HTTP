@@ -13,4 +13,6 @@ public class ConfigConstants {
     public static String[] inputs = {"fizz", "buzz", "foo"};
     public static String root = "";
     public static int port;
+
+    
 }

@@ -1,6 +1,8 @@
 import org.junit.Test;
-
 import java.io.ByteArrayOutputStream;
+import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.Assert.*;
 /**
@@ -11,7 +13,27 @@ import static org.junit.Assert.*;
  * To change this template use File | Settings | File Templates.
  */
 public class ResponseFactoryTest {
+    @Test
+    public void takesListOfSubsystems(){
+        ResponseSubsystem alwaysPing=new ResponseSubsystem() {
+            @Override
+            public boolean shouldHandle(Request request) {
+                return true;
+            }
 
+            @Override
+            public Response buildResponse(Request request, OutputStream outputStream) {
+                return new PingResponse(outputStream);
+            }
+        };
+        List<ResponseSubsystem> subsystemList=new ArrayList<ResponseSubsystem>();
+        subsystemList.add(alwaysPing);
+        ResponseFactory factory=new ResponseFactory(subsystemList);
+        MockRequest mockRequest=new MockRequest("GET","asdf","".getBytes(),false,true);
+        OutputStream stream=new ByteArrayOutputStream();
+        Response response=factory.buildResponse(mockRequest, stream, subsystemList);
+        assertEquals(PingResponse.class,response.getClass());
+        
 
-    
+    }
 }

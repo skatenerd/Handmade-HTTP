@@ -1,4 +1,6 @@
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.
@@ -8,27 +10,30 @@ import java.io.*;
  * To change this template use File | Settings | File Templates.
  */
 public class ResponseFactory {
-    public ResponseFactory() {
-
+    List<ResponseSubsystem> _subsystems;
+    public ResponseFactory(List<ResponseSubsystem> subsystemList) {
+        _subsystems=subsystemList;
     }
 
-    public Response buildResponse(Request request, OutputStream stream) {
-        ResponseSubsystem malformed=new MalformedRequestSubsystem();
-        ResponseSubsystem form=new FormRequestSubsystem();
-        ResponseSubsystem ping=new PingSubsystem();
-        ResponseSubsystem file=new FileServerSubsystem(new FileBrowserImpl(ConfigConstants.root));
+    public Response buildResponse(Request request, OutputStream stream){
+        return buildResponse(request, stream, new ArrayList<ResponseSubsystem>());
+    }
+    
+    public Response buildResponse(Request request, OutputStream stream,List<ResponseSubsystem> subsystems) {
 
-        if(malformed.shouldHandle(request)){
-            return malformed.buildResponse(request, stream);
-        } else if(form.shouldHandle(request)){
-            return form.buildResponse(request, stream);
-        } else if(ping.shouldHandle(request)){
-            return ping.buildResponse(request,stream);
-        } else if (file.shouldHandle(request)){
-            return file.buildResponse(request,stream);
-        } else {
-            return new NotAllowedResponse(stream);
+        subsystems.add(new MalformedRequestSubsystem());
+        subsystems.add(new FormRequestSubsystem());
+        subsystems.add(new PingSubsystem());
+        subsystems.add(new FileServerSubsystem(new FileBrowserImpl(ConfigConstants.root)));
+
+        for(ResponseSubsystem subsystem:subsystems){
+            if(subsystem.shouldHandle(request)){
+                return subsystem.buildResponse(request,stream);
+            }
+
         }
+        return new NotAllowedResponse(stream);
+
     }
 
 
