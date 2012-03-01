@@ -6,12 +6,7 @@
 \pard\pardeftab720
 
 \f0\fs44 \cf0 --------------------------\
-test the request handler with injected dependencies\
-make timeouts sensitive to incomplete reads\
-don't send the stream into the response.  it should not be a field.\
-add html type field to request\
-\
 properly process requests that look like:\
-GET HTML/1.1\
+GET HTML/1.1, so that they don't have a path :-).\
 \
-so that they don't have a path :-).}
+make the response factory check request validity by default}

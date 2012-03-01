@@ -13,8 +13,6 @@ public class MalformedRequestSubsystem implements ResponseSubsystem {
     public Response buildResponse(Request request){
         if(request.get_timedOut()){
             return new TimeoutResponse();
-        }else if (!request.requestTypeSupplied()){
-            return new NotAllowedResponse();
         }else{
             return new BadRequestResponse();
         }

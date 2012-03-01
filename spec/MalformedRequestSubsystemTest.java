@@ -32,14 +32,6 @@ public class MalformedRequestSubsystemTest {
     }
 
     @Test
-    public void buildsNotAllowedResponses(){
-        MalformedRequestSubsystem factory=new MalformedRequestSubsystem();
-        Request randomPut=new MockRequest(null,"/","".getBytes(),false,true);
-        Response putResponse=factory.buildResponse(randomPut);
-        assertEquals(NotAllowedResponse.class, putResponse.getClass());
-    }
-
-    @Test
     public void knowsWhatToHandle(){
         MalformedRequestSubsystem factory=new MalformedRequestSubsystem();
 

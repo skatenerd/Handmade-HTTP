@@ -92,7 +92,7 @@ public class IntegrationTest {
         BufferedReader reader=new BufferedReader(new InputStreamReader(malformedRequestSocket.getInputStream()));
 
         String status=reader.readLine();
-        assertTrue(status.indexOf("405")>0);
+        assertTrue(status.indexOf("400")>0);
         malformedRequestSocket.close();
     }
 
@@ -143,6 +143,21 @@ public class IntegrationTest {
         long elapsedTime=endTime - startTime;
         assertTrue(elapsedTime<3000);
     }
+
+    @Test
+    public void postResponseWithoutContentLength()
+    throws IOException{
+        Socket postSocket=getTestSocket();
+        String body="fozz";
+
+        postSocket.getOutputStream().write(("POST /form HTTP/1.1\n\n"+body).getBytes());
+
+        BufferedReader reader=new BufferedReader(new InputStreamReader(postSocket.getInputStream()));
+
+        String status=reader.readLine();
+        assertTrue(status.indexOf("400")>0);
+    }
+
 
 }
 

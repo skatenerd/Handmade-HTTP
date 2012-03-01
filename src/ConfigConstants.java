@@ -16,7 +16,6 @@ public class ConfigConstants {
 
     public static List<ResponseSubsystem> getDefaultSubsystems(String root, int port){
         List<ResponseSubsystem> subsystems=new ArrayList<ResponseSubsystem>();
-        subsystems.add(new MalformedRequestSubsystem());
         subsystems.add(new FormRequestSubsystem());
         subsystems.add(new PingSubsystem());
         subsystems.add(new FileServerSubsystem(new FileBrowserImpl(root),port));

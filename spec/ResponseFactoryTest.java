@@ -33,6 +33,10 @@ public class ResponseFactoryTest {
         ResponseFactory factory=new ResponseFactory();
         MockRequest mockRequest=new MockRequest("GET","asdf","".getBytes(),false,true);
         Response response=factory.buildResponse(mockRequest,subsystemList);
-        assertEquals(PingResponse.class,response.getClass());        
+        assertEquals(PingResponse.class,response.getClass());
+        
+        MockRequest malformed=new MockRequest(null,"asfd","".getBytes(),false,false);
+        Response malformedResponse=factory.buildResponse(malformed, subsystemList);
+        assertEquals(BadRequestResponse.class,malformedResponse.getClass());
     }
 }
