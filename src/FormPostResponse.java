@@ -17,20 +17,10 @@ public class FormPostResponse extends Response {
     }
 
     public byte[] getBody() {
-        Map<String, String> values = parseBody();
+        Map<String, String> values = PostDataParser.parse(new String(_request.get_Body()));
         return _generator.displayForm(values).getBytes();
     }
 
-    private Map<String, String> parseBody() {
-        Map<String, String> rtn = new HashMap<String, String>();
-        String body = new String(_request.get_Body());
-        String[] values = body.split("&");
-        for (String value : values) {
-            String[] keyAndVal = value.split("=");
-            rtn.put(keyAndVal[0], keyAndVal[1]);
-        }
-        return rtn;
-    }
 
     public String contentType() {
         return "text/html";
