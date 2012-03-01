@@ -19,4 +19,18 @@ public class PostDataParserTest {
         assertEquals("far",parsed.get("zanzibar"));
         assertNull(parsed.get("fizz"));
     }
+    
+    @Test
+    public void parsesGarbage(){
+        String postData="fail";
+        Map<String,String> parsed = PostDataParser.parse(postData);
+        assertEquals(0,parsed.size());
+    }
+    @Test
+    public void extractsGoodData(){
+        String postData="fail=true&zanzibar";
+        Map<String,String> parsed = PostDataParser.parse(postData);
+        assertEquals("true",parsed.get("fail"));
+    }
+    
 }

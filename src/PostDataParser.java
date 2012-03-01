@@ -15,7 +15,9 @@ public class PostDataParser {
         String[] values = postdata.split("&");
         for (String value : values) {
             String[] keyAndVal = value.split("=");
-            rtn.put(keyAndVal[0], keyAndVal[1]);
+            if(keyAndVal.length==2){
+                rtn.put(keyAndVal[0], keyAndVal[1]);
+            }
         }
         return rtn;
     }

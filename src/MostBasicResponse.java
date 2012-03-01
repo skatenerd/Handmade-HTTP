@@ -13,7 +13,7 @@ public class MostBasicResponse extends Response {
     }
 
     public byte[] getBody() {
-        return "workers\nrevolt\nin\nsouth asia".getBytes();
+        return "sparkling cider".getBytes();
     }
 
     public String contentType() {
